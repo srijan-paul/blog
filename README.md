@@ -1,2 +1,2 @@
 # blog
-Personal blog site
+A Personal blog site built with 11ty.
