@@ -4,17 +4,23 @@
   "description": "A Personal blog site built with 11ty.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "npx @11ty/eleventy",
+    "watch": "npx @11ty/elevnty --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/srijan-paul/blog.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Srijan Paul",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/srijan-paul/blog/issues"
   },
-  "homepage": "https://github.com/srijan-paul/blog#readme"
+  "homepage": "https://github.com/srijan-paul/blog#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.11.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1"
+  }
 }

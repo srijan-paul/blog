@@ -1,0 +1,26 @@
+---
+title: My rad blog
+---
+
+<!doctype html>
+<html class="no-js">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{ title }}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/post.css">
+        <link rel="stylesheet" href="../css/skeleton.css"> 
+        <link rel="stylesheet" href="../css/prism-theme.css">
+    </head>
+    <body class="light">
+
+        <div class="content-wrapper light">
+            <h1 class="post-title">{{ title }}</h1>
+            {{ content | safe }}
+        </div>
+        <script src="" async defer></script>
+    </body>
+</html>
