@@ -1,0 +1,45 @@
+<!doctype html>
+<html data-theme="light">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{ metadata.blogName }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    {% import "components/postlist.njk" as postList %}
+
+    <section class="main">
+      <div class="content-wrapper">
+        {% include "components/navbar.njk" %}
+
+        {# blog title #}
+        <h1 class="post-title">{{ title }}</h1>
+        {# tags #}
+        <div class="tags">
+          {% for tag in tags %}
+            <a class="tag" href="#">
+              {{ tag }}
+            </a>
+          {% endfor %}
+        </div>
+        <hr>
+
+        {# home page description #}
+        <article class="post">{{ content | safe }}</article>
+
+        {{postList.postList(collections.all, title, metadata.outDir)}}
+
+      </div>
+    </section>
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
+  </body>
+</html>

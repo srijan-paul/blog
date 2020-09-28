@@ -1,0 +1,15 @@
+{% macro postList(collection, current, relativePath = '..') %}
+  <div class = "post-list">
+    <ul>
+      {% for post in collection %}
+        {% if post.data.title != current %}
+          <li>
+            <a href="{{relativePath}}{{ post.url }}index.html">{{ post.data.title }}
+            </a>
+            <span class="post-date"> ({{ post.date | formatDate }}) </span>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endmacro %}

@@ -1,6 +1,7 @@
 ---
-layout: home.njk
-title: Home
+layout: post.njk
+title: BLog Post test
+tags: "Post"
 ---
 
 Welcome to Byte Fiction, a place where I write about my creations. 

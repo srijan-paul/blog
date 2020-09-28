@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/prism-theme.css">
   </head>
   <body>
@@ -17,30 +18,9 @@
     <section class="main">
 
       <div class="content-wrapper">
-        <div class="navbar">
-          <div class="nav-item">
-            <a href="/_site/home/index.html" id="logo">{{ metadata.blogName }}</a>
-          </div>
-          {# theme switcher button #}
-          <div class="nav-item">
-            <label class="switch">
-              <input type="checkbox" id="theme-switcher-button">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-
-        {# blog title #}
-        <h1 class="post-title">{{ title }}</h1>
-        <div class="info">{{page.date | formatDate}}</div>
-        {# tags #}
-        <div class="tags">
-          {% for tag in tags %}
-            <a class="tag" href="#">
-              {{ tag }}
-            </a>
-          {% endfor %}
-        </div>
+        {% include "components/navbar.njk" %}
+        {% import "components/post_macros.njk" as macros %}
+        {{ macros.header(title) }}
         <hr>
 
         {# blog contents #}
@@ -49,11 +29,13 @@
         {# navigating to previous and next post #}
         <div class="nav">
           {% if previousPost %}
-            <a class="prev" href="/_site{{previousPost.url}}index.html">&lt; {{ previousPost.data.title }}</a>
+            <a class="prev" 
+              href="/{{metadata.outDir}}{{previousPost.url}}index.html">&lt; {{ previousPost.data.title }}</a>
           {% endif %}
 
           {% if nextPost %}
-            <a class="next" href="/_site{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
+            <a class="next"
+              href="/{{metadata.outDir}}/{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
           {% endif %}
         </div>
       </div>

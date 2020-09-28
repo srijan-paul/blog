@@ -1,5 +1,6 @@
 {
-  "blogName": "Byte Fiction",
+  "blogName": "ByteFiction",
+  "outDir": "docs",
   "tags": ["Post", "Gamedev"],
   "author": "Srijan Paul"
 }

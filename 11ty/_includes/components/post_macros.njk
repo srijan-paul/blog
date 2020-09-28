@@ -1,0 +1,13 @@
+{% macro header(title) %}
+  {# blog title #}
+  <h1 class="post-title">{{ title }}</h1>
+  <div class="info">{{page.date | formatDate}}</div>
+  {# tags #}
+  <div class="tags">
+    {% for tag in tags %}
+      <a class="tag" href="#">
+        {{ tag }}
+      </a>
+    {% endfor %}
+  </div>
+{% endmacro %}
