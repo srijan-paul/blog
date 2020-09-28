@@ -3,7 +3,6 @@ const themeName = {
   LIGHT: 'light',
 };
 
-console.log('Byte Fiction blog')
 // current state of the slider.
 let btnState = themeName.LIGHT;
 // currently activated theme
