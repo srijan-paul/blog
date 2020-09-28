@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/skeleton.css">
     <link rel="stylesheet" href="../css/prism-theme.css">
+    <script type="text/javascript" src="../js/theme_switch.js" async defer></script>
+    <script>console.log("inline JS")</script>
   </head>
   <body>
     {% set previousPost = collections.Post | getPreviousCollectionItem(page) %}
@@ -58,7 +60,6 @@
         </div>
       </div>
       {# Javascript for theme switching, light/dark mode. #}
-      <script type="text/javascript" src="../js/theme_switch.js" async defer/>
     </section>
 
   </body>
