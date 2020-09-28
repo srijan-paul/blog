@@ -11,3 +11,19 @@
     {% endfor %}
   </div>
 {% endmacro %}
+
+{% macro postList(collection, title, root) %}
+  <div class = "post-list">
+    <ul>
+      {% for post in collection %}
+        {% if post.data.title != title %}
+          <li>
+            <a href="{{root}}{{ post.url }}index.html">{{ post.data.title }}
+            </a>
+            <span class="post-date"> ({{ post.date | formatDate }}) </span>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endmacro %}
