@@ -22,7 +22,7 @@
       <div class="content-wrapper">
         {% include "components/navbar.njk" %}
         {% import "components/post_macros.njk" as macros %}
-        {{ macros.header(title) }}
+        {{ macros.header(title, tags) }}
         <hr>
 
         {# blog contents #}

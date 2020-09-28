@@ -1,7 +1,7 @@
 ---
 layout: post.njk
 title: BLog Post test
-tags: "Post"
+tags: ["Post", "test tag"]
 ---
 
 Welcome to Byte Fiction, a place where I write about my creations. 
