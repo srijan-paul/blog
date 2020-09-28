@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ title }}</title>
+    <title>{{ metadata.blogName }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/home.css">
+
     <link rel="stylesheet" href="../css/prism-theme.css">
   </head>
   <body>
-    {% set previousPost = collections.Post | getPreviousCollectionItem(page) %}
-    {% set nextPost = collections.Post | getNextCollectionItem(page) %}
     <section class="main">
 
       <div class="content-wrapper">
@@ -32,7 +32,6 @@
 
         {# blog title #}
         <h1 class="post-title">{{ title }}</h1>
-        <div class="info">{{page.date | formatDate}}</div>
         {# tags #}
         <div class="tags">
           {% for tag in tags %}
@@ -43,19 +42,23 @@
         </div>
         <hr>
 
-        {# blog contents #}
+        {# home page description #}
         <article class="post">{{ content | safe }}</article>
-        <hr>
-        {# navigating to previous and next post #}
-        <div class="nav">
-          {% if previousPost %}
-            <a class="prev" href="/_site{{previousPost.url}}index.html">&lt; {{ previousPost.data.title }}</a>
-          {% endif %}
 
-          {% if nextPost %}
-            <a class="next" href="/_site{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
-          {% endif %}
+        <div class = "post-list">
+          <ul>
+            {% for post in collections.all %}
+              {% if post.data.title != title %}
+                <li>
+                  <a href="/_site{{ post.url }}index.html">{{ post.data.title }}
+                  </a>
+                  <span class="post-date"> ({{ post.date | formatDate }}) </span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
         </div>
+
       </div>
       {# Javascript for theme switching, light/dark mode. #}
       <script type="text/javascript" src="../js/theme_switch.js" async defer/>

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "npx @11ty/eleventy",
-    "watch": "npx @11ty/elevnty --watch"
+    "watch": "npx @11ty/eleventy --watch"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1"
+  },
+  "dependencies": {
+    "strftime": "^0.10.0"
   }
 }
