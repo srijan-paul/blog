@@ -1,6 +1,7 @@
 {
   "blogName": "ByteFiction",
   "outDir": "docs",
+  "root": "blog",
   "tags": ["Post", "Gamedev"],
   "author": "Srijan Paul"
 }

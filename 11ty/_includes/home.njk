@@ -15,7 +15,6 @@
   </head>
 
   <body>
-    {% import "components/postlist.njk" as postList %}
 
     <section class="main">
       <div class="content-wrapper">
@@ -36,7 +35,19 @@
         {# home page description #}
         <article class="post">{{ content | safe }}</article>
 
-        {{postList.postList(collections.all, title, metadata.outDir)}}
+        <div class = "post-list">
+          <ul>
+            {% for post in collections.all %}
+              {% if post.data.title != title %}
+                <li>
+                  <a href="{{ post.url }}index.html">{{ post.data.title }}
+                  </a>
+                  <span class="post-date"> ({{ post.date | formatDate }}) </span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
 
       </div>
     </section>
