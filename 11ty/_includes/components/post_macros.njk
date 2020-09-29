@@ -26,7 +26,7 @@
       {% for post in collection %}
 
         <li>
-          <a href="{{relativePath}}/{{env.root}}{{ post.url }}index.html">{{ post.data.title }}
+          <a href="{{relativePath}}{{env.root}}{{ post.url }}index.html">{{ post.data.title }}
           </a>
           <span class="post-date"> ({{ post.date | formatDate }}) </span>
         </li>
@@ -40,7 +40,7 @@
 
   <div class="navbar">
     <div class="nav-item">
-      <a href="{{path}}/{{env.root}}/home" id="logo">{{ name }}</a>
+      <a href="{{path}}/home" id="logo">{{ name }}</a>
     </div>
 
     {# theme switcher button #}

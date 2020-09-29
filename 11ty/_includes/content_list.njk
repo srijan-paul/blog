@@ -18,7 +18,7 @@
   <body>
     <section class="main">
       <div class="content-wrapper">
-        {{ macros.navbar('../..') }}
+        {{ macros.navbar('../../' + env.root) }}
         <article class="post">
           {{ content | safe }}
         </article>

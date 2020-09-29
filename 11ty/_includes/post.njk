@@ -1,6 +1,5 @@
 {% import "components/post_macros.njk" as macros %}
 
-
 <!doctype html>
 <html data-theme="light">
   <!--<![endif]-->
@@ -20,7 +19,7 @@
     {% set nextPost = collections.Post | getNextCollectionItem(page) %}
     <class class="main">
       <div class="content-wrapper">
-        {{ macros.navbar() }}
+        {{ macros.navbar('../' + env.root) }}
         {{ macros.header(title, tags) }}
         <hr>
 
