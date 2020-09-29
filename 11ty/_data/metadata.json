@@ -2,6 +2,7 @@
   "blogName": "ByteFiction",
   "outDir": "docs",
   "root": "blog",
+  "productionMode": true,
   "tags": ["Post", "Gamedev", "Ave", "Programming Language"],
   "author": "Srijan Paul"
 }

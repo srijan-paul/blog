@@ -1,5 +1,4 @@
-{%import "components/post_macros.njk" as macros%}
-{%set root=".."%}
+{% import "components/post_macros.njk" as macros %}
 
 <!doctype html>
 <html data-theme="light">
@@ -14,12 +13,10 @@
     <link rel="stylesheet" href="../css/skeleton.css">
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
     <section class="main">
-
       <div class="content-wrapper">
         {% include "components/navbar.njk" %}
 
@@ -34,10 +31,10 @@
           {% endfor %}
         </div>
         <hr>
-
+      {{env.root}}
         {# home page description #}
         <article class="post">{{ content | safe }}</article>
-        {{macros.postList(collections.all, title, root)}}
+        {{macros.postList(collections.all, title, env.root)}}
       </div>
     </section>
     <script type="text/javascript" src="../js/theme_switch.js"></script>
