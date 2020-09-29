@@ -20,7 +20,7 @@
 # `collection`, and the title of which doesn't match `title` 
 #  `root` being the relative path of the root w.r.t the caller.
 #}
-{% macro postList(collection, root) %}
+{% macro postList(collection) %}
   <div class = "post-list">
     <ul>
       {% for post in collection %}

@@ -12,6 +12,7 @@ module.exports = function (eleventyConfig) {
   });
 
   return {
+    pathPrefix: 'blog',
     dir: {
       input: '11ty',
       output: 'docs',
