@@ -32,8 +32,10 @@
         </div>
         <hr>
         {# home page description #}
-        <article class="post">{{ content | safe }}</article>
-        {{macros.postList(collections.Post, "..")}}
+        <article class="post">
+          {{ content | safe }}
+          {{macros.postList(collections.Post, "..")}}
+        </article>
       </div>
     </section>
     <script type="text/javascript" src="../js/theme_switch.js"></script>
