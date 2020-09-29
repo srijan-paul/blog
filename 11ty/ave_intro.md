@@ -128,5 +128,10 @@ Obviously there is a lot more to the language that has been implemented so far,
 and a lot that is still on the to-do list (classes, inheritance, import/exports). But hopefully 
 this gave you a "feel" for the language.
 
+
+Finally, if you want to take a look at the source code, it lives [here](https://github.com/srijan-paul/AveTS) on github.
+The docs and README aren't exactly polished, but the code is well organized for the most part.
+
+
 In the coming series of posts, I will explain how I implemented the type system, and hopefully you end
 up learning a bit too. 
