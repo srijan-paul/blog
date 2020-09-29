@@ -1,4 +1,4 @@
-{%set root = "."%}
+{%set root = ".."%}
 
 <!doctype html>
 <html data-theme="light">
@@ -37,7 +37,7 @@
 
           {% if nextPost %}
             <a class="next"
-              href="/{{root}}/{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
+              href="/{{root}}{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
           {% endif %}
         </div>
       </div>
