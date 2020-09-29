@@ -15,11 +15,11 @@
   --background: #282c34;
   --foreground: #a5b1c2;
   --comment: #5c6370;
-  --keyword: #778beb;
+  --keyword: #2e86de;
   --var: #FD971F;
   --function: #0fb9b1;
   --property: #66D9EF;
-  --number: #0abde3;
+  --number: #fab1a0;
   --semi: #8395a7;
   --string: #e5c07b;
   --operator: #ff6b6b;
@@ -28,6 +28,18 @@
 }
 
 [data-theme="light"] {
+  /* --background: #282c34;
+  --foreground: #a5b1c2;
+  --comment: #5c6370;
+  --keyword: #2e86de;
+  --var: #FD971F;
+  --function: #0fb9b1;
+  --property: #66D9EF;
+  --number: #fab1a0;
+  --semi: #8395a7;
+  --string: #e5c07b;
+  --operator: #ff6b6b; */
+
   --background: #F8F5EC;
   --foreground: #5C6E74;
   --comment: #93A1A1;
@@ -39,8 +51,9 @@
   --semi: #999999;
   --string: green;
   --operator: #a67f59;
+  
   --bg-no-pre: #F9F2F4;
-  --fg-no-pre: #4b6584;
+  --fg-no-pre: #4b6584; 
 }
 
 
