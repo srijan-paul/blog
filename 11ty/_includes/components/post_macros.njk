@@ -8,7 +8,7 @@
   {# tags #}
   <div class="tags">
     {% for tag in tags %}
-      <a class="tag" href="/tags/{{tag}}">
+      <a class="tag" href="{{root.env}}/tags/{{tag}}">
         {{ tag }}
       </a>
     {% endfor %}
@@ -26,7 +26,7 @@
       {% for post in collection %}
 
         <li>
-          <a href="{{root}}{{ post.url }}index.html">{{ post.data.title }}
+          <a href="{{ post.url | url }}">{{ post.data.title }}
           </a>
           <span class="post-date"> ({{ post.date | formatDate }}) </span>
         </li>
