@@ -1,0 +1,127 @@
+
+
+<!doctype html>
+<html data-theme="light">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Making a programming language from scratch.</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/prism-theme.css">
+  </head>
+  <body>
+    
+    
+    <class class="main">
+      <div class="content-wrapper">
+        <div class="navbar">
+  <div class="nav-item">
+    <a href="../home/index.html" id="logo">ByteFiction</a>
+  </div>
+
+  
+  <div class="nav-item">
+    <label class="switch">
+      <input type="checkbox" id="theme-switcher-button">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
+
+        
+        
+  
+  <h1 class="post-title">Making a programming language from scratch.</h1>
+  <div class="info">September 29, 2020</div>
+  
+  <div class="tags">
+    
+      <a class="tag" href="#">
+        Ave
+      </a>
+    
+      <a class="tag" href="#">
+        Programming languages
+      </a>
+    
+      <a class="tag" href="#">
+        Type system
+      </a>
+    
+      <a class="tag" href="#">
+        Post
+      </a>
+    
+  </div>
+
+        <hr>
+
+        
+        <article class="post"><p>This is the first in a series of blog posts to come about how I made a statically type checked, scripting
+language that compiles to Javascript. The intent is to offer python/coffeescript's minimal syntax
+with Typescript's type system. All compiling down to ES6 Javascript.</p>
+<h2>The problem with Plain Javascript.</h2>
+<p>Yeah, my language compiles to plain JS. Because the target is Node applications and small front ends.
+Here is something funny, copy paste the following code snippet in your browser's console (<code>F12</code>) and
+hit enter.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> fruit <span class="token operator">=</span> <span class="token string">'b'</span> <span class="token operator">+</span> <span class="token string">'a'</span> <span class="token operator">+</span> <span class="token operator">+</span> <span class="token string">'a'</span> <span class="token operator">+</span> <span class="token string">'a'</span><span class="token punctuation">;</span><br>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>fruit<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Surprised ?
+Probably not if you're used to Javascript. But many new users are, and this is just one of the many annoying eccentricities
+of Javascript's weird, implicit coercion loving &quot;type system&quot;.</p>
+<p>In case you didn't bother with running it, it spits out, <code>'banana'</code> even though there is no <code>'n'</code>  in the expression on line 1.
+How ? Try <code>console.log(+'a')</code> and you'll have a clue.</p>
+<p>Notice the unary <code>+</code> before the 3rd <code>'a'</code> ? Welp, turns out Javascript doesn't complain when you use any of it's operators on
+strings but will croak and return a <code>NaN</code> at runtime.</p>
+<p>Since addition associates to the left, it roughly evaluates like this:</p>
+<pre class="language-js"><code class="language-js"><span class="token string">'b'</span> <span class="token operator">+</span> <span class="token string">'a'</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'ba'</span> <br><span class="token string">'ba'</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'ba'</span> <span class="token operator">+</span> <span class="token number">NaN</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'baNaN'</span> <span class="token comment">// NaN coerces to string.</span><br><span class="token string">'baNaN'</span> <span class="token operator">+</span> <span class="token string">'a'</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'baNaNa'</span></code></pre>
+<p>and finally, <code>.toLowerCase()</code>  turns &quot;baNaNa&quot; into &quot;banana&quot;. This is one of the many problems with Javascript,
+and unfortunately, the other bugs you will encouter won't be as fun to explore.</p>
+<h2>In comes Ave.</h2>
+<p>Yeah I couldn't think of a name that wasn't already take, so I went with 'Ave'. It's the name of a Spanish bird species (I think?).
+If you have a better name in mind, let me know.</p>
+<p>Anyway, this is what it looks like:</p>
+<pre class="language-py"><code class="language-py"><span class="token comment"># Variable declaration </span><br>myNumber <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token number">1</span><br>myString <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token string">'this is a string'</span><br><br>myString <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token number">123</span> <span class="token comment"># TypeError: Cannot assign value of type 'num' to 'str'.</span><br><br><span class="token comment"># Type annotations</span><br>name<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'Hello World !'</span><br>name <span class="token operator">+=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <br><span class="token comment"># TypeError: Cannot use operator '+=' on values of type 'str' and 'Array&lt;num>' </span></code></pre>
+<p>Don't like the way variable declaration looks ? You can do it the JS/TS way too !</p>
+<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> a<span class="token operator">:</span> num <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span><br><span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span><br>a <span class="token operator">+=</span> b<span class="token punctuation">;</span> </code></pre>
+<p>This won't compile. Because You're trying to add a boolean to a number.
+Plain JS would accept this and <code>a</code> would be <code>124</code>. Now let's see what basic control flow looks like.</p>
+<pre class="language-lua"><code class="language-lua"><span class="token keyword">for</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><br>  <span class="token keyword">if</span> i <span class="token operator">%</span> <span class="token number">2</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'i is odd'</span><span class="token punctuation">)</span><br>  <span class="token keyword">else</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'i is even !'</span><span class="token punctuation">)</span></code></pre>
+<p>Yeah, the syntax is whitespace sensitive like Python. I know that's a turn off for many, but I'd
+rather have it this way in my own language. Moving on,
+Did I mention record data types ?</p>
+<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">Person</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> <span class="token hvariable">str</span><br>  <span class="token hvariable">age</span> <span class="token operator">:</span> <span class="token hvariable">num</span><br>  <br><span class="token keyword">let</span> <span class="token hvariable">bob</span><span class="token operator">:</span> <span class="token constant">Person</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> '<span class="token constant">Bob</span>'<span class="token punctuation">,</span><br>  <span class="token hvariable">age</span><span class="token operator">:</span> <span class="token number">12</span><br><span class="token punctuation">}</span></code></pre>
+<p>Kind of like structs in C or interfaces in Typescript.
+We also have generics.
+They can be recursive too !</p>
+<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token constant">E</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span> <span class="token operator">|</span> <span class="token hvariable">nil</span><br><br><span class="token keyword">let</span> <span class="token builtin">head</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token hvariable">number</span><span class="token operator">></span> <span class="token operator">=</span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">1</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span><br>    <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">23</span><br>    <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token hvariable">nil</span></code></pre>
+<p>Notice how you can create objects even without the <code>{}</code> ? I personally prefer braces around them,
+but at least the user has that choice.</p>
+<p>And functions:</p>
+<pre class="language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">fib</span><span class="token punctuation">(</span>n<span class="token punctuation">:</span> num<span class="token punctuation">)</span><span class="token punctuation">:</span> num<br>  <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> or n <span class="token operator">==</span> <span class="token number">1</span><br>    <span class="token keyword">return</span> <span class="token number">1</span><br>  <span class="token keyword">return</span> <span class="token function">fib</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">fib</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><br><br>fib10 <span class="token operator">:=</span> <span class="token function">fib</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
+<p>Obviously there is a lot more to the language that has been implemented so far,
+and a lot that is still on the to-do list (classes, inheritance, import/exports). But hopefully
+this gave you a &quot;feel&quot; for the language.</p>
+<p>In the coming series of posts, I will explain how I implemented the type system, and hopefully you end
+up learning a bit too.</p>
+</article>
+        <hr>
+        
+        <div class="nav">
+          
+            <a class="prev" 
+              href="/../home/index.html">&lt; Home</a>
+          
+
+          
+        </div>
+      </div>
+    </class>
+    
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
+  </body>
+</html>
