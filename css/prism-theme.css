@@ -10,9 +10,43 @@
 /*********************************************************
 * General
 */
+
+[data-theme="dark"] {
+  --background: #282c34;
+  --foreground: #a5b1c2;
+  --comment: #5c6370;
+  --keyword: #778beb;
+  --var: #FD971F;
+  --function: #0fb9b1;
+  --property: #66D9EF;
+  --number: #0abde3;
+  --semi: #8395a7;
+  --string: #e5c07b;
+  --operator: #ff6b6b;
+  --bg-no-pre: #222f3e;
+  --fg-no-pre: #c8d6e5;
+}
+
+[data-theme="light"] {
+  --background: #F8F5EC;
+  --foreground: #5C6E74;
+  --comment: #93A1A1;
+  --keyword: #0077aa;
+  --var: #ee9900;
+  --function: #DD4A68;
+  --property: #990055;
+  --number: #0fb9b1;
+  --semi: #999999;
+  --string: green;
+  --operator: #a67f59;
+  --bg-no-pre: #F9F2F4;
+  --fg-no-pre: #4b6584;
+}
+
+
 pre[class*="language-"],
 code[class*="language-"] {
-  color: #abb2bf;
+  color: var(--foreground);
   font-size: 13px;
   text-shadow: none;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -47,13 +81,13 @@ pre[class*="language-"] {
   padding: 1em;
   margin: .5em 0;
   overflow: auto;
-  background: #282c34;
+  background: var(--background);
 }
-:not(pre) > code[class*="language-"] {
+:not(pre) > code {
   padding: .1em .3em;
   border-radius: .3em;
-  color: #abb2bf;
-  background: #282c34;
+  color: var(--fg-no-pre);
+  background: var(--bg-no-pre);
 }
 /*********************************************************
 * Tokens
@@ -65,48 +99,53 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #636d83;
+  color: var(--comment);
 }
 .token.punctuation {
-  color: #7a82da;
+  color: var(--semi);
 }
-.token.property,
+
 .token.tag,
 .token.boolean,
 .token.number,
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #f8c291;
+  color: var(--number);
 }
+
+.token.property {
+  color: var(--property)
+}
+
 .token.selector,
 .token.attr-name,
 .token.string,
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #f9c859;
+  color: var(--string);
 }
 .token.operator,
 .token.entity,
 .token.url,
 .language-css .token.string,
 .style .token.string {
-  color: #ff6480;
-  background: #282c34;
+  color: var(--operator);
+  background: var(--background);
 }
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-  color: #10b1fe;
+  color: var(--keyword);
 }
 .token.function {
-  color: #1abc9c;
+  color: var(--function);
 }
 .token.regex,
 .token.important,
 .token.variable {
-  color: #ee9900;
+  color: var(--var);
 }
 .token.important,
 .token.bold {
@@ -134,7 +173,7 @@ pre[class*="language-"] > code[class*="language-"] {
   right: 0;
   padding: inherit 0;
   margin-top: 1em;
-  background: #282c34;
+  background: var(--background);
   box-shadow: inset 5px 0 0 #282c34;
   z-index: 0;
   pointer-events: none;

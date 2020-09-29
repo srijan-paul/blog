@@ -11,7 +11,7 @@ with Typescript's type system. All compiling down to ES6 Javascript.
 
 ## The problem with Plain Javascript.
 
-Yeah, my language compiles to plain JS. Because the target is Node applications and small front ends.
+Lets first explore *why* the world needs another programming language when there are already so many.
 Here is something funny, copy paste the following code snippet in your browser's console (`F12`) and
 hit enter. 
 

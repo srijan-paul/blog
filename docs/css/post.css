@@ -9,8 +9,8 @@ body {
 }
 
 [data-theme='dark'] {
-  --fg-color: #ffffff;
-  --fg-color-2: #d1d8e0;
+  --fg-color: #d1d8e0;
+  --fg-color-2: #a5b1c2;
   --bg-color: #23272a;
   --info-color: gray;
   --accent-color: #2c2f33;
