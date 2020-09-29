@@ -18,18 +18,12 @@
   <body>
     <section class="main">
       <div class="content-wrapper">
-        {% include "components/navbar.njk" %}
+        {{macros.navbar()}}
 
         {# blog title #}
         <h1 class="post-title">{{ title }}</h1>
         {# tags #}
-        <div class="tags">
-          {% for tag in tags %}
-            <a class="tag" href="#">
-              {{ tag }}
-            </a>
-          {% endfor %}
-        </div>
+        
         <hr>
         {# home page description #}
         <article class="post">

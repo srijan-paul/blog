@@ -1,3 +1,6 @@
+{% import "components/post_macros.njk" as macros %}
+
+
 <!doctype html>
 <html data-theme="light">
   <!--<![endif]-->
@@ -17,9 +20,7 @@
     {% set nextPost = collections.Post | getNextCollectionItem(page) %}
     <class class="main">
       <div class="content-wrapper">
-        {% include "components/navbar.njk" %}
-
-        {% import "components/post_macros.njk" as macros %}
+        {{ macros.navbar() }}
         {{ macros.header(title, tags) }}
         <hr>
 
@@ -30,12 +31,12 @@
         <div class="nav">
           {% if previousPost %}
             <a class="prev" 
-              href="{{previousPost.url | url }}">&lt; {{ previousPost.data.title }}</a>
+              href="{{ root.env }}{{previousPost.url }}">&lt; {{ previousPost.data.title }}</a>
           {% endif %}
 
           {% if nextPost %}
             <a class="next"
-              href="{{nextPost.url | url }}">{{ nextPost.data.title }} &gt;</a>
+              href="{{ root.env }}{{ nextPost.url }}">{{ nextPost.data.title }} &gt;</a>
           {% endif %}
         </div>
       </div>

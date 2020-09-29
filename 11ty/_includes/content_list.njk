@@ -18,8 +18,7 @@
   <body>
     <section class="main">
       <div class="content-wrapper">
-        {% include 'components/navbar.njk' %}
-
+        {{ macros.navbar('..') }}
         <article class="post">
           {{ content | safe }}
         </article>

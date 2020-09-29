@@ -1,14 +1,14 @@
 {## 
 # macro to create header from a given title and tag list.
 #}
-{% macro header(title, tags) %}
+{% macro header(title, tags, relativePath = '..') %}
   {# blog title #}
   <h1 class="post-title">{{ title }}</h1>
   <div class="info">{{page.date | formatDate}}</div>
   {# tags #}
   <div class="tags">
     {% for tag in tags %}
-      <a class="tag" href= "{{ ('tags/' + tag) | url }}">
+      <a class="tag" href="{{relativePath}}/{{env.root}}{{"tags/" + tag}}">
         {{ tag }}
       </a>
     {% endfor %}
@@ -20,17 +20,36 @@
 # `collection`, and the title of which doesn't match `title` 
 #  `root` being the relative path of the root w.r.t the caller.
 #}
-{% macro postList(collection) %}
+{% macro postList(collection, relativePath = '..') %}
   <div class = "post-list">
     <ul>
       {% for post in collection %}
+
         <li>
-          <a href="{{ post.url | url }}">{{ post.data.title }}
+          <a href="{{relativePath}}/{{env.root}}{{ post.url }}index.html">{{ post.data.title }}
           </a>
           <span class="post-date"> ({{ post.date | formatDate }}) </span>
         </li>
-        
+
       {% endfor %}
     </ul>
   </div>
+{% endmacro %}
+
+{% macro navbar(path = '', name = 'ByteFiction') %}
+
+  <div class="navbar">
+    <div class="nav-item">
+      <a href="{{path}}/{{env.root}}/home" id="logo">{{ name }}</a>
+    </div>
+
+    {# theme switcher button #}
+    <div class="nav-item">
+      <label class="switch">
+        <input type="checkbox" id="theme-switcher-button">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  
 {% endmacro %}
