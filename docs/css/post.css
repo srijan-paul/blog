@@ -9,8 +9,8 @@ body {
 }
 
 [data-theme='dark'] {
-  --fg-color: #fafafa;
-  --fg-color-2: #fafafa;
+  --fg-color: #dcdde1;
+  --fg-color-2: #dcdde1;
   --bg-color: #23272a;
   --info-color: gray;
   --accent-color: #2c2f33;
@@ -47,7 +47,7 @@ body {
   display: grid;
   grid-template-columns: 50% 50%;
   /* gap: 10%; */
-  margin-bottom: 1%;
+  margin-bottom: 3%;
 }
 
 .nav-item {

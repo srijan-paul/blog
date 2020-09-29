@@ -20,17 +20,17 @@
 # `collection`, and the title of which doesn't match `title` 
 #  `root` being the relative path of the root w.r.t the caller.
 #}
-{% macro postList(collection, title, root) %}
+{% macro postList(collection, root) %}
   <div class = "post-list">
     <ul>
       {% for post in collection %}
-        {% if post.data.title != title %}
-          <li>
-            <a href="{{root}}{{ post.url }}index.html">{{ post.data.title }}
-            </a>
-            <span class="post-date"> ({{ post.date | formatDate }}) </span>
-          </li>
-        {% endif %}
+
+        <li>
+          <a href="{{root}}{{ post.url }}index.html">{{ post.data.title }}
+          </a>
+          <span class="post-date"> ({{ post.date | formatDate }}) </span>
+        </li>
+        
       {% endfor %}
     </ul>
   </div>

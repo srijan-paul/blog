@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="../css/prism-theme.css">
   </head>
   <body>
-    {% set previousPost = collections.all | getPreviousCollectionItem(page) %}
-    {% set nextPost = collections.all | getNextCollectionItem(page) %}
+    {% set previousPost = collections.Post | getPreviousCollectionItem(page) %}
+    {% set nextPost = collections.Post | getNextCollectionItem(page) %}
     <class class="main">
       <div class="content-wrapper">
         {% include "components/navbar.njk" %}

@@ -31,10 +31,9 @@
           {% endfor %}
         </div>
         <hr>
-      {{env.root}}
         {# home page description #}
         <article class="post">{{ content | safe }}</article>
-        {{macros.postList(collections.all, title, "..")}}
+        {{macros.postList(collections.Post, "..")}}
       </div>
     </section>
     <script type="text/javascript" src="../js/theme_switch.js"></script>

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "npx @11ty/eleventy",
-    "watch": "npx @11ty/eleventy --watch"
+    "watch": "npx @11ty/eleventy --watch",
+    "serve": "npx @11ty/eleventy --serve"
   },
   "repository": {
     "type": "git",
