@@ -34,7 +34,7 @@
       {{env.root}}
         {# home page description #}
         <article class="post">{{ content | safe }}</article>
-        {{macros.postList(collections.all, title, env.root)}}
+        {{macros.postList(collections.all, title, "..")}}
       </div>
     </section>
     <script type="text/javascript" src="../js/theme_switch.js"></script>
