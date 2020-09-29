@@ -133,4 +133,4 @@ Finally, if you want to take a look at the source code, it lives [here](https://
 The docs and README aren't exactly polished, but the code is well organized for the most part.
 
 
-In the next post, I'll explain how I implemented the type system, and hopefully you end up taking something away from it. 
+In the next post I'll explain how I implemented the type system, and hopefully you end up taking something away from it. 
