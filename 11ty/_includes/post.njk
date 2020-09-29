@@ -30,12 +30,12 @@
         <div class="nav">
           {% if previousPost %}
             <a class="prev" 
-              href="..{{previousPost.url}}index.html">&lt; {{ previousPost.data.title }}</a>
+              href="../{{previousPost.url}}index.html">&lt; {{ previousPost.data.title }}</a>
           {% endif %}
 
           {% if nextPost %}
             <a class="next"
-              href="..{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
+              href="../{{nextPost.url}}index.html ">{{ nextPost.data.title }} &gt;</a>
           {% endif %}
         </div>
       </div>
