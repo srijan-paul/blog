@@ -1,4 +1,4 @@
-{% import "components/post_macros.njk" as macros %}
+
 
 <!DOCTYPE html>
 <html data-theme="light">
@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>{{ metadata.blogName }}</title>
+    <title>ByteFiction</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../../css/post.css" />
@@ -18,10 +18,37 @@
   <body>
     <section class="main">
       <div class="content-wrapper">
-        {% include 'components/navbar.njk' %}
+        <div class="navbar">
+  <div class="nav-item">
+    <a href="../home/index.html" id="logo">ByteFiction</a>
+  </div>
+
+  
+  <div class="nav-item">
+    <label class="switch">
+      <input type="checkbox" id="theme-switcher-button">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
 
         <article class="post">
-          {{ content | safe }}
+          
+<h1 class="post-title">Posts tagged “Type system”:</h1>
+
+<div class="post-list">
+  <ul>
+    
+    
+      <li>
+        <a href="/ave_intro/">Making a programming language from scratch.
+        </a>
+        <span class="post-date">September 29, 2020
+        </span>
+      </li>
+    
+  </ul>
+</div>
         </article>
       </div>
     </section>
