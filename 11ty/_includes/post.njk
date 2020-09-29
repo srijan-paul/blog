@@ -17,10 +17,10 @@
   <body>
     {% set previousPost = collections.Post | getPreviousCollectionItem(page) %}
     {% set nextPost = collections.Post | getNextCollectionItem(page) %}
-    <section class="main">
-
+    <class class="main">
       <div class="content-wrapper">
         {% include "components/navbar.njk" %}
+
         {% import "components/post_macros.njk" as macros %}
         {{ macros.header(title, tags) }}
         <hr>
@@ -41,8 +41,8 @@
           {% endif %}
         </div>
       </div>
-      {# Javascript for theme switching, light/dark mode. #}
-    </section>
-    <script type="text/javascript" src="../js/theme_switch.js" async defer></script>
+    </class>
+    {# Javascript for theme switching, light/dark mode. #}
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
   </body>
 </html>
