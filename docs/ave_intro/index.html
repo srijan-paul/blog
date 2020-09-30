@@ -39,7 +39,7 @@
         
   
   <h1 class="post-title">Making a programming language from scratch.</h1>
-  <div class="info">September 29, 2020</div>
+  <div class="info">September 30, 2020</div>
   
   <div class="tags">
     
@@ -67,7 +67,7 @@
         <article class="post"><p>This is the first in a series of blog posts to come about how I made a statically type checked, scripting
 language that compiles to Javascript. The intent is to offer python/coffeescript's minimal syntax
 with Typescript's type system. All compiling down to ES6 Javascript.</p>
-<h2>The problem with Plain Javascript.</h2>
+<h2>The problem with plain Javascript.</h2>
 <p>Lets first explore <em>why</em> the world needs another programming language when there are already so many.
 Here is something funny, copy paste the following code snippet in your browser's console (<code>F12</code>) and
 hit enter.</p>
@@ -96,7 +96,7 @@ Plain JS would accept this and <code>a</code> would be <code>124</code>. Now let
 <p>Yeah, the syntax is whitespace sensitive like Python. I know that's a turn off for many, but I'd
 rather have it this way in my own language. Moving on,
 Did I mention record data types ?</p>
-<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">Person</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> <span class="token hvariable">str</span><br>  <span class="token hvariable">age</span> <span class="token operator">:</span> <span class="token hvariable">num</span><br>  <br><span class="token keyword">let</span> <span class="token hvariable">bob</span><span class="token operator">:</span> <span class="token constant">Person</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> '<span class="token constant">Bob</span>'<span class="token punctuation">,</span><br>  <span class="token hvariable">age</span><span class="token operator">:</span> <span class="token number">12</span><br><span class="token punctuation">}</span></code></pre>
+<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">Person</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> <span class="token hvariable">str</span><br>  <span class="token hvariable">age</span> <span class="token operator">:</span> <span class="token hvariable">num</span><br>  <br><span class="token keyword">let</span> <span class="token hvariable">bob</span><span class="token operator">:</span> <span class="token constant">Person</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token hvariable">name</span><span class="token operator">:</span> <span class="token string">"Bob"</span><span class="token punctuation">,</span><br>  <span class="token hvariable">age</span><span class="token operator">:</span> <span class="token number">12</span><br><span class="token punctuation">}</span></code></pre>
 <p>Kind of like structs in C or interfaces in Typescript.
 We also have generics.
 They can be recursive too !</p>

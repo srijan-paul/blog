@@ -9,7 +9,7 @@ language that compiles to Javascript. The intent is to offer python/coffeescript
 with Typescript's type system. All compiling down to ES6 Javascript.
 
 
-## The problem with Plain Javascript.
+## The problem with plain Javascript.
 
 Lets first explore *why* the world needs another programming language when there are already so many.
 Here is something funny, copy paste the following code snippet in your browser's console (`F12`) and
@@ -89,7 +89,7 @@ record Person
   age : num
   
 let bob: Person = {
-  name: 'Bob',
+  name: "Bob",
   age: 12
 }
 ```

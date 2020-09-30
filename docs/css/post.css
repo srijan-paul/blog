@@ -182,13 +182,12 @@ pre {
   border-radius: 8px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 2.5% !important;
-  line-height: 10%;
   margin-bottom: 4% !important;
 }
 
 code {
-  font-size: 16px !important;
-  line-height: 10%;
+  font-size: 15.5px !important;
+  /* line-height: 10%; */
   overflow: scroll;
 }
 
