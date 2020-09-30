@@ -235,4 +235,12 @@ p {
     font-size: 30px;
   }
 
+  pre {
+    padding: 4% 4% 4% 4% !important;
+  }
+
+  code[class*="language"] {
+    font-size: 14px !important;
+  }
+
 }
