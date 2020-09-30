@@ -1,10 +1,10 @@
 {## 
 # macro to create header from a given title and tag list.
 #}
-{% macro header(title, tags, relativePath = '..') %}
+{% macro header(title, tags, date, relativePath = '..') %}
   {# blog title #}
   <h1 class="post-title">{{ title }}</h1>
-  <div class="info">{{page.date | formatDate}}</div>
+  <div class="info">{{date | formatDate}}</div>
   {# tags #}
   <div class="tags">
     {% for tag in tags %}

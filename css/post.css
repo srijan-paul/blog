@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla&family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Miriam+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
 body {
   margin: 0px;
   height: 100%;
@@ -38,7 +39,7 @@ body {
   font-size: 30px;
   color: var(--logo-color);
   text-decoration: none;
-  font-family: 'Miriam Libre', sans-serif;
+  font-family: 'Fira Code', monospace, sans-serif;
 }
 
 /* navbar */
@@ -59,8 +60,9 @@ body {
   margin-top: 3% !important;
   background-color: var(--accent-color);
   color: var(--fg-color);
-  font-family: 'Karla', sans-serif;
+  font-family:  'Karla', sans-serif;
   padding: 3%;
+  word-spacing: 0.3rem;
   width: 55%;
   margin: auto;
   margin-bottom: 5%;

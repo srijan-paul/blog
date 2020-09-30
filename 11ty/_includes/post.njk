@@ -1,3 +1,4 @@
+
 {% import "components/post_macros.njk" as macros %}
 
 <!doctype html>
@@ -20,7 +21,7 @@
     <class class="main">
       <div class="content-wrapper">
         {{ macros.navbar('..') }}
-        {{ macros.header(title, tags) }}
+        {{ macros.header(title, tags, page.date) }}
         <hr>
 
         {# blog contents #}

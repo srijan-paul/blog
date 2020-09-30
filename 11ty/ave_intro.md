@@ -1,7 +1,7 @@
 ---
 layout: post.njk
 tags: ['Ave', 'Programming languages', 'Type system', 'Post']
-title: Making a programming language from scratch. 
+title: Making a programming language from scratch.
 ---
 
 This is the first in a series of blog posts to come about how I made a statically type checked, scripting 
