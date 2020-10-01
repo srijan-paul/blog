@@ -40,11 +40,13 @@ Since addition associates to the left, it roughly evaluates like this:
 ```
 
 and finally, `.toLowerCase()`  turns "baNaNa" into "banana". This is one of the many problems with Javascript,
- and unfortunately, the other bugs you will encouter won't be as fun to explore.  
+ and unfortunately, the other bugs you will encouter won't be as fun to explore. Moreover, it's much harder to get your code to
+ follow a proper schema/structure when writing Javascript. Which is why tools like Typescript and Flow exist to address this, and many other 
+ problems. So I took my own shot at this, and here we are. 
 
 ## Introducing Ave.
 
-Yeah I couldn't think of a name that wasn't already taken, so I went with 'Ave'. It's the name of a Spanish bird species (I think?).
+Yeah I couldn't think of a name that wasn't already taken, so I went with 'Ave'. The word means 'a warm greeting' (I think?).
 If you have a better name in mind, let me know.
 
 Anyway, this is what it looks like: 
