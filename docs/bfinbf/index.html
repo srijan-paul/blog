@@ -1,0 +1,204 @@
+
+
+
+<!doctype html>
+<html data-theme="light">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Compiling to Brainf#ck - Meep.</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/prism-theme.css">
+  </head>
+  <body>
+    
+    
+    <class class="main">
+      <div class="content-wrapper">
+        
+
+  <div class="navbar">
+    <div class="nav-item">
+      <a href="../home" id="logo">ByteFiction</a>
+    </div>
+
+    
+    <div class="nav-item">
+      <label class="switch">
+        <input type="checkbox" id="theme-switcher-button">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  
+
+        
+  
+  <h1 class="post-title">Compiling to Brainf#ck - Meep.</h1>
+  <div class="info">October 05, 2020</div>
+  
+  <div class="tags">
+    
+      <a class="tag" href="../tags/brainfuck">
+        brainfuck
+      </a>
+    
+      <a class="tag" href="../tags/programming-languages">
+        programming-languages
+      </a>
+    
+      <a class="tag" href="../tags/post">
+        post
+      </a>
+    
+  </div>
+
+        <hr>
+
+        
+        <article class="post"><h2>Alternate Title: Writing a brainfuck interpreter in brainfuck, the stupid way.</h2>
+<p>Brainfuck is one of the very first esoteric programming languages that gained popularity.
+Esoteric languages are &quot;for fun only&quot; and not for serious use (but that didn't stop a lot of people).
+Most esoteric programming languages are simple, have a very limited instruction-set/syntax and most
+importantly, they all are very, very different from your conventional programming language.</p>
+<p>In this post, I attempt to write a programming language that compiles to brainfuck, and then write an
+interepreter for brainfuck in our new language, compile it and have a brainfuck interpreter in brainfuck!
+(Not the brightest means to the end, I know. But it's a good way of testing our implementation).</p>
+<h2>The What - Brainfuck</h2>
+<p>The Brainfuck programming language's syntax contains a total of 8 characters (yes, 8).
+Brainfuck models an imaginary machine, with an infinitely long memory tape.</p>
+<p><img src="..\assets\img\brainfuck\1.png"></img></p>
+<p>Each cell in this tape is a byte long and initially set to zero.
+We also have a data pointer, which I drew as an arrow below the tape. It points to the current data cell under inspection.
+The programmer moves this data pointer around in the tape, incrementing and decrementing the values in the cells.</p>
+<p>The 8 instructions we talked about earlier are the following:</p>
+<p><code>+</code> - increment the value at the current data pointer by one.</p>
+<p><code>-</code> - decrement the value at the current data pointer by one.</p>
+<p><code>&gt;</code> - move the data pointer one cell to the right.</p>
+<p><code>&lt;</code> - move the data pointer one cell to the left.</p>
+<p><code>.</code> - print the value at the current data pointer as an ascii character.</p>
+<p><code>,</code> - take one byte of input from the user and put it in the current cell.</p>
+<p><code>[</code> - if the value at the current data pointer is 0, skip the corresponding <code>]</code>, else continue from the next instruction.</p>
+<p><code>]</code> - if the value at the current data pointer is non-zero, jump back to the correspondong <code>[</code>, else continue on to the next instruction</p>
+<p>And that's all. This might seem like a very limited instruction set, and it is, but brainfuck is a turing-complete programming language.
+Meaning, if a solution exists to a computational problem, It is theoretically possible find it with brainfuck. To know more about brainfuck,
+I'd advise you to skim over <a href="https://esolangs.org/wiki/Brainfuck">this</a> page.</p>
+<p>Creating an interpreter for brainfuck is trivial, and you can finish one in a couple of hours. Brainfuck is easy to compile, but hard to <em>compile to</em>. And so I spend a weekend challenging myself to attempt the latter.</p>
+<h2>The Why</h2>
+<p>Because we can, really. Brainfuck <strong>is</strong> turing complete, so it <em>could</em> serve as a good compilation target.
+One weekend I found myself going through some brainfuck-derived languages, all of which added some spice to the language,
+like having a 2D grid serve as a memory instead of the tape, and what not. Now programming in brainfuck is not my thing at all, I don't find
+the idea of solving problems with a tape of unsigned bytes fun, nor would I be good at it. However, it could work as an interesting thought experiment to see if one can compile a programming language down to such a limited instruction set, and to top it all off,
+We could write a brainfuck interpreter in the language we invent, because why not ?</p>
+<p>Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done <em>fast</em>, no big promises, no kanban boards,
+no to-dos and wishlists, just a simple, single pass compiler cobbled up in a weekend as a little prototype.</p>
+<h2>The How - Meep</h2>
+<p>Here is the weekend-long implementation plan I came up with:</p>
+<ol>
+<li>Write the language in Javascript, performance not a goal.</li> 
+<li>Single pass, no AST involved, compile tokens to IR and IR to Brainfuck.</li> 
+<li>Emulate a stack on brainfuck's memory tape, helps model a stack based VM-like architechture.</li> 
+<li>Write a brainfuck interpreter in our language to test the implementation. </li> 
+<li>Profit</li> 
+</ol>
+<p>Now this is something I wanted to be done with in about 2-3 days at the longest, so I also put down some design goals for the language
+that we're about to build.</p>
+<ul>
+<li><strong>As normal looking as possible</strong> - It should look familiar to existing languages.</li>
+<li><strong>Minimal feature set</strong> - It should support arrays, numbers, strings, if-else, looping. Just about what we need to
+write a brainfuck interpreter, it's a prototype after all.</li>
+<li><strong>Single pass</strong> - The compiler <em>must</em> be single pass. That poses some difficulties, and some restrictions. But we'll get over those.</li>
+</ul>
+<h2>A Tour of meep</h2>
+<p>Like I mentioned earlier, it has byte sized numbers, arrays, strings, if-elses and while loops.
+To an experienced brainfuck programmer, all this is probably very easy to get by.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> message <span class="token operator">=</span> <span class="token string">"Hello!"</span><span class="token punctuation">;</span><br><span class="token function">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello!</span><br><span class="token keyword">set</span> message<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'y'</span><span class="token punctuation">;</span> <br><span class="token function">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Heylo!</span><br><br><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'0'</span> <span class="token operator">+</span> <span class="token function">len</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 6</span><br><br><span class="token keyword">var</span> char <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span><br><span class="token function">print</span><span class="token punctuation">(</span>char<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">set</span> char <span class="token operator">=</span> <span class="token string">'b'</span><span class="token punctuation">;</span><br><span class="token function">print</span><span class="token punctuation">(</span>char<span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token keyword">var</span> bool <span class="token operator">=</span> input <span class="token operator">==</span> <span class="token string">'a'</span><span class="token punctuation">;</span><br><br><span class="token keyword">if</span> bool<br>    print <span class="token string">"you entered the letter 'a'"</span><span class="token punctuation">;</span><br><span class="token keyword">else</span> <br>    print <span class="token string">"idk what you entered"</span><span class="token punctuation">;</span><br><br><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><br><span class="token keyword">while</span> i <span class="token operator">&lt;</span> <span class="token number">10</span> <span class="token punctuation">{</span><br>    print <span class="token string">'a'</span> <span class="token operator">+</span> i<span class="token punctuation">;</span><br>    <span class="token keyword">set</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br></code></pre>
+<p>No, it doesn't have functions, <code>print</code> is actually a statement, and <code>len</code> is a language feature.
+Though I might write another version of this with an additional pass, <em>with</em> functions and a simulated heap some day.
+This particular language still remains rushed and largely prototypical.</p>
+<h2>How does it work ?</h2>
+<p>The path that a user written program takes in meep goes,</p>
+<p>source code -&gt; <strong>Tokenizer</strong> -&gt; tokens -&gt; <strong>IRCompiler</strong> -&gt; IR -&gt; <strong>Generator</strong> -&gt; Brainfuck</p>
+<p>The IR stands for intermediate representation, it's kind of like assembly but instead of targeting a
+processor, it targets a compiler back end. It's dumbed down in complexity in comparison to an AST, is more
+lightweight. Usually, real programming language implementations first construct a syntax tree and then break it
+down into IR code (Exceptions exist, like Lua). For a small language though, we should be fine.</p>
+<p>Now here are all the IR instructions at a glance:</p>
+<pre class="language-c"><code class="language-c">  POP PUSH<br>  ADD SUB EQUALS<br>  SET_VAR GET_VAR<br>  FALSE_ TRUE_<br>  LOAD_BYTE PRINT START_IF CLOSE_IF_BODY<br>  END_IF START_ELSE END_ELSE START_LOOP END_LOOP<br>  POPN CMP_LESS CMP_GREATER LOAD_STRING MAKE_BUS<br>  INDEX_VAR NOT MAKE_SIZED_BUS SET_AT_INDEX INPUT<br>  LEN</code></pre>
+<p>Let's walk through a little program here and see the transformations it goes through :</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> bool <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br><span class="token keyword">if</span> bool print <span class="token string">'a'</span> <span class="token keyword">else</span> print <span class="token string">'b'</span><span class="token punctuation">;</span></code></pre>
+<p>first it tokenizes to:</p>
+<pre class="language-js"><code class="language-js"><span class="token punctuation">[</span><br>  <span class="token string">'var'</span><span class="token punctuation">,</span>   <span class="token string">'bool'</span><span class="token punctuation">,</span>  <span class="token string">'='</span><span class="token punctuation">,</span><br>  <span class="token string">'false'</span><span class="token punctuation">,</span> <span class="token string">';'</span><span class="token punctuation">,</span>     <span class="token string">'if'</span><span class="token punctuation">,</span><br>  <span class="token string">'bool'</span><span class="token punctuation">,</span>  <span class="token string">'print'</span><span class="token punctuation">,</span> <span class="token string">"'a'"</span><span class="token punctuation">,</span><br>  <span class="token string">'else'</span><span class="token punctuation">,</span>  <span class="token string">'print'</span><span class="token punctuation">,</span> <span class="token string">"'b'"</span><span class="token punctuation">,</span><br>  <span class="token string">';'</span><br><span class="token punctuation">]</span></code></pre>
+<p>The tokens are then picked up by the IRCompiler which does the parsing and spits out
+the following IR:</p>
+<pre class="language-js"><code class="language-js"><span class="token comment">// First, we push a `false` onto the stack, </span><br><span class="token comment">// this is the local variable `'bool'`.</span><br><span class="token comment">// stack state: [0]</span><br><span class="token constant">FALSE_</span><br><span class="token comment">// Then we read from the variable, meaning we take the value at index 0 </span><br><span class="token comment">// in the stack and push it again to the top [0, 0]</span><br><span class="token constant">GET_VAR</span> <span class="token number">0</span><br><span class="token comment">// marks the beginning of an if-block,</span><br><span class="token comment">// the part after this is executed if </span><br><span class="token comment">// the value on top of the stack is </span><br><span class="token comment">// true (non-zero)</span><br><span class="token constant">START_IF</span><br><span class="token comment">// push an 'a' onto the stack</span><br><span class="token constant">LOAD_BYTE</span> <span class="token number">97</span><br><span class="token comment">// print the value at the top of the</span><br><span class="token comment">// stack and pop it.</span><br><span class="token constant">PRINT</span><br><span class="token constant">CLOSE_IF_BODY</span><br><span class="token comment">// the else block</span><br><span class="token comment">// excutes of the if block didn't </span><br><span class="token comment">// I'll get to how I did this down later.</span><br><span class="token constant">START_ELSE</span><br><span class="token comment">// push 'b'</span><br><span class="token constant">LOAD_BYTE</span> <span class="token number">98</span><br><span class="token comment">// print value at</span><br><span class="token comment">// stack top</span><br><span class="token constant">PRINT</span><br><span class="token constant">END_ELSE</span><br><span class="token constant">END_IF</span></code></pre>
+<p>And that finally turns into a bloated brainfuck file:</p>
+<pre class="language-js"><code class="language-js"><span class="token operator">>></span><span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token operator">></span><span class="token operator">+</span><span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;&lt;</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">>></span><span class="token punctuation">[</span><span class="token operator">&lt;&lt;</span><span class="token operator">+</span><span class="token operator">>></span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token operator">>></span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">+</span><br><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token operator">></span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><br><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token operator">++</span><span class="token punctuation">.</span><span class="token punctuation">[</span><br><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">&lt;</span></code></pre>
+<p>The idea is to get the braifuck memory tape to  act as a stack that we can push to and pop from,
+then it's possible to get it to  act like a stack based VM. Variables are simply looked up
+by their index.</p>
+<p>I'll explain some of the challenges I came across and ones that you may have to fight
+if you ever choose to try something similar for whatever reason.</p>
+<h2>Under the hood.</h2>
+<p>Lets get a few things established before moving on to the implementation.</p>
+<ol>
+<li>
+<p>The data pointer is used to point to the top of the stack, it is what you would call a &quot;stack pointer&quot;.
+It points to the top most value in the stack.</p>
+</li>
+<li>
+<p>All the cells are initially zeroed out, so we have an empty stack which is about 30k bytes long in most
+implementations.</p>
+</li>
+<li>
+<p>All statemnents must have a stack-effect of 0, meaning they shouldn't leave any unpopped values on the
+stack after they finish execution.</p>
+</li>
+<li>
+<p>All expressions must have a stack effect of + 1, meaning they must leave the stack one value (not 1 byte or cell)
+larger than it was before the expression was evaluated.</p>
+</li>
+</ol>
+<h3>Variables.</h3>
+<p>This is fairly easy, just push a value onto the stack (write <code>&quot;&gt;&quot; * n</code> where n is the value of the variable).
+All statements <em>must</em> always leave the stack as big as it was before the statement was evaluated.
+This allows us to just use the <code>&lt;</code> and <code>&gt;</code> instructions to look up variable values. The number of variables
+is always known at compile time, as is the order they appear in, so we can substitute every variable look-up
+as just copying byte from a certain depth in the stack to the top.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> c <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span>      <span class="token comment">// 1</span><br><span class="token function">print</span><span class="token punctuation">(</span>c <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 2</span><br><span class="token keyword">set</span> c <span class="token operator">=</span> <span class="token string">'b'</span><span class="token punctuation">;</span>      <span class="token comment">// 3</span><br><span class="token function">print</span><span class="token punctuation">(</span>c <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 4</span></code></pre>
+<p>Line 1 - First, <code>'a'</code> is pushed to the stack (<code>[97]</code>). Since this value is never popped, it's a byte sized variable.</p>
+<p>Line 2 - Then, we get the variable at index <code>0</code> and push it to the top (<code>[97, 97]</code>).
+Push a <code>1</code> to the top of the stack (<code>[97, 97, 1]</code>), then pop the top two values, add them and push the result back (<code>[97, 98]</code>).
+Now we print the value at the top of the stack, and pop it right after (<code>[97]</code>)</p>
+<p>See how we executed an entire statement, and yet the stack is exactly as long as it was on line 1 ?
+Try going through the next 2 statements and you'll see the effect is exactly the same. This is true for
+all statements except variable declarations, which have a stack effect of +1, as they push one value onto it that just
+stays there until the program terminates.</p>
+<p>So how exactly do we push values on top of the stack, when the stack is really the brainfuck memory tape ?
+Simple, we use <code>&gt;</code>, to move one step forward and then <code>+</code> to increment from 0 to the value of the variable.
+So pushing a <code>5</code> is as simple as <code>&quot;&gt;+++++&quot;</code>.</p>
+<p>Popping a byte however, can't just be done with <code>&quot;&lt;&quot;</code> because when a new stack slot is occupied, it's assumed to be 0.
+So we zero out all values before popping off. Henceforth, our instruction for popping a byte becomes <code>&quot;[-]&lt;&quot;</code>.
+Basically, decrement the value at stack pointer until it is 0, then move the stack pointer on step back.</p>
+</article>
+        <hr>
+        
+        <div class="nav">
+          
+            <a class="prev" 
+              href="/ave_intro/">&lt; Making a programming language from scratch.</a>
+          
+
+          
+        </div>
+      </div>
+    </class>
+    
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
+  </body>
+</html>

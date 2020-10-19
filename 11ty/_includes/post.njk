@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="../css/prism-theme.css">
   </head>
   <body>
-    {% set previousPost = collections.Post | getPreviousCollectionItem(page) %}
-    {% set nextPost = collections.Post | getNextCollectionItem(page) %}
+    {% set previousPost = collections.post | getPreviousCollectionItem(page) %}
+    {% set nextPost = collections.post | getNextCollectionItem(page) %}
     <class class="main">
       <div class="content-wrapper">
         {{ macros.navbar('..') }}

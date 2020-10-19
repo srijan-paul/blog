@@ -1,6 +1,6 @@
 ---
 layout: post.njk
-tags: ['Ave', 'Programming languages', 'Type system', 'Post']
+tags: ['ave', 'programming-languages', 'type-system', 'post']
 title: Making a programming language from scratch.
 ---
 
