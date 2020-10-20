@@ -20,7 +20,7 @@ interepreter for brainfuck in our new language, compile it and have a brainfuck 
 The Brainfuck programming language's syntax contains a total of 8 characters (yes, 8).
 Brainfuck models an imaginary machine, with an infinitely long memory tape.
 
-<img src="..\assets\img\brainfuck\1.png"></img>
+<img src="..\assets\img\brainfuck\1.png"/>
 
 Each cell in this tape is a byte long and initially set to zero.
 We also have a data pointer, which I drew as an arrow below the tape. It points to the current data cell under inspection.
@@ -266,4 +266,78 @@ So pushing a `5` is as simple as `">+++++"`.
 Popping a byte however, can't just be done with `"<"` because when a new stack slot is occupied, it's assumed to be 0.
 So we zero out all values before popping off. Henceforth, our instruction for popping a byte becomes `"[-]<"`.
 Basically, decrement the value at stack pointer until it is 0, then move the stack pointer on step back.
+
+### Strings and arrays.
+
+Strings and arrays behave mostly identically in Meep, they're both just streams of bytes.
+I didn't bother adding 2D arrays, though they'd be trivial given most of the scaffolding needed is already
+present. The trickiest part was to support indexing arrays.
+
+Arrays can be indexed with values that aren't known at compile time.
+
+```js
+var array = {'a', 'b', 'c'};
+var index = input;
+if index > len(array) {
+  print "Index out of bounds";
+} else {
+  print array[index];
+}
+```
+
+I googled around a bit to find what brainfuck programmers usually do, one solution involved
+having a flag next to every single array element, doubling the size of arrays, it was also tough
+to work with. Another one I found was to pad an array with 2 zeros in the beginning and one at the end,
+but this required that no elements in the array be 0, which is a bit inconvinient. 
+
+I however had the advantage of getting the memory tape to follow stack semantics, so I came up with a solution
+which works pretty well at the moment. Let's first see how we would get an element from an array.
+The information we have at compile time is: 
+
+- The index we need to visit is currently present at the top of the stack.
+- We know the size of the stack.
+- We know the index of the array and it's depth from the stack top.
+
+What we need to do is:
+
+- Pop the index from the stack's top, then fetch the value at that index, and push
+the value to the stack's top. 
+
+So if `array` is `{1, 2, 3, 4}` at depth **D**, and the index **i** is `2`, the memory tape looks like this:
+
+!["brainfuck memory tape"](..\assets\img\brainfuck\2.png "Indexing arrays.")
+
+The idea is:
+1. Move the pointer to the right by one cell and leave behind a `0` to mark the current stack top.
+2. Move the pointer to the right again by **D** cells, leaving behind a trail of `1`s in the process.
+3. Now, if we copy a value which is at a depth of **D** cells from the current position, we have succesfully copied
+the value at index **i** to the current stack pointer.
+4. Keep moving the value back as long as we see a `1` in the cell to the left.
+5. Once a `0` is seen on the left, shift the value to that cell.
+6. Done.
+
+Here is a very artistic potrayal of the steps to explain it better:
+
+
+!["getting value at index"](..\assets\img\brainfuck\3.png "Indexing arrays.")
+
+Modifying the value at an array's index is similar, using the index move the value **i** cells to the 
+right, then copy the value at the stack's top to the value at depth **D** from here. Move the stack pointer
+back just like we did before and we're done.
+
+The actual code for moving a value **v** to the right by **v** steps after planting a marker is:
+
+```js
+[-  >+<]> // place a marker 0 by moving index one cell to the right.
+[    // until the index is 0   
+  [- >+<]+> - // move it one step to the right, place a 1 at
+              // it's previous location, and decrement it's value by 1.
+] 
+```
+
+After copying the value, moving it back to the eft is similary achieved with `<[->[-<+>]<<]>[-<+>]<`.
+
+### If statements.
+
+If statements behave similar to C, as one would expect. 
 

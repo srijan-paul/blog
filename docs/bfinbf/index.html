@@ -72,7 +72,7 @@ interepreter for brainfuck in our new language, compile it and have a brainfuck 
 <h2>The What - Brainfuck</h2>
 <p>The Brainfuck programming language's syntax contains a total of 8 characters (yes, 8).
 Brainfuck models an imaginary machine, with an infinitely long memory tape.</p>
-<p><img src="..\assets\img\brainfuck\1.png"></img></p>
+<img src="..\assets\img\brainfuck\1.png"/>
 <p>Each cell in this tape is a byte long and initially set to zero.
 We also have a data pointer, which I drew as an arrow below the tape. It points to the current data cell under inspection.
 The programmer moves this data pointer around in the tape, incrementing and decrementing the values in the cells.</p>
@@ -185,6 +185,51 @@ So pushing a <code>5</code> is as simple as <code>&quot;&gt;+++++&quot;</code>.<
 <p>Popping a byte however, can't just be done with <code>&quot;&lt;&quot;</code> because when a new stack slot is occupied, it's assumed to be 0.
 So we zero out all values before popping off. Henceforth, our instruction for popping a byte becomes <code>&quot;[-]&lt;&quot;</code>.
 Basically, decrement the value at stack pointer until it is 0, then move the stack pointer on step back.</p>
+<h3>Strings and arrays.</h3>
+<p>Strings and arrays behave mostly identically in Meep, they're both just streams of bytes.
+I didn't bother adding 2D arrays, though they'd be trivial given most of the scaffolding needed is already
+present. The trickiest part was to support indexing arrays.</p>
+<p>Arrays can be indexed with values that aren't known at compile time.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> array <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br><span class="token keyword">var</span> index <span class="token operator">=</span> input<span class="token punctuation">;</span><br><span class="token keyword">if</span> index <span class="token operator">></span> <span class="token function">len</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  print <span class="token string">"Index out of bounds"</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><br>  print array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<p>I googled around a bit to find what brainfuck programmers usually do, one solution involved
+having a flag next to every single array element, doubling the size of arrays, it was also tough
+to work with. Another one I found was to pad an array with 2 zeros in the beginning and one at the end,
+but this required that no elements in the array be 0, which is a bit inconvinient.</p>
+<p>I however had the advantage of getting the memory tape to follow stack semantics, so I came up with a solution
+which works pretty well at the moment. Let's first see how we would get an element from an array.
+The information we have at compile time is:</p>
+<ul>
+<li>The index we need to visit is currently present at the top of the stack.</li>
+<li>We know the size of the stack.</li>
+<li>We know the index of the array and it's depth from the stack top.</li>
+</ul>
+<p>What we need to do is:</p>
+<ul>
+<li>Pop the index from the stack's top, then fetch the value at that index, and push
+the value to the stack's top.</li>
+</ul>
+<p>So if <code>array</code> is <code>{1, 2, 3, 4}</code> at depth <strong>D</strong>, and the index <strong>i</strong> is <code>2</code>, the memory tape looks like this:</p>
+<p><img src="..%5Cassets%5Cimg%5Cbrainfuck%5C2.png" alt="&quot;brainfuck memory tape&quot;" title="Indexing arrays."></p>
+<p>The idea is:</p>
+<ol>
+<li>Move the pointer to the right by one cell and leave behind a <code>0</code> to mark the current stack top.</li>
+<li>Move the pointer to the right again by <strong>D</strong> cells, leaving behind a trail of <code>1</code>s in the process.</li>
+<li>Now, if we copy a value which is at a depth of <strong>D</strong> cells from the current position, we have succesfully copied
+the value at index <strong>i</strong> to the current stack pointer.</li>
+<li>Keep moving the value back as long as we see a <code>1</code> in the cell to the left.</li>
+<li>Once a <code>0</code> is seen on the left, shift the value to that cell.</li>
+<li>Done.</li>
+</ol>
+<p>Here is a very artistic potrayal of the steps to explain it better:</p>
+<p><img src="..%5Cassets%5Cimg%5Cbrainfuck%5C3.png" alt="&quot;getting value at index&quot;" title="Indexing arrays."></p>
+<p>Modifying the value at an array's index is similar, using the index move the value <strong>i</strong> cells to the
+right, then copy the value at the stack's top to the value at depth <strong>D</strong> from here. Move the stack pointer
+back just like we did before and we're done.</p>
+<p>The actual code for moving a value <strong>v</strong> to the right by <strong>v</strong> steps after planting a marker is:</p>
+<pre class="language-js"><code class="language-js"><span class="token punctuation">[</span><span class="token operator">-</span>  <span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token comment">// place a marker 0 by moving index one cell to the right.</span><br><span class="token punctuation">[</span>    <span class="token comment">// until the index is 0   </span><br>  <span class="token punctuation">[</span><span class="token operator">-</span> <span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token operator">></span> <span class="token operator">-</span> <span class="token comment">// move it one step to the right, place a 1 at</span><br>              <span class="token comment">// it's previous location, and decrement it's value by 1.</span><br><span class="token punctuation">]</span> </code></pre>
+<p>After copying the value, moving it back to the eft is similary achieved with <code>&lt;[-&gt;[-&lt;+&gt;]&lt;&lt;]&gt;[-&lt;+&gt;]&lt;</code>.</p>
+<h3>If statements.</h3>
+<p>If statements behave similar to C, as one would expect.</p>
 </article>
         <hr>
         
