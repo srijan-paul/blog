@@ -312,7 +312,7 @@ What we need to do is:
 
 So if `array` is `{1, 2, 3, 4}` at depth **D**, and the index **i** is `2`, the memory tape looks like this:
 
-!["brainfuck memory tape"](..\assets\img\brainfuck\2.png 'Indexing arrays.')
+<img src="..\assets\img\brainfuck\2.png"/>
 
 The idea is:
 
@@ -326,7 +326,7 @@ The idea is:
 
 Here is a very artistic potrayal of the steps to explain it better:
 
-!["getting value at index"](..\assets\img\brainfuck\3.png 'Indexing arrays.')
+<img src="..\assets\img\brainfuck\3.png"/>
 
 Modifying the value at an array's index is similar, using the index move the value **i** cells to the
 right, then copy the value at the stack's top to the value at depth **D** from here. Move the stack pointer
@@ -369,7 +369,7 @@ the flag tells us whether or not to execute the `else` block.
 
 So right after pushing the condition, this is what the memory tape looks like:
 
-!["if statement"](..\assets\img\brainfuck\4.png 'condition and flag')
+<img src="..\assets\img\brainfuck\4.png"/>
 
 And the generated brainfuck code looks somewhat like this:
 
