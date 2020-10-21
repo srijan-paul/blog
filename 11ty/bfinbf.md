@@ -518,7 +518,7 @@ while i != len(code) {
 }
 ```
 
-Hmm, It honestly doesn't look too bad !!
+Hmm, It honestly doesn't look too bad!
 
 Until... you compile it and it generates a
 [850 line file](https://github.com/srijan-paul/BFinBF/blob/main/bf_interpreter.bf) with thousands
