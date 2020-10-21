@@ -17,6 +17,9 @@ interepreter for brainfuck in our new language, compile it and have a brainfuck 
 
 ## The What - Brainfuck
 
+If you're already familiar with brainfuck, you'll probably be better off skipping over
+this part.
+
 The Brainfuck programming language's syntax contains a total of 8 characters (yes, 8).
 Brainfuck models an imaginary machine, with an infinitely long memory tape.
 
