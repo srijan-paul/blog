@@ -59,7 +59,7 @@ Because we can, really. Brainfuck **is** turing complete, so it _could_ serve as
 One weekend I found myself going through some brainfuck-derived languages, all of which added some spice to the language,
 like having a 2D grid serve as a memory instead of the tape, and what not. Now programming in brainfuck is not my thing at all, I don't find
 the idea of solving problems with a tape of unsigned bytes fun, nor would I be good at it. However, it could work as an interesting thought experiment to see if one can compile a programming language down to such a limited instruction set, and to top it all off,
-We could write a brainfuck interpreter in the language we invent, because why not ?
+We could write a brainfuck interpreter in the language we invent, because why not?
 
 Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done _fast_, no big promises, no kanban boards,
 no to-dos and wishlists, just a simple, single pass compiler cobbled up in a weekend as a little prototype.
@@ -124,7 +124,7 @@ No, it doesn't have functions, `print` is actually a statement, and `len` is a l
 Though I might write another version of this with an additional pass, _with_ functions and a simulated heap some day.
 This particular language still remains rushed and largely prototypical.
 
-## How does it work ?
+## How does it work?
 
 The path that a user written program takes in meep goes,
 
@@ -179,7 +179,7 @@ first it tokenizes to:
 The tokens are then picked up by the IRCompiler which does the parsing and spits out
 the following IR:
 
-```js
+```c
 // First, we push a `false` onto the stack,
 // this is the local variable `'bool'`.
 // stack state: [0]
@@ -264,12 +264,12 @@ Line 2 - Then, we get the variable at index `0` and push it to the top (`[97, 97
 Push a `1` to the top of the stack (`[97, 97, 1]`), then pop the top two values, add them and push the result back (`[97, 98]`).
 Now we print the value at the top of the stack, and pop it right after (`[97]`)
 
-See how we executed an entire statement, and yet the stack is exactly as long as it was on line 1 ?
+See how we executed an entire statement, and yet the stack is exactly as long as it was on line 1?
 Try going through the next 2 statements and you'll see the effect is exactly the same. This is true for
 all statements except variable declarations, which have a stack effect of +1, as they push one value onto it that just
 stays there until the program terminates.
 
-So how exactly do we push values on top of the stack, when the stack is really the brainfuck memory tape ?
+So how exactly do we push values on top of the stack, when the stack is really the brainfuck memory tape?
 Simple, we use `>`, to move one step forward and then `+` to increment from 0 to the value of the variable.
 So pushing a `5` is as simple as `">+++++"`.
 
@@ -529,10 +529,10 @@ of characters.For reference, the [shortest known BF interpreter](https://esolang
 over 400 characters.
 Time for some hindsight:
 
-- Is Meep efficient ? **No**. It doesn't optimize, single pass.
-- Does the brainfuck interpreter work ? **Yes**.
-- Can it interpret itself ? **No**. That's a bit sad.
-- Was it worth it ? **Absolutely**. I still think this is cool :)
+- Is Meep efficient? **No**. It doesn't optimize, single pass.
+- Does the brainfuck interpreter work? **Yes**.
+- Can it interpret itself? **No**. That's a bit sad.
+- Was it worth it? **Absolutely**. I still think this is cool :)
 
 ## Acknowledgement.
 
@@ -547,7 +547,7 @@ of the languages and are a lot more primitive.
 
 ## Come take a look !
 
-Interested in the code ? As usual, it lives [here](https://github.com/srijan-paul/meep) on github.
+Interested in the code? As usual, it lives [here](https://github.com/srijan-paul/meep) on github.
 I'd usually say _"feel free to fork and run wild with your ideas !"_
 but this one is a codebase botched together in a sleepless weekend and then patched
 with comments. So tread carefully, I can't gaurantee everything I wrote in the comments is accurate
