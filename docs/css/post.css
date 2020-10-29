@@ -10,11 +10,11 @@ body {
 }
 
 [data-theme='dark'] {
-  --fg-color: #dfe6e9;
-  --fg-color-2: #f7f1e3;
-  --bg-color: #1a1a1a;
-  --info-color: #f7f1e3;
-  --accent-color: #222222;
+  --fg-color: #d3d3d3;
+  --fg-color-2: #dddddd;
+  --bg-color: #1a1c1f;
+  --info-color: gray;
+  --accent-color: rgb(32, 35, 37);
   --logo-color: #fed130d3;
   --link-color: #01a3a4;
 }
