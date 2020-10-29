@@ -61,15 +61,14 @@ like having a 2D grid serve as a memory instead of the tape, and what not. Now p
 the idea of solving problems with a tape of unsigned bytes fun, nor would I be good at it. However, it could work as an interesting thought experiment to see if one can compile a programming language down to such a limited instruction set, and to top it all off,
 We could write a brainfuck interpreter in the language we invent, because why not?
 
-Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done _fast_, no big promises, no kanban boards,
-no to-dos and wishlists, just a simple, single pass compiler cobbled up in a weekend as a little prototype.
+Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done _fast_, meaning no kanban boards,
+no to-dos and wishlists. Just a simple, single pass compiler cobbled up in a weekend as a little prototype.
 
 ## The How - Meep
 
 Here is the weekend-long implementation plan I came up with:
 
 <ol>
-<li>Write the language in Javascript, performance not a goal.</li> 
 <li>Single pass, no AST involved, compile tokens to IR and IR to Brainfuck.</li> 
 <li>Emulate a stack on brainfuck's memory tape, helps model a stack based VM-like architechture.</li> 
 <li>Write a brainfuck interpreter in our language to test the implementation. </li> 
@@ -452,8 +451,8 @@ class IRCompiler {
 ```
 
 That's about it for all the challenging parts.
-This section would have been a **lot** longer had I tried this as a semi-serious project.
-The language still leaves many features to be desired:
+This section would have been a **lot** longer had someone tried this as a more featured language.
+Meep still leaves many features to be desired:
 
 - Support for numbers larger than 1 byte.
 - N-d arrays (this is an easy one, I was just lazy / tired).

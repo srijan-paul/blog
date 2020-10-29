@@ -1,4 +1,3 @@
-
 {% import "components/post_macros.njk" as macros %}
 
 <!doctype html>
@@ -31,12 +30,12 @@
         <div class="nav">
           {% if previousPost %}
             <a class="prev" 
-              href="{{ root.env }}{{previousPost.url }}">&lt; {{ previousPost.data.title }}</a>
+              href="{{ env.root }}{{previousPost.url }}">&lt; {{ previousPost.data.title }}</a>
           {% endif %}
 
           {% if nextPost %}
             <a class="next"
-              href="{{ root.env }}{{ nextPost.url }}">{{ nextPost.data.title }} &gt;</a>
+              href="{{ env.root }}{{ nextPost.url }}">{{ nextPost.data.title }} &gt;</a>
           {% endif %}
         </div>
       </div>

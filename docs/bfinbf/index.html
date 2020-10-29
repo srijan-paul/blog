@@ -1,6 +1,5 @@
 
 
-
 <!doctype html>
 <html data-theme="light">
   <!--<![endif]-->
@@ -97,12 +96,11 @@ One weekend I found myself going through some brainfuck-derived languages, all o
 like having a 2D grid serve as a memory instead of the tape, and what not. Now programming in brainfuck is not my thing at all, I don't find
 the idea of solving problems with a tape of unsigned bytes fun, nor would I be good at it. However, it could work as an interesting thought experiment to see if one can compile a programming language down to such a limited instruction set, and to top it all off,
 We could write a brainfuck interpreter in the language we invent, because why not?</p>
-<p>Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done <em>fast</em>, no big promises, no kanban boards,
-no to-dos and wishlists, just a simple, single pass compiler cobbled up in a weekend as a little prototype.</p>
+<p>Now I had exams coming up, and a couple of other things to work on. So I wanted this to be done <em>fast</em>, meaning no kanban boards,
+no to-dos and wishlists. Just a simple, single pass compiler cobbled up in a weekend as a little prototype.</p>
 <h2>The How - Meep</h2>
 <p>Here is the weekend-long implementation plan I came up with:</p>
 <ol>
-<li>Write the language in Javascript, performance not a goal.</li> 
 <li>Single pass, no AST involved, compile tokens to IR and IR to Brainfuck.</li> 
 <li>Emulate a stack on brainfuck's memory tape, helps model a stack based VM-like architechture.</li> 
 <li>Write a brainfuck interpreter in our language to test the implementation. </li> 
@@ -273,8 +271,8 @@ which has a data member <code>this.ir</code>, an array of IR codes. <code>this.e
 <code>o</code> to the IR array.</p>
 <pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">IRCompiler</span> <span class="token punctuation">{</span><br>  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>ir <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token comment">// other code</span><br><br>  <span class="token function">whileStmt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token comment">// store the length of the IR before</span><br>    <span class="token comment">// the condition is compiled</span><br>    <span class="token keyword">let</span> before <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ir<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">expression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// compile condition.</span><br>    <span class="token comment">// length after the condition is compiled.</span><br>    <span class="token keyword">let</span> after <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ir<span class="token punctuation">.</span>length<span class="token punctuation">;</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token constant">IR</span><span class="token punctuation">.</span>start_loop<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">statement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token comment">// emit the bytes for the condition again</span><br>    <span class="token comment">// since it needs to be re-evaluated.</span><br>    <span class="token comment">// To do this, we take the code for the</span><br>    <span class="token comment">// condition, and re-insert it again.</span><br>    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> before <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> after<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>ir<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token constant">IR</span><span class="token punctuation">.</span>end_loop<span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token comment">// other code</span><br><span class="token punctuation">}</span></code></pre>
 <p>That's about it for all the challenging parts.
-This section would have been a <strong>lot</strong> longer had I tried this as a semi-serious project.
-The language still leaves many features to be desired:</p>
+This section would have been a <strong>lot</strong> longer had someone tried this as a more featured language.
+Meep still leaves many features to be desired:</p>
 <ul>
 <li>Support for numbers larger than 1 byte.</li>
 <li>N-d arrays (this is an easy one, I was just lazy / tired).</li>
@@ -323,7 +321,7 @@ good heads-up for the codebase.</p>
         <div class="nav">
           
             <a class="prev" 
-              href="/ave_intro/">&lt; Making a programming language from scratch.</a>
+              href="blog/ave_intro/">&lt; Making a programming language from scratch.</a>
           
 
           

@@ -10,12 +10,13 @@ body {
 }
 
 [data-theme='dark'] {
-  --fg-color: #dcdde1;
-  --fg-color-2: #dcdde1;
-  --bg-color: #23272a;
-  --info-color: gray;
-  --accent-color: #2c2f33;
-  --logo-color: #fed330;
+  --fg-color: #dfe6e9;
+  --fg-color-2: #f7f1e3;
+  --bg-color: #1a1a1a;
+  --info-color: #f7f1e3;
+  --accent-color: #222222;
+  --logo-color: #fed130d3;
+  --link-color: #01a3a4;
 }
 
 [data-theme='light'] {
@@ -25,6 +26,7 @@ body {
   --bg-color: #fafafa;
   --accent-color: #ffffff;
   --logo-color: #227093;
+  --link-color: #01a3a4;
 }
 
 .main {
@@ -114,7 +116,7 @@ a:visited,
 a:link,
 a:active {
   text-decoration: none;
-  color: #01a3a4;
+  color: var(--link-color);
 }
 
 a:hover {
