@@ -219,9 +219,8 @@ And that finally turns into a bloated brainfuck file:
 -]<[-]][-]<[-]<
 ```
 
-The idea is to get the braifuck memory tape to act as a stack that we can push to and pop from,
-then it's possible to get it to act like a stack based VM. Variables are simply looked up
-by their index.
+The idea is to get the brainfuck memory tape to act like a stack that we can push to and pop from,
+then it's possible to get it to act like a stack based VM.
 
 I'll explain some of the challenges I came across and ones that you may have to fight
 if you ever choose to try something similar for whatever reason.
@@ -241,6 +240,8 @@ Lets get a few things established before moving on to the implementation.
 
 4. All expressions must have a stack effect of +1, meaning they must leave the stack one value (not 1 byte or cell)
    larger than it was before the expression was evaluated.
+
+That's really just the basics of how a stack based VM works.
 
 ### Variables.
 
@@ -286,7 +287,7 @@ Arrays can be indexed with values that aren't known at compile time.
 
 ```js
 var array = {'a', 'b', 'c'};
-var index = input;
+var index = input();
 if index > len(array) {
   print "Index out of bounds";
 } else {
@@ -455,7 +456,7 @@ This section would have been a **lot** longer had someone tried this as a more f
 Meep still leaves many features to be desired:
 
 - Support for numbers larger than 1 byte.
-- N-d arrays (this is an easy one, I was just lazy / tired).
+- N-d arrays (this is an easy one to implement).
 - Functions, more flow control.
 - Heap allocation and passing/copying strings and arrays by reference.
 
@@ -465,8 +466,8 @@ on of those crazy computers that run brainfuck natively ! Which reminds me...
 
 ## BFinBF
 
-Halway into the whole thing I thought, let's make this less about a compile2BF language
-and more about a bootstrapping brainfuck interpreter. So here it is:
+There are many bootstrapping brainfuck interpreters, one of the reasons I made
+meep was to write one of those myself. So here it is:
 
 ```js
 var memory = bus 250; // the memory tape
@@ -547,10 +548,7 @@ of the languages and are a lot more primitive.
 ## Come take a look !
 
 Interested in the code? As usual, it lives [here](https://github.com/srijan-paul/meep) on github.
-I'd usually say _"feel free to fork and run wild with your ideas !"_
-but this one is a codebase botched together in a sleepless weekend and then patched
-with comments. So tread carefully, I can't gaurantee everything I wrote in the comments is accurate
-since I was almost asleep and have no memory of documenting the code, otherwise it should serve as a
-good heads-up for the codebase.
+Having been botched together in a weekend, the code isn't the prettiest but you'll most likely find
+your way around since I commented a lot of stuff for myself.
 
 Adios.

@@ -42,16 +42,16 @@
   --string: #e5c07b;
   --operator: #ff6b6b; */
 
-  --background: #f1f3f4;
-  --foreground: #37474f;
+  --background: #f5f5f5;
+  --foreground: #383a42;
   --comment: #93a1a1;
-  --keyword: #195abb;
+  --keyword: #a626a4;
   --var: #ee9900;
-  --function: #dd4a68;
+  --function: #3f7bfc;
   --property: #990055;
-  --number: #0c99a3;
+  --number: #986801;
   --semi: #999999;
-  --string: rgb(22, 141, 95);
+  --string: #50a14f;
   --operator: #a67f59;
   --const: #e84393;
 
