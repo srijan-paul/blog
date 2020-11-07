@@ -14,7 +14,7 @@ layout: content_list.njk
     {% set taglist = collections[tag] %}
     {% for post in taglist | reverse %}
       <li>
-        <a href="../../{{ post.url }}">{{ post.data.title }}
+        <a href="../..{{ post.url }}">{{ post.data.title }}
         </a>
         <span class="post-date">{{ post.date | formatDate }}
         </span>
