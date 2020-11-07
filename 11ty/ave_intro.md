@@ -1,7 +1,7 @@
 ---
 layout: post.njk
 tags: ['ave', 'programming-languages', 'type-system', 'post']
-title: Making a programming language from scratch.
+title: 'Ave - Adding elegance and types to Javascript'
 ---
 
 This is the first in a series of blog posts to come about how I made a statically type checked, scripting
@@ -103,7 +103,7 @@ record LLNode<E>
   value: E
   next: LLNode<E> | nil
 
-let head: LLNode<number> =
+let head: LLNode<num> =
   value: 1
   next:
     value: 23

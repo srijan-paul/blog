@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Making a programming language from scratch.</title>
+    <title>Ave - Adding elegance and types to Javascript</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/post.css">
@@ -38,7 +38,7 @@
 
         
   
-  <h1 class="post-title">Making a programming language from scratch.</h1>
+  <h1 class="post-title">Ave - Adding elegance and types to Javascript</h1>
   <div class="info">September 29, 2020</div>
   
   <div class="tags">
@@ -102,7 +102,7 @@ Did I mention record data types ?</p>
 <p>Kind of like structs in C or interfaces in Typescript.
 We also have generics.
 They can be recursive too !</p>
-<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token constant">E</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span> <span class="token operator">|</span> <span class="token hvariable">nil</span><br><br><span class="token keyword">let</span> <span class="token builtin">head</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token hvariable">number</span><span class="token operator">></span> <span class="token operator">=</span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">1</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span><br>    <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">23</span><br>    <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token hvariable">nil</span></code></pre>
+<pre class="language-hs"><code class="language-hs"><span class="token hvariable">record</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token constant">E</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token constant">E</span><span class="token operator">></span> <span class="token operator">|</span> <span class="token hvariable">nil</span><br><br><span class="token keyword">let</span> <span class="token builtin">head</span><span class="token operator">:</span> <span class="token constant">LLNode</span><span class="token operator">&lt;</span><span class="token hvariable">num</span><span class="token operator">></span> <span class="token operator">=</span><br>  <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">1</span><br>  <span class="token hvariable">next</span><span class="token operator">:</span><br>    <span class="token hvariable">value</span><span class="token operator">:</span> <span class="token number">23</span><br>    <span class="token hvariable">next</span><span class="token operator">:</span> <span class="token hvariable">nil</span></code></pre>
 <p>Notice how you can create objects even without the <code>{}</code> ? I personally prefer braces around them,
 but at least the user has that choice.</p>
 <p>And functions:</p>
