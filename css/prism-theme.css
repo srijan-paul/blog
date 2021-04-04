@@ -42,8 +42,24 @@
 }
 
 [data-theme='light'] {
+  --background: #ffffff;
+  --foreground: #5C6E74;
+  --comment: #93A1A1;
+  --keyword: #0077aa;
+  --var: #ee9900;
+  --function: #DD4A68;
+  --property: #990055;
+  --number: #986801;
+  --semi: #999999;
+  --string: #50a14f;
+  --operator: #a67f59;
+  --const: #e84393;
 
+  --bg-no-pre: #f9f2f4;
+  --fg-no-pre: #4b6584;
+}
 
+[data-theme='light'] {
   --background: #ffffff;
   --foreground: #5C6E74;
   --comment: #93A1A1;
