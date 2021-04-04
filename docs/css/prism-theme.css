@@ -12,42 +12,44 @@
 */
 
 [data-theme='dark'] {
-  --background: #1e1e1e;
-  --foreground: #d4d4d4;
-  --comment: #6a9955;
-  --keyword: #569cd6;
-  --var: #fc9867;
-  --function: #dcdcaa;
-  --property: #66d9ef;
-  --number: #b5cea8;
-  --semi: #8395a7;
-  --string: #ce9178;
-  --operator: #d4d4d4;
-  --const: #31aa90;
-
-  --bg-no-pre: #222f3e;
-  --fg-no-pre: #c8d6e5;
-}
-
-[data-theme='light'] {
-  /* --background: #282c34;
+  --background: #282c34;
   --foreground: #a5b1c2;
   --comment: #5c6370;
-  --keyword: #2e86de;
+  --keyword: #0077aa;
   --var: #FD971F;
   --function: #0fb9b1;
   --property: #66D9EF;
   --number: #fab1a0;
   --semi: #8395a7;
   --string: #e5c07b;
-  --operator: #ff6b6b; */
+  --operator: #ff6b6b;
 
-  --background: #f5f5f5;
-  --foreground: #383a42;
-  --comment: #93a1a1;
-  --keyword: #a626a4;
+  /* --background: #1e1e1e;
+  --foreground: #d4d4d4;
+  --comment: #6a9955;
+  --keyword: #0077aa;
+  --var: #fc9867;
+  --function: #DD4A68;
+  --property: #66d9ef;
+  --number: #b5cea8;
+  --semi: #8395a7;
+  --string: #ce9178;
+  --operator: #d4d4d4;
+  --const: #31aa90; */
+
+  --bg-no-pre: #222f3e;
+  --fg-no-pre: #c8d6e5;
+}
+
+[data-theme='light'] {
+
+
+  --background: #ffffff;
+  --foreground: #5C6E74;
+  --comment: #93A1A1;
+  --keyword: #0077aa;
   --var: #ee9900;
-  --function: #3f7bfc;
+  --function: #DD4A68;
   --property: #990055;
   --number: #986801;
   --semi: #999999;
@@ -64,7 +66,7 @@ code[class*='language-'] {
   color: var(--foreground);
   font-size: 13px;
   text-shadow: none;
-  font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
+  font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
     monospace;
   direction: ltr;
   text-align: left;

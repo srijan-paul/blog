@@ -477,7 +477,8 @@ var code = bus 250;   // the user's code
 var i = 0; // current position in the source code.
 
 // this is a very unusual and wonky way of getting
-// user input but since we can only get one byte an input so....
+// user input but since we can only get one byte of input
+// at a time so...
 while i != len(code) {
     set code[i] = input;
     set i = i + 1;
@@ -506,7 +507,8 @@ while i != len(code) {
                 set i = i + 1;
             }
         }
-    } else if c == ']' { // jump back to the opening '[' if current cell is nonzero
+    // jump back to the opening '[' if current cell is nonzero
+    } else if c == ']' {
         if (memory[mptr] != 0) {
             set i = i - 1;
             while ((bctr != 0) + (code[i] != '[')) != 0 {
