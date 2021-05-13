@@ -19,7 +19,7 @@ const fruit = 'b' + 'a' + +'a' + 'a';
 console.log(fruit.toLowerCase());
 ```
 
-Surprised ?
+Surprised?
 Probably not if you're used to Javascript. But many new users are, and this is just one of the many annoying eccentricities
 of Javascript's weird, implicit coercion loving "type system".
 
