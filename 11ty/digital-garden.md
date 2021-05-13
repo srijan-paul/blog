@@ -6,7 +6,7 @@ title: 'On digital gardens, books and trying a new style of learning.'
 
 Warm greetings to all zero of my readers. This blog has been fairly dead for a while now.
 I've mostly been busy trying out a lot of things, and working on yet another
-programming language this time (More on this later).
+programming language this time (more on this later).
 
 In the past several months I've made a simple observation about my learning methods: 
 they're very ad-hoc and not disciplined. This often leaves me 'half-invested' in many different topics
