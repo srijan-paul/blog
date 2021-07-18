@@ -344,7 +344,7 @@ Yes, I did defend JavaScript quite a bit. But I still do have my own fair share 
 
 
 
-There's some other smaller problems that one can live with, like no native integers etc. But I can live with those. In contrast, I *have* to live with the above.
+There's some other smaller problems like no native integers etc. But I can live with those. In contrast, I *have* to live with the above.
 
 ## What does the future hold?
 
