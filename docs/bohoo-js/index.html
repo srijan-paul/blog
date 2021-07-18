@@ -1,0 +1,278 @@
+
+
+<!doctype html>
+<html data-theme="light">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>BoOHoO JaVaScRiPT!!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/prism-theme.css">
+  </head>
+  <body>
+    
+    
+    <class class="main">
+      <div class="content-wrapper">
+        
+
+  <div class="navbar">
+    <div class="nav-item">
+      <a href="../home" id="logo">ByteFiction</a>
+    </div>
+
+    
+    <div class="nav-item">
+      <label class="switch">
+        <input type="checkbox" id="theme-switcher-button">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  
+
+        
+  
+  <h1 class="post-title">BoOHoO JaVaScRiPT!!</h1>
+  <div class="info">July 18, 2021</div>
+  
+  <div class="tags">
+    
+      <a class="tag" href="../tags/javascript">
+        javascript
+      </a>
+    
+      <a class="tag" href="../tags/programming-languages">
+        programming-languages
+      </a>
+    
+      <a class="tag" href="../tags/post">
+        post
+      </a>
+    
+  </div>
+
+        <hr>
+
+        
+        <article class="post"><p><em>&quot;JavaScript is the devilspawn!&quot;</em> cried Dante, the average modern day web developer. <em>&quot;The semantics make little sense, the spec is absolute heresy! Brendan Eich be crucified!&quot;</em></p>
+<p>His voice echoed throughout the halls of the Purgatory's fifth circle.
+With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon their image in the bloody river.</p>
+<p><em>&quot;<code>0.1 + 0.2 != 0.3</code> evaluates to <code>false</code>!?&quot; <code>NaN != NaN</code> is <code>true</code>? With a curse like that, we shall forever be stuck in the inferno.&quot;</em></p>
+<p>&quot;<em>Art thou, too, of the other fools, Dante?</em> &quot; Virgilio, the wise pagan soul broke his silence.</p>
+<p><em>&quot;Pardon, Virgilio?&quot;</em></p>
+<p><em>&quot;Such rampant ignorance. My soul whimpers in despair.&quot;</em>  said the exasperated Virgilio.</p>
+<p><em>&quot;What is this ignorance you speak of, partner?&quot;</em> the unnerved Dante asked.</p>
+<p>Virgilio faced him and continued...</p>
+<p><em>&quot;It is true that JavaScript is somewhat second-rate. I would stake my life on it. But to compare it to the devil itself, is to manifest a sin!&quot;</em>. Tears started running down Virgil's eyes, as he went on to explain why so much of the critique JavaScript receives is misplaced.</p>
+<p>Dante's reflection in the river of Styx might be contrasted with that of a novice programmer, new to the delicate craft of forging computer programs out of several different languages. It is completely fair for the novice to critique Programming Languages, as it is for anyone else. However, it is in the programmer, and everyone else's interest if they do some reading up before presenting their criticisms to the global community of programmers.</p>
+<p>In this post, I want to:</p>
+<ol>
+<li>Take a look at popularly misplaced critiques of JavaScript.</li>
+<li>Provide some critiques rooted somewhat more in reason.</li>
+</ol>
+<p>Below is a list of JavaScript expressions, along with the values they evaluate to.  JavaScript receives crazy amount of slack for it's design choices, however it may surprise some to know that many of these mistakes aren't JavaScript's mistakes in the first place!</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token number">0.1</span> <span class="token operator">+</span> <span class="token number">0.2</span> <span class="token operator">==</span> <span class="token number">0.3</span>       <span class="token comment">// false</span><br><span class="token number">NaN</span> <span class="token operator">==</span> <span class="token number">NaN</span>             <span class="token comment">// false</span><br><span class="token keyword">typeof</span> <span class="token number">NaN</span>             <span class="token comment">// "number"</span><br><span class="token boolean">true</span> <span class="token operator">==</span> <span class="token number">1</span>		       <span class="token comment">// true</span><br><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>      <span class="token comment">// [ 31, 4, 5 ]</span><br><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token comment">// false</span></code></pre>
+<p>Moreover:</p>
+<ol>
+<li>JavaScript is slow.</li>
+<li>Extremely loosely typed and unsafe.</li>
+<li>Single threaded.</li>
+</ol>
+<p>If you're anything but a very beginner programmer, the above might come off as obvious to you, and you might be better of skipping half of this post! However, it really is true that the above are some of the most  &quot;meme&quot;-d  takes on JavaScript. Type  &quot;JavaScript bad meme&quot; into your search engine of choice to convince yourself, that's how I got to the bunch above.</p>
+<p>&quot;JavaScript bad because <code>0.1 + 0.2 != 0.3</code>&quot; is tech-twitter's favorite game to play on weekends!</p>
+<p>Before we move on, Let's establish this:</p>
+<blockquote>
+<p>I want to pick on JavaScript's <strong>design</strong>, not it's <strong>ecosystem</strong>.</p>
+</blockquote>
+<h2>Playing the devil's advocate</h2>
+<p>First, let's briefly dissect the expressions one by one, starting with the most common:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token number">0.1</span> <span class="token operator">+</span> <span class="token number">0.2</span> <span class="token operator">==</span> <span class="token number">0.3</span> <span class="token comment">// false</span></code></pre>
+<p>This is not JavaScript's fault, but a by-product of how computers represent floating point numbers.
+You see, we can't have infinite precision decimals within finite space, so we make a trade-off. We store all floating point numbers in 64-bits of space, and loose some precision in the process. This is standardized by the <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">IEEE 64 bit floating point representation</a>. The Wikipedia article does a better job of explaining it than I ever could, so I refer you to that in case you want to know more.</p>
+<p>Most other languages do the same thing. C, Java, C++, Lua, Python and friends.
+Note however that some do not, <a href="https://www.raku.org/">Raku</a> (also called Perl-6 by some) for example, correctly evaluates <code>0.1 + 0.2</code> to <code>0.3</code>.
+Magic?  Nope, just a different representation written in software. Instead of using IEEE floats, Raku uses rational numbers of the form <code>p/q</code> where <code>p</code> and <code>q</code> share no common factors barring 1.</p>
+<p>Why don't all languages do what Raku does?
+This has some trade-offs, speed is the very obvious first candidate, but also space. Now we have to store 2 numbers, <code>p</code> and <code>q</code>. This not only means twice the space, but the number may no longer fit in CPU registers.</p>
+<p>Next up, we have:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token number">NaN</span> <span class="token operator">==</span> <span class="token number">NaN</span> <span class="token comment">// false</span></code></pre>
+<p>This one is also simple, The aforementioned IEEE double precision floating point spec simply states that <code>NaN</code> must never be equal to another <code>NaN</code>. To my knowledge, this is mostly to immediately raise alarms instead of quietly passing through conditions of <code>if</code> statements and such.</p>
+<p>Moving on...</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">typeof</span> <span class="token number">NaN</span> <span class="token comment">// number</span></code></pre>
+<p><code>NaN</code> literally means &quot;not a number&quot;, so why does JavaScript tell me otherwise? This could have been handled differently by having a separate <code>&quot;NaN&quot;</code> type. However it does make sense when you think about it this way, the <code>NaN</code> value always appears in places where you would expect numbers. <code>Math.sqrt(-1)</code> for example.</p>
+<p>And now:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token boolean">true</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token comment">// true</span></code></pre>
+<p>This is debatable. Python, Ruby and C++ do what JavaScript here does, Lua however disagrees. Java rebels and throws a type error at compile time. If you ask me, all these approaches make sense. In duck typed languages, we're seldom concerned with an actual boolean value, and really care about <a href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy-ness</a>.</p>
+<p>In case of JavaScript, if we complain about the above, then why not  maintain the same energy for this:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/* stuff */</span> <span class="token punctuation">}</span></code></pre>
+<p>Why is it okay to substitute <code>0</code> (or <code>''</code>) for <code>false</code> but not <code>true</code> for <code>1</code>?</p>
+<p>The <code>==</code> operator compares <strong>truthiness</strong> of values. i.e it makes a judgement based on a <strong>property</strong> of it's operands, and their value. Take a look:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token string">''</span>   <span class="token operator">==</span> <span class="token boolean">false</span> <span class="token comment">// true</span><br><span class="token number">0</span>    <span class="token operator">==</span> <span class="token string">''</span>    <span class="token comment">// true</span></code></pre>
+<p>Note however that it's overloaded to act differently for numbers and strings (and this weird polymorphism is a fair critique, which we'll address).
+If you want strict value comparison, use <code>==</code>'s sister <code>===</code> instead.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token string">''</span>   <span class="token operator">===</span> <span class="token boolean">false</span> <span class="token comment">// false</span><br><span class="token number">0</span>    <span class="token operator">===</span> <span class="token string">''</span>    <span class="token comment">// false</span></code></pre>
+<p>Up next:</p>
+<pre class="language-java"><code class="language-java"><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// [ 31, 4, 5 ]</span></code></pre>
+<p>Now this, is questionable API design choice. I completely agree with that. However, it doesn't tie into the semantics of JavaScript as a language in any way. In the same spirit, one could pick bones with C++'s poorly named standard library entities. (<code>std::empty</code> instead of <code>std::is_empty</code>).</p>
+<p>To do a number comparison-based sort, you'd have to call it like so:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">-</span> b<span class="token punctuation">)</span> <span class="token comment">// [4, 5, 31]</span></code></pre>
+<p>Just to be clear, I believe this is a completely fair and valid criticism, just not of the language, but it's standard library.</p>
+<p>Finally,</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span></code></pre>
+<p>This is the simplest, most trivial snippet. It's just heap allocation. The two arrays are different objects living at different places in memory. When you modify one, the other doesn't change. If JavaScript had operator overloading, one could perhaps override <code>==</code> for <code>Array.prototype</code> and achieve element-by-element comparison? Who knows.</p>
+<p>Now to tackle the rest:</p>
+<h2>JavaScript is slow.</h2>
+<p>Is it really? We'll discuss that.</p>
+<p>But first, I don't like using the phrase <em>&quot;&lt;<strong>Insert language</strong>&gt; is slow&quot;</em>.
+Languages are defined by their syntax + semantics + standards. It is impossible to quantify a language's speed because that depends on it's <strong>implementation</strong>.</p>
+<p><em>&quot;Python is slow!&quot;</em></p>
+<p>This statement gives rise to two obvious questions:</p>
+<ol>
+<li>Which implementation of Python? CPython? PyPy? Numba? RPython? MicroPython? Jython?</li>
+<li>Slow compared to what? x86 Assembly? C++? Ruby? Chuck?</li>
+</ol>
+<p>A better way to put it would be:</p>
+<p><em>&quot;CPython is slow&quot;</em></p>
+<p>The more context, the better:</p>
+<p><em>&quot;CPython is slower than V8 JavaScript&quot;</em>.</p>
+<p>This statement is much more meaningful, we can now write programs, run benchmarks and make real comparisons. However, we must not forget that not all languages cover the same domains. Scripting languages have a lot more reason and leeway to be slower owing to the environments they are generally embedded in. C++ vs JavaScript is simply an apples to oranges comparison.</p>
+<p>That said, is JavaScript <em>actually slow</em>?</p>
+<p>Many tend to assume that JS must be slow since it is capable of exhibiting such highly dynamic behavior.
+However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonkey are extremely performant, heavily optimizing beasts. They're JIT engines, the exact inner workings of some of their parts are currently a dark art to me, so I can't comment on the exact optimizations they make, but perhaps taking a look at numbers may help move the argument forward.</p>
+<p>Taking a look at some benchmarks from the <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html">computer language benchmark games</a> site, it would appear that Node.js (which embeds V8) is actually not bad at all, even beating some implementations of Java and Haskell and C++ at times!</p>
+<p>Now it is true that benchmarks are nowhere close to real programs, but the JavaScript interpreter being a bottleneck in web-apps is not something you hear often. So I'd say</p>
+<p><strong>&quot;JavaScript is fast enough for what it needs to do&quot;</strong></p>
+<h2>JavaScript is loosely typed and unsafe.</h2>
+<p>I read this in someone's blog, and a supporting twitter thread and it's uuh... not true maybe?</p>
+<p>JavaScript is <strong>dynamically checked</strong> and <strong>safe</strong>. But I do not blame the people who make this claim at all. In fact, I believe the problem is with misnomers and poor definition of terms like &quot;loosely typed&quot;, &quot;dynamically typed&quot; and &quot;safe&quot;.</p>
+<p>I'll take a page out of Pierce's great book, <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and programming languages</a>:</p>
+<blockquote>
+<p>Terms like &quot;dynamically typed&quot; are arguably misnomers and should probably be replaced by &quot;dynamically checked,&quot; but the usage is standard.</p>
+</blockquote>
+<p><strong>Dynamically checked:</strong> Variables and symbols do <strong>not</strong> have types. The types lie within <strong>values</strong>.</p>
+<p><em>...What?</em></p>
+<p>Let's try with an example. The number <code>100</code>, has a type of &quot;number&quot; at runtime. However in this statement:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> x <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span></code></pre>
+<p>The <strong>symbol</strong> &quot;x&quot; and in it's semantic  definition, does not have a type. But it's still not wrong to say <em>&quot;the type of 'x' is <code>number</code>&quot;</em>. Why? Because when <code>x</code> is evaluated by the runtime, as a <strong>value</strong>, it does have a type (which can be seen by <code>typeof x</code>).</p>
+<p>However the <strong>name</strong> &quot;x&quot; is void of any type. So we can do <code>x = 'xyz'</code> and still be good, law-abiding JavaScript programmers.</p>
+<p>The key is understanding the difference between the <strong>name</strong> ''x&quot; which can be bound to any value, and the <strong>value</strong> &quot;x&quot;, which always evaluates to whichever value the name is bound to at the time of evaluation.</p>
+<p>And now, I back my wild claim, <em>&quot;JavaScript is safe&quot;</em>.</p>
+<p>I sound like a total nutjob wo should be banned from touching a keyboard ever again, but bear with me! A very simple definition of the word <strong>safe</strong> in context of programming languages is:</p>
+<p><em>A language where every code snippet always is well-defined by the standard.</em></p>
+<p>And this is indeed true of JavaScript. If you don't like that thought, pause for a second and try to come up with a JavaScript code snippet that is <strong>undefined</strong> under the ECMAScript spec. I bet you there isn't any. It may error out, or produce wonky output, but the behavior is <strong>defined</strong>, and will be the same for every standard-compliant JavaScript implementation.</p>
+<p>In fact, C++ is <strong>less safe</strong> than JavaScript, despite being statically typed (which makes sense, because the two properties aren't always locked in pair). For example, the following C++ code does not have any defined behavior:</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span><br><br><span class="token keyword">union</span> IntOrPtr <span class="token punctuation">{</span><br>    <span class="token keyword">int</span> integer<span class="token punctuation">;</span><br>    <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  IntOrPtr u <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span>ptr <span class="token operator">=</span> <span class="token string">"C++ gang"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>  <br>  std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>integer <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment">// &lt;--- Whoops!</span><br>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<p>Accessing the uninitialized field of a union is undefined behavior, and may have different behavior on different compilers, hardware, OS or even different runs of the same executable!</p>
+<p>Relying on such behavior can be lethal for your program (and I bet you I've seen industry codebases that relies on such behavior!).</p>
+<p>My personal opinion:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Safe</th>
+<th>Unsafe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dynamic checking</strong></td>
+<td>Very easy to write erroneous programs, but much easier to debug due to well defined runtime behavior and inspection.</td>
+<td>Don't know of any such languages except hobby projects. Let me know if you got some!</td>
+</tr>
+<tr>
+<td><strong>Static checking</strong></td>
+<td>Best of both worlds. Most languages in this bucket are functional.</td>
+<td>Easier to write correct programs, but much harder to debug due. There are no types and bounds at runtime.</td>
+</tr>
+</tbody>
+</table>
+<p>IMO, there is always a tradeoff. If you miss having compile time type checking, maybe checkout Typescript/Purescript? I'm a huge fan of both.</p>
+<p>So what did we learn? Instead of saying:</p>
+<p><em>&quot;JavaScript is unsafe&quot;</em></p>
+<p>Say:</p>
+<p><em>&quot;JavaScript is unsafe... for your mental health&quot;</em></p>
+<h5>JavaScript is single threaded = bad.</h5>
+<p>To be honest, I wish things were different too. But thankfully V8 (and <s>NodeJS</s> libuv) are designed well enough that this problem is easily circumvented with asynchronous code. JavaScript's async support is commendable. This is one of the few design choices that I actually fully support.</p>
+<p>Threading is a bit of a gray area, some people would argue it's a part of the language, some would say it's a part of the implementation. I fall in the latter camp.</p>
+<p>Besides, for all of it's currently popular use-cases, JavaScript's threading facility (or the lack thereof) is circumvented to a small extent by <code>async</code> code and sometimes even available because of good design choices of the embedding application.</p>
+<p>That said, this critique has the most substance behind it so far (IMO).</p>
+<h4>You sicken me! JavaScript fanboy</h4>
+<p>Virgilio shared his wisdom, and the flames of wrath abandoned Dante's mind. He learned to reason with a deeper conscience.</p>
+<p><em>&quot;I understand now, Virgilio.&quot;</em> said Dante.</p>
+<p><em>&quot;The devil is not as black as he is painted&quot;</em> he continued. <em>&quot;JavaScript is indeed a blessing from the highest sphere of Paradise!&quot;</em> filled with joy and hope, he started debugging his application again.</p>
+<p><em>&quot;I am not finished, Dante.&quot;</em> Virgilio stopped him at once.
+<em>&quot;There are reasons as to why JavaScript resides in the 5th circle, the land of wrathful and the sullen.&quot;</em></p>
+<h4>Not all roses.</h4>
+<p>Yes, I did defend JavaScript quite a bit. But I still do have my own fair share of complaints. Let's see.</p>
+<ol>
+<li>
+<p>Starting off on an easier foot, the <code>var</code> keyword. ECMA's unwillingness to forsake backwards compatibility has led to some very annoying legacy cruft in JS that just won't go away. <strong>function scope</strong> is one of those.</p>
+</li>
+<li>
+<p><strong>Too much implicit type-coercion</strong>. Yes, I did defend mis-categorization of JavaScript's typed-ness earlier, but I am still of the opinion that the JS type system is absolutely borked, and beyond saving. Some of these rules make no sense. While <code>true == 1</code> isn't that whack, this certainly is:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// true</span></code></pre>
+<p>That's just one of the infinitely many examples that I wish JS got right. It's one of those things that makes up for 50% of why JavaScript is popularly hated.</p>
+</li>
+<li>
+<p><strong>Wonky whitespace sensitivity.</strong> JavaScript looks like it's not white-space sensitive at first glance. Catch this:</p>
+</li>
+</ol>
+<pre class="language-javascript"><code class="language-javascript">a <span class="token operator">=</span> <span class="token number">124</span> <span class="token comment">// ok</span><br>b <span class="token operator">=</span> <span class="token number">100</span> <span class="token comment">// ok</span><br>c <span class="token operator">=</span> <span class="token number">124</span> d <span class="token operator">=</span> <span class="token number">214</span> <span class="token comment">// NOT OK</span></code></pre>
+<p>That's right, it isn't really white-space sensitive at all. I wish the language had simpler rules regarding this, but that's unfortunately not the case. So we rely on linters to warn us. (This ties into the next point).</p>
+<ol start="4">
+<li>
+<p><strong>Automatic semi-colon insertion</strong>. What you're seeing above is really an effect of <a href="https://262.ecma-international.org/7.0/#sec-rules-of-automatic-semicolon-insertion">this</a> annoying ECMA ruleset. So behold:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">ten</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><br>    	<span class="token number">10</span><br><span class="token punctuation">}</span><br>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">ten</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// undefined</span></code></pre>
+<p>This not very obvious when your functions are deeply nested and the expression is big, like:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                    <span class="token comment">// not doing what you think it's doing</span><br>                    <span class="token keyword">return</span><br>                    	GetFooFactory<span class="token punctuation">.</span><span class="token function">MakeFoo</span><span class="token punctuation">(</span><span class="token function">MakeBar</span><span class="token punctuation">(</span><span class="token function">Baz</span><span class="token punctuation">(</span>Pop<span class="token punctuation">,</span> Bop<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <br>                <span class="token punctuation">}</span><br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+</li>
+<li>
+<p><strong>Contextual keywords</strong>. <code>async</code>, <code>await</code> and even <code>let</code> are keywords under some contexts and identifiers under others. This leads to some funny possibilities like <code>var let = 100</code>. Although not inherently bad, I still dislike them personally because of it's inconsistent nature.</p>
+</li>
+<li>
+<p><strong>Unused reserved words</strong>. <code>enum</code>, <code>private</code>, <code>public</code> are reserved words that you cannot use. But they don't bring any features to the language. ECMA just <em>might</em> one day add private members or enums and so they reserved these words. I see this as a good strategy, but why not do one thing? If you have contextual keywords, then make these keywords contextual too instead of &quot;pre-reserving&quot; them and making other future keywords contextual. That said, I see this as a reasonable approach. Although I don't quite understand why implementing enums is taking so long :p</p>
+</li>
+<li>
+<p><strong>Hoisting</strong>. Not a big deal, but not WSYIWYG. I like my scripting languages WSYIWYG, thank you.</p>
+</li>
+</ol>
+<p>There's some other smaller problems that one can live with, like no native integers etc. But I can live with those. In contrast, I <em>have</em> to live with the above.</p>
+<h2>What does the future hold?</h2>
+<p>Pain and suffering. Because JS will always have to be backwards compatible.</p>
+<p>But also some nice stuff, because the newer additions to JavaScript have been fairly nice! Besides, we are still in the early dawn of programming languages. I don't know if there will ever be a language that is both popularly used and popularly liked.</p>
+<blockquote>
+<p><em>&quot;There are only two kinds of languages: the ones people complain about and the ones nobody uses.&quot;</em>
+<strong><div style ="text-align: right">- Bjarne Stroustrup </div></strong></p>
+</blockquote>
+<h2>FAQ</h2>
+<ul>
+<li><strong>So do you like JS or not?</strong> No comments.</li>
+<li><strong>Why did you feel the need to write this blog post?</strong> I have time, and no job. Go figure.</li>
+<li><strong>Why is there an FAQ section when clearly nobody is reading this ever?</strong> Rude :(</li>
+<li><strong>Show me more wonky JavaScript.</strong> Go to <a href="https://wtfjs.com/">wtfjs</a> and knock yourself out.</li>
+<li><strong>JavaScript done right?</strong> I have searched for ages, but couldn't find anything better than PureScript or Dart (when transpiled). it is extremely difficult for scripting languages to enter browsers, unless the transpile to the unholy devilspawn.</li>
+<li><strong>Why are there references to Dante's inferno?</strong> That is the closest entertaining piece of literature in my recent memory and I don't want a completely bland wall of text.</li>
+</ul>
+</article>
+        <hr>
+        
+        <div class="nav">
+          
+            <a class="prev" 
+              href="..//digital-garden/">&lt; On digital gardens, books and trying a new style of learning.</a>
+          
+
+          
+        </div>
+      </div>
+    </class>
+    
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
+  </body>
+</html>
