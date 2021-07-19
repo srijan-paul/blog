@@ -12,30 +12,18 @@
 */
 
 [data-theme='dark'] {
-  --background: #282c34;
-  --foreground: #a5b1c2;
+  --background: #282C34;
+  --foreground: #d6d6d6;
   --comment: #5c6370;
-  --keyword: #0077aa;
-  --var: #FD971F;
-  --function: #0fb9b1;
+  --keyword: #C678DD;
+  --var: #E06C75;
+  --function: #61AFEF;
   --property: #66D9EF;
-  --number: #fab1a0;
-  --semi: #8395a7;
-  --string: #e5c07b;
-  --operator: #ff6b6b;
+  --number: #e5c07b;
+  --semi: #ABB2BF;
+  --string: #98C379;
+  --operator: #56B6C2;
 
-  /* --background: #1e1e1e;
-  --foreground: #d4d4d4;
-  --comment: #6a9955;
-  --keyword: #0077aa;
-  --var: #fc9867;
-  --function: #DD4A68;
-  --property: #66d9ef;
-  --number: #b5cea8;
-  --semi: #8395a7;
-  --string: #ce9178;
-  --operator: #d4d4d4;
-  --const: #31aa90; */
 
   --bg-no-pre: #222f3e;
   --fg-no-pre: #c8d6e5;
