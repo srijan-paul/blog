@@ -30,14 +30,17 @@
         <div class="nav">
           {% if previousPost %}
             <a class="prev" 
-              href="../{{ previousPost.url }}">&lt; {{ previousPost.data.title }}</a>
+              href="..{{ previousPost.url }}">&lt; {{ previousPost.data.title | truncateString }}</a>
           {% endif %}
 
           {% if nextPost %}
             <a class="next"
-              href = "../{{ nextPost.url }}">{{ nextPost.data.title }} &gt;</a>
+              href = "..{{ nextPost.url }}">{{ nextPost.data.title | truncateString }} &gt;</a>
           {% endif %}
         </div>
+
+        {{macros.socials()}}
+
       </div>
     </class>
     {# Javascript for theme switching, light/dark mode. #}

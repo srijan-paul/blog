@@ -11,6 +11,11 @@ module.exports = function (eleventyConfig) {
     return strftime('%B %d, %Y', date);
   });
 
+  eleventyConfig.addNunjucksFilter('truncateString', (str) => {
+    const truncateLen = 30;
+    return str.length > truncateLen ? `${str.substr(0, truncateLen)}...` : str;
+  });
+
   return {
     dir: {
       input: '11ty',

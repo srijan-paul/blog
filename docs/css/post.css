@@ -14,12 +14,15 @@ body {
   --info-color: gray;
   --accent-color: rgb(32, 35, 37);
   --logo-color: #fed130d3;
-  --link-color: #61AFEF;
+  --link-color: #61afef;
+  --bq-border: gray;
+  --bq-bg: #282c34;
 }
 
 [data-theme='light'] {
   --fg-color: #2c3e50;
   --fg-color-2: #2c3e50;
+  --bq-border: #ccc;
   --info-color: gray;
   --bg-color: #ffffff;
   --heading-color: #2c3e50;
@@ -75,7 +78,7 @@ code {
 }
 
 ul li {
-  list-style: square none;
+  list-style: disc outside;
   margin-left: 2%;
 }
 
@@ -85,10 +88,11 @@ ol {
 
 ol li {
   /* display: inline; */
+  list-style: decimal inside;
   list-style-position: initial;
   margin: 0;
   padding: 0;
-  margin-left: 1.5%;
+  margin-left: 2.2%;
 }
 
 .post-title {
@@ -105,6 +109,35 @@ img {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2%;
+}
+
+blockquote {
+  background: var(--bq-bg);
+  border-left: 10px solid var(--bq-border);
+  margin: 1.2em 10px;
+  padding: 0.5em 10px;
+  quotes: '\201C''\201D''\2018''\2019';
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.05em;
+  vertical-align: -0.4em;
+}
+
+blockquote:after {
+  color: #ccc;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-left: 0.05em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display: inline;
 }
 
 a,
@@ -275,5 +308,15 @@ p {
   img {
     width: 100%;
     height: auto;
+  }
+
+  ul li {
+    list-style: disc inside;
+    margin-left: 2%;
+  }
+
+  ol li {
+    list-style: decimal outside;
+    margin-left: 4%;
   }
 }

@@ -34,7 +34,7 @@
       </label>
     </div>
   </div>
-  
+
 
         
   
@@ -63,14 +63,14 @@
         <article class="post"><p><em>&quot;JavaScript is the devilspawn!&quot;</em> cried Dante, the average modern day web developer. <em>&quot;The semantics make little sense, the spec is absolute heresy! Brendan Eich be crucified!&quot;</em></p>
 <p>His voice echoed throughout the halls of the Purgatory's fifth circle.
 With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon their image in the bloody river.</p>
-<p><em>&quot;<code>0.1 + 0.2 != 0.3</code> evaluates to <code>false</code>!?&quot; <code>NaN != NaN</code> is <code>true</code>? With a curse like that, we shall forever be stuck in the inferno.&quot;</em></p>
+<p>&quot;<em><code>0.1 + 0.2 != 0.3</code> evaluates to <code>false</code>!? <code>NaN != NaN</code> is <code>true</code>? With a curse like that, we shall forever be stuck in purgatorio.&quot;</em></p>
 <p>&quot;<em>Art thou, too, of the other fools, Dante?</em> &quot; Virgilio, the wise pagan soul broke his silence.</p>
 <p><em>&quot;Pardon, Virgilio?&quot;</em></p>
 <p><em>&quot;Such rampant ignorance. My soul whimpers in despair.&quot;</em>  said the exasperated Virgilio.</p>
 <p><em>&quot;What is this ignorance you speak of, partner?&quot;</em> the unnerved Dante asked.</p>
 <p>Virgilio faced him and continued...</p>
-<p><em>&quot;It is true that JavaScript is somewhat second-rate. I would stake my life on it. But to compare it to the devil itself, is to manifest a sin!&quot;</em>. Tears started running down Virgil's eyes, as he went on to explain why so much of the critique JavaScript receives is misplaced.</p>
-<p>Dante's reflection in the river of Styx might be contrasted with that of a novice programmer, new to the delicate craft of forging computer programs out of several different languages. It is completely fair for the novice to critique Programming Languages, as it is for anyone else. However, it is in the programmer, and everyone else's interest if they do some reading up before presenting their criticisms to the global community of programmers.</p>
+<p><em>&quot;It is true that JavaScript is second-rate. I could stake my life on it. But to compare it to the devil itself, is to manifest the greatest of sins!&quot;</em>. Tears started pouring down Virgil's eyes, as he went on to explain why so much of the critique JavaScript receives is misplaced.</p>
+<p>Dante's reflection in the river of Styx might be contrasted with that of a novice programmer, new to the delicate craft of forging computer programs out of several different languages. It is completely fair for the novice to critique Programming Languages, as it is for anyone else. However, it is in everyone's best interest if they do some reading up before presenting their criticisms to the world.</p>
 <p>In this post, I want to:</p>
 <ol>
 <li>Take a look at popularly misplaced critiques of JavaScript.</li>
@@ -220,12 +220,11 @@ However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonk
 <p>That's just one of the infinitely many examples that I wish JS got right. It's one of those things that makes up for 50% of why JavaScript is popularly hated.</p>
 </li>
 <li>
-<p><strong>Wonky whitespace sensitivity.</strong> JavaScript looks like it's not white-space sensitive at first glance. Catch this:</p>
-</li>
-</ol>
+<p><strong>Wonky whitespace sensitivity.</strong>
+JavaScript looks like it's not white-space sensitive at first     glance. Catch this:</p>
 <pre class="language-javascript"><code class="language-javascript">a <span class="token operator">=</span> <span class="token number">124</span> <span class="token comment">// ok</span><br>b <span class="token operator">=</span> <span class="token number">100</span> <span class="token comment">// ok</span><br>c <span class="token operator">=</span> <span class="token number">124</span> d <span class="token operator">=</span> <span class="token number">214</span> <span class="token comment">// NOT OK</span></code></pre>
 <p>That's right, it isn't really white-space sensitive at all. I wish the language had simpler rules regarding this, but that's unfortunately not the case. So we rely on linters to warn us. (This ties into the next point).</p>
-<ol start="4">
+</li>
 <li>
 <p><strong>Automatic semi-colon insertion</strong>. What you're seeing above is really an effect of <a href="https://262.ecma-international.org/7.0/#sec-rules-of-automatic-semicolon-insertion">this</a> annoying ECMA ruleset. So behold:</p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">ten</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><br>    	<span class="token number">10</span><br><span class="token punctuation">}</span><br>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">ten</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// undefined</span></code></pre>
@@ -265,11 +264,44 @@ However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonk
         <div class="nav">
           
             <a class="prev" 
-              href="..//digital-garden/">&lt; On digital gardens, books and trying a new style of learning.</a>
+              href="../digital-garden/">&lt; On digital gardens, books and ...</a>
           
 
           
         </div>
+
+        
+
+  <div class="socials-section">
+    <hr/>
+    <div class="social-icons">
+      
+      <a class="social-icon" href="https://www.twitter.com/" target="_blank">
+        <img class="social-img" src="../assets/svg/twitter.svg"/>
+      </a>
+
+      <a class="social-icon" href="https://www.github.com/srijan-paul" target="_blank">
+        <img class="social-img filterclass" src="../assets/svg/github.svg"/>
+      </a>
+
+      <a class="social-icon" href="https://srijan-paul.github.io" target="_blank">
+        <img class="social-img filterclass" src="../assets/svg/www.svg"/>
+      </a>
+
+      <a class="social-icon" href="mailto:srijannr1@gmail.com" target="_blank">
+        <img class="social-img" src="../assets/svg/gmail.svg"/>
+      </a>
+
+    </div>
+
+    <div class="copyright"> 
+      Copyright Ⓒ 2020-2021 Srijan Paul.
+      <div class="copyright-note"> Why do blog sites need copyrights anyway? </div>
+    </div>
+  
+  </div>
+
+
       </div>
     </class>
     

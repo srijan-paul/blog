@@ -23,7 +23,7 @@
         {# blog title #}
         <h1 class="post-title">{{ title }}</h1>
         {# tags #}
-        
+
         <hr>
         {# home page description #}
         <article class="post">
@@ -31,7 +31,10 @@
           {{macros.postList(collections.post)}}
         </article>
       </div>
+
+      {{macros.socials()}}
+
     </section>
     <script type="text/javascript" src="../js/theme_switch.js"></script>
   </body>
-</html> 
+</html>

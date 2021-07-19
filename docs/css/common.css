@@ -1,4 +1,34 @@
 .svg-icon {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-img {
+  width: 24px;
+  height: 24px;
+}
+
+.copyright {
+  text-align: center;
+  padding: 1.5%;
+  font-size: 15px;
+}
+
+.copyright-note {
+  font-size: 7px;
+}
+
+[data-theme='dark'] {
+  --icon-light-filter: invert();
+}
+
+.filterclass {
+  filter: var(--icon-light-filter);
 }

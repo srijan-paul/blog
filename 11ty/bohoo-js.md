@@ -9,7 +9,7 @@ title: 'BoOHoO JaVaScRiPT!!'
 His voice echoed throughout the halls of the Purgatory's fifth circle. 
 With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon their image in the bloody river.
 
-*"`0.1 + 0.2 != 0.3` evaluates to `false`!?" `NaN != NaN` is `true`? With a curse like that, we shall forever be stuck in the inferno."*
+"*`0.1 + 0.2 != 0.3` evaluates to `false`!? `NaN != NaN` is `true`? With a curse like that, we shall forever be stuck in purgatorio."*
 
 "*Art thou, too, of the other fools, Dante?* " Virgilio, the wise pagan soul broke his silence.
 
@@ -21,9 +21,9 @@ With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon
 
 Virgilio faced him and continued...
 
-*"It is true that JavaScript is somewhat second-rate. I would stake my life on it. But to compare it to the devil itself, is to manifest a sin!"*. Tears started running down Virgil's eyes, as he went on to explain why so much of the critique JavaScript receives is misplaced.
+*"It is true that JavaScript is second-rate. I could stake my life on it. But to compare it to the devil itself, is to manifest the greatest of sins!"*. Tears started pouring down Virgil's eyes, as he went on to explain why so much of the critique JavaScript receives is misplaced.
 
-Dante's reflection in the river of Styx might be contrasted with that of a novice programmer, new to the delicate craft of forging computer programs out of several different languages. It is completely fair for the novice to critique Programming Languages, as it is for anyone else. However, it is in the programmer, and everyone else's interest if they do some reading up before presenting their criticisms to the global community of programmers. 
+Dante's reflection in the river of Styx might be contrasted with that of a novice programmer, new to the delicate craft of forging computer programs out of several different languages. It is completely fair for the novice to critique Programming Languages, as it is for anyone else. However, it is in everyone's best interest if they do some reading up before presenting their criticisms to the world. 
 
 In this post, I want to:
 
@@ -42,7 +42,6 @@ true == 1		       // true
 ```
 
 Moreover:
-
 1. JavaScript is slow.
 2. Untyped and extremely unsafe.
 3. Single threaded.
@@ -291,15 +290,14 @@ Yes, I did defend JavaScript quite a bit. But I still do have my own fair share 
 
    That's just one of the infinitely many examples that I wish JS got right. It's one of those things that makes up for 50% of why JavaScript is popularly hated.
 
-3.  **Wonky whitespace sensitivity.** JavaScript looks like it's not white-space sensitive at first glance. Catch this:
-
-   ```javascript
-   a = 124 // ok
-   b = 100 // ok
-   c = 124 d = 214 // NOT OK
-   ```
-
-   That's right, it isn't really white-space sensitive at all. I wish the language had simpler rules regarding this, but that's unfortunately not the case. So we rely on linters to warn us. (This ties into the next point).
+3.  **Wonky whitespace sensitivity.** 
+    JavaScript looks like it's not white-space sensitive at first     glance. Catch this:
+    ```javascript
+    a = 124 // ok
+    b = 100 // ok
+    c = 124 d = 214 // NOT OK
+    ```
+    That's right, it isn't really white-space sensitive at all. I wish the language had simpler rules regarding this, but that's unfortunately not the case. So we rely on linters to warn us. (This ties into the next point).
 
 4. **Automatic semi-colon insertion**. What you're seeing above is really an effect of [this](https://262.ecma-international.org/7.0/#sec-rules-of-automatic-semicolon-insertion) annoying ECMA ruleset. So behold: 
 
@@ -334,6 +332,7 @@ Yes, I did defend JavaScript quite a bit. But I still do have my own fair share 
 5. **Contextual keywords**. `async`, `await` and even `let` are keywords under some contexts and identifiers under others. This leads to some funny possibilities like `var let = 100`. Although not inherently bad, I still dislike them personally because of it's inconsistent nature.
 
 6. **Unused reserved words**. `enum`, `private`, `public` are reserved words that you cannot use. But they don't bring any features to the language. ECMA just *might* one day add private members or enums and so they reserved these words. I see this as a good strategy, but why not do one thing? If you have contextual keywords, then make these keywords contextual too instead of "pre-reserving" them and making other future keywords contextual. That said, I see this as a reasonable approach. Although I don't quite understand why implementing enums is taking so long :p
+
 7. **Hoisting**. Not a big deal, but not WSYIWYG. I like my scripting languages WSYIWYG, thank you.
 
 
