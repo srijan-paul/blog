@@ -44,10 +44,10 @@ true == 1		       // true
 Moreover:
 
 1. JavaScript is slow.
-2. untyped and extremely unsafe.
+2. Untyped and extremely unsafe.
 3. Single threaded.
 
-If you're anything but a very beginner programmer, the above might come off as obvious to you, and you might be better of skipping half of this post! However, it really is true that the above are some of the most  "meme"-d  takes on JavaScript. Type  "JavaScript bad meme" into your search engine of choice to convince yourself, that's how I got to the bunch above.
+If you're anything but a very new programmer, the above might come off as obvious to you, and you might be better of skipping half of this post! However, it really is true that the above are some of the most  "meme"-d  takes on JavaScript. Type  "JavaScript bad meme" into your search engine of choice to convince yourself, that's how I got to the bunch above.
 
 "JavaScript bad because `0.1 + 0.2 != 0.3`" is tech-twitter's favorite game to play on weekends!
 
