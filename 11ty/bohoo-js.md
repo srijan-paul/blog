@@ -44,7 +44,7 @@ true == 1		       // true
 Moreover:
 
 1. JavaScript is slow.
-2. Extremely loosely typed and unsafe.
+2. untyped and extremely unsafe.
 3. Single threaded.
 
 If you're anything but a very beginner programmer, the above might come off as obvious to you, and you might be better of skipping half of this post! However, it really is true that the above are some of the most  "meme"-d  takes on JavaScript. Type  "JavaScript bad meme" into your search engine of choice to convince yourself, that's how I got to the bunch above.
@@ -106,7 +106,7 @@ if (0) { /* stuff */ }
 
 Why is it okay to substitute `0` (or `''`) for `false` but not `true` for `1`?
 
-The `==` operator compares **truthiness** of values. i.e it makes a judgement based on a **property** of it's operands, and their value. Take a look:
+The `==` operator compares **truthiness** of values. i.e it makes a judgement based on a **property** of it's operands, and not the values themselves. Take a look:
 
 ```javascript
 ''   == false // true
@@ -176,7 +176,7 @@ This statement is much more meaningful, we can now write programs, run benchmark
 That said, is JavaScript *actually slow*?
 
 Many tend to assume that JS must be slow since it is capable of exhibiting such highly dynamic behavior. 
-However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonkey are extremely performant, heavily optimizing beasts. They're JIT engines, the exact inner workings of some of their parts are currently a dark art to me, so I can't comment on the exact optimizations they make, but perhaps taking a look at numbers may help move the argument forward.
+However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonkey are extremely performant, heavily optimizing beasts. They're JIT engines, the precise inner workings of which deserve a post of their own, but perhaps taking a look at numbers may help move the argument forward.
 
 Taking a look at some benchmarks from the [computer language benchmark games](https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html) site, it would appear that Node.js (which embeds V8) is actually not bad at all, even beating some implementations of Java and Haskell and C++ at times!
 
@@ -184,47 +184,41 @@ Now it is true that benchmarks are nowhere close to real programs, but the JavaS
 
 **"JavaScript is fast enough for what it needs to do"**
 
-## JavaScript is loosely typed and unsafe.
+## JavaScript is untyped and unsafe.
 
 I read this in someone's blog, and a supporting twitter thread and it's uuh... not true maybe? 
 
-JavaScript is **dynamically checked** and **safe**. But I do not blame the people who make this claim at all. In fact, I believe the problem is with misnomers and poor definition of terms like "loosely typed", "dynamically typed" and "safe".
+JavaScript is **dynamically checked** and **safe**. But I do not blame the people who make this claim at all. In fact, I believe the problem is with misnomers and poor definition of terms like "loosely typed", "dynamically typed" and "safe" outside of academia.
 
-I'll take a page out of Pierce's great book, [Types and programming languages](https://www.cis.upenn.edu/~bcpierce/tapl/):
+I'll take an excerpt out of Pierce's great book, [Types and programming languages](https://www.cis.upenn.edu/~bcpierce/tapl/):
 
 >  Terms like "dynamically typed" are arguably misnomers and should probably be replaced by "dynamically checked," but the usage is standard.
 
-**Dynamically checked:** Variables and symbols do **not** have types. The types lie within **values**.
+**Dynamically checked:** Variables and symbols do **not** have types. The types are bound to **values** instead.
 
 *...What?*
 
 Let's try with an example. The number `100`, has a type of "number" at runtime. However in this statement:
 
 ```javascript
-const x = 100;
+let x = 100;
 ```
 
 The **symbol** "x" and in it's semantic  definition, does not have a type. But it's still not wrong to say *"the type of 'x' is `number`"*. Why? Because when `x` is evaluated by the runtime, as a **value**, it does have a type (which can be seen by `typeof x`). 
 
 However the **name** "x" is void of any type. So we can do `x = 'xyz'` and still be good, law-abiding JavaScript programmers. 
 
-
-
 The key is understanding the difference between the **name** ''x" which can be bound to any value, and the **value** "x", which always evaluates to whichever value the name is bound to at the time of evaluation.
-
-
 
 And now, I back my wild claim, *"JavaScript is safe"*.
 
-I sound like a total nutjob wo should be banned from touching a keyboard ever again, but bear with me! A very simple definition of the word **safe** in context of programming languages is: 
+I sound like a total nutjob wo should be banned from touching a keyboard ever again, but bear with me! A very simple definition of the word **safe** in context of programming languages can be overly simplified to: 
 
 *A language where every code snippet always is well-defined by the standard.* 
 
 And this is indeed true of JavaScript. If you don't like that thought, pause for a second and try to come up with a JavaScript code snippet that is **undefined** under the ECMAScript spec. I bet you there isn't any. It may error out, or produce wonky output, but the behavior is **defined**, and will be the same for every standard-compliant JavaScript implementation.
 
 In fact, C++ is **less safe** than JavaScript, despite being statically typed (which makes sense, because the two properties aren't always locked in pair). For example, the following C++ code does not have any defined behavior:
-
-
 
 ```cpp
 #include <iostream>
@@ -249,8 +243,8 @@ My personal opinion:
 
 |                      | Safe                                                         | Unsafe                                                       |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Dynamic checking** | Very easy to write erroneous programs, but much easier to debug due to well defined runtime behavior and inspection. | Don't know of any such languages except hobby projects. Let me know if you got some! |
-| **Static checking**  | Best of both worlds. Most languages in this bucket are functional. | Easier to write correct programs, but much harder to debug due. There are no types and bounds at runtime. |
+| **Dynamic checking** | Very easy to write erroneous programs, but much easier to debug due to well defined runtime behavior and inspection capability. | Don't know of any such languages except hobby projects. Let me know if you have some in mind! |
+| **Static checking**  | Best of both worlds. Most languages in this bucket are functional. | Easier to write correct programs, but much harder to debug as there are no types and bounds at runtime. |
 
 IMO, there is always a tradeoff. If you miss having compile time type checking, maybe checkout Typescript/Purescript? I'm a huge fan of both.
 

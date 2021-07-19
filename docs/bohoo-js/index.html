@@ -81,7 +81,7 @@ With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon
 <p>Moreover:</p>
 <ol>
 <li>JavaScript is slow.</li>
-<li>Extremely loosely typed and unsafe.</li>
+<li>untyped and extremely unsafe.</li>
 <li>Single threaded.</li>
 </ol>
 <p>If you're anything but a very beginner programmer, the above might come off as obvious to you, and you might be better of skipping half of this post! However, it really is true that the above are some of the most  &quot;meme&quot;-d  takes on JavaScript. Type  &quot;JavaScript bad meme&quot; into your search engine of choice to convince yourself, that's how I got to the bunch above.</p>
@@ -112,7 +112,7 @@ This has some trade-offs, speed is the very obvious first candidate, but also sp
 <p>In case of JavaScript, if we complain about the above, then why not  maintain the same energy for this:</p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/* stuff */</span> <span class="token punctuation">}</span></code></pre>
 <p>Why is it okay to substitute <code>0</code> (or <code>''</code>) for <code>false</code> but not <code>true</code> for <code>1</code>?</p>
-<p>The <code>==</code> operator compares <strong>truthiness</strong> of values. i.e it makes a judgement based on a <strong>property</strong> of it's operands, and their value. Take a look:</p>
+<p>The <code>==</code> operator compares <strong>truthiness</strong> of values. i.e it makes a judgement based on a <strong>property</strong> of it's operands, and not the values themselves. Take a look:</p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token string">''</span>   <span class="token operator">==</span> <span class="token boolean">false</span> <span class="token comment">// true</span><br><span class="token number">0</span>    <span class="token operator">==</span> <span class="token string">''</span>    <span class="token comment">// true</span></code></pre>
 <p>Note however that it's overloaded to act differently for numbers and strings (and this weird polymorphism is a fair critique, which we'll address).
 If you want strict value comparison, use <code>==</code>'s sister <code>===</code> instead.</p>
@@ -144,26 +144,26 @@ Languages are defined by their syntax + semantics + standards. It is impossible 
 <p>This statement is much more meaningful, we can now write programs, run benchmarks and make real comparisons. However, we must not forget that not all languages cover the same domains. Scripting languages have a lot more reason and leeway to be slower owing to the environments they are generally embedded in. C++ vs JavaScript is simply an apples to oranges comparison.</p>
 <p>That said, is JavaScript <em>actually slow</em>?</p>
 <p>Many tend to assume that JS must be slow since it is capable of exhibiting such highly dynamic behavior.
-However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonkey are extremely performant, heavily optimizing beasts. They're JIT engines, the exact inner workings of some of their parts are currently a dark art to me, so I can't comment on the exact optimizations they make, but perhaps taking a look at numbers may help move the argument forward.</p>
+However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonkey are extremely performant, heavily optimizing beasts. They're JIT engines, the precise inner workings of which deserve a post of their own, but perhaps taking a look at numbers may help move the argument forward.</p>
 <p>Taking a look at some benchmarks from the <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html">computer language benchmark games</a> site, it would appear that Node.js (which embeds V8) is actually not bad at all, even beating some implementations of Java and Haskell and C++ at times!</p>
 <p>Now it is true that benchmarks are nowhere close to real programs, but the JavaScript interpreter being a bottleneck in web-apps is not something you hear often. So I'd say</p>
 <p><strong>&quot;JavaScript is fast enough for what it needs to do&quot;</strong></p>
-<h2>JavaScript is loosely typed and unsafe.</h2>
+<h2>JavaScript is untyped and unsafe.</h2>
 <p>I read this in someone's blog, and a supporting twitter thread and it's uuh... not true maybe?</p>
-<p>JavaScript is <strong>dynamically checked</strong> and <strong>safe</strong>. But I do not blame the people who make this claim at all. In fact, I believe the problem is with misnomers and poor definition of terms like &quot;loosely typed&quot;, &quot;dynamically typed&quot; and &quot;safe&quot;.</p>
-<p>I'll take a page out of Pierce's great book, <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and programming languages</a>:</p>
+<p>JavaScript is <strong>dynamically checked</strong> and <strong>safe</strong>. But I do not blame the people who make this claim at all. In fact, I believe the problem is with misnomers and poor definition of terms like &quot;loosely typed&quot;, &quot;dynamically typed&quot; and &quot;safe&quot; outside of academia.</p>
+<p>I'll take an excerpt out of Pierce's great book, <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and programming languages</a>:</p>
 <blockquote>
 <p>Terms like &quot;dynamically typed&quot; are arguably misnomers and should probably be replaced by &quot;dynamically checked,&quot; but the usage is standard.</p>
 </blockquote>
-<p><strong>Dynamically checked:</strong> Variables and symbols do <strong>not</strong> have types. The types lie within <strong>values</strong>.</p>
+<p><strong>Dynamically checked:</strong> Variables and symbols do <strong>not</strong> have types. The types are bound to <strong>values</strong> instead.</p>
 <p><em>...What?</em></p>
 <p>Let's try with an example. The number <code>100</code>, has a type of &quot;number&quot; at runtime. However in this statement:</p>
-<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> x <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span></code></pre>
 <p>The <strong>symbol</strong> &quot;x&quot; and in it's semantic  definition, does not have a type. But it's still not wrong to say <em>&quot;the type of 'x' is <code>number</code>&quot;</em>. Why? Because when <code>x</code> is evaluated by the runtime, as a <strong>value</strong>, it does have a type (which can be seen by <code>typeof x</code>).</p>
 <p>However the <strong>name</strong> &quot;x&quot; is void of any type. So we can do <code>x = 'xyz'</code> and still be good, law-abiding JavaScript programmers.</p>
 <p>The key is understanding the difference between the <strong>name</strong> ''x&quot; which can be bound to any value, and the <strong>value</strong> &quot;x&quot;, which always evaluates to whichever value the name is bound to at the time of evaluation.</p>
 <p>And now, I back my wild claim, <em>&quot;JavaScript is safe&quot;</em>.</p>
-<p>I sound like a total nutjob wo should be banned from touching a keyboard ever again, but bear with me! A very simple definition of the word <strong>safe</strong> in context of programming languages is:</p>
+<p>I sound like a total nutjob wo should be banned from touching a keyboard ever again, but bear with me! A very simple definition of the word <strong>safe</strong> in context of programming languages can be overly simplified to:</p>
 <p><em>A language where every code snippet always is well-defined by the standard.</em></p>
 <p>And this is indeed true of JavaScript. If you don't like that thought, pause for a second and try to come up with a JavaScript code snippet that is <strong>undefined</strong> under the ECMAScript spec. I bet you there isn't any. It may error out, or produce wonky output, but the behavior is <strong>defined</strong>, and will be the same for every standard-compliant JavaScript implementation.</p>
 <p>In fact, C++ is <strong>less safe</strong> than JavaScript, despite being statically typed (which makes sense, because the two properties aren't always locked in pair). For example, the following C++ code does not have any defined behavior:</p>
@@ -182,13 +182,13 @@ However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonk
 <tbody>
 <tr>
 <td><strong>Dynamic checking</strong></td>
-<td>Very easy to write erroneous programs, but much easier to debug due to well defined runtime behavior and inspection.</td>
-<td>Don't know of any such languages except hobby projects. Let me know if you got some!</td>
+<td>Very easy to write erroneous programs, but much easier to debug due to well defined runtime behavior and inspection capability.</td>
+<td>Don't know of any such languages except hobby projects. Let me know if you have some in mind!</td>
 </tr>
 <tr>
 <td><strong>Static checking</strong></td>
 <td>Best of both worlds. Most languages in this bucket are functional.</td>
-<td>Easier to write correct programs, but much harder to debug due. There are no types and bounds at runtime.</td>
+<td>Easier to write correct programs, but much harder to debug as there are no types and bounds at runtime.</td>
 </tr>
 </tbody>
 </table>
