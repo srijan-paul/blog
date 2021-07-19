@@ -38,6 +38,7 @@ NaN == NaN             // false
 typeof NaN             // "number"
 true == 1		       // true
 [5, 4, 31].sort()      // [ 31, 4, 5 ]
+Math.max() 			   // -Infinity
 [1, 2, 3] == [1, 2, 3] // false
 ```
 
@@ -137,6 +138,39 @@ To do a number comparison-based sort, you'd have to call it like so:
 
 
 Just to be clear, I believe this is a completely fair and valid criticism, just not of the language, but it's standard library.
+
+Following up with:
+
+```javascript
+Math.max() // -Infinity
+```
+
+`Math.max` is a variadic function, meaning you can call it with 1, 2, 3 or 0 arguments. When called with 0 arguments, it returns `-Infinity`. Why? Because maximum of an empty set is negative infinity.
+
+Why not throw an arity error on 0 arguments you ask? Because there are cases where the number of arguments isn't known at compile time. For example, calling it with the spread operator like `Math.max(...myArgs)`. In fact, try implementing `Math.max` yourself, how would you do it?
+
+```javascript
+Math.max = (args...) => {
+    let maxSoFar = /* what? */
+    args.forEach(arg => {
+       if (arg > maxSoFar) maxSoFar = arg; 
+    });
+    return maxSoFar;
+}
+```
+
+What should `maxSoFar` be initialized with? What is that one value which is guaranteed to be less than anything in `args`? Why `-Infinity` of course! Note that we can't initialize it with `args[0]` here because the index may be out of bounds, when `args` is empty. Another approach could be:
+
+```javascript
+Math.max = (args...) => {
+   if (args.length < 1) throw new Error("Expected at least 1 argument");
+   // ...
+}
+```
+
+This is a completely valid approach as well, just different from what JavaScript does. I hope given the perspective above, you can see why neither of them are better or worse than the other. Neither is void of reason, they just have different conventions.
+
+
 
 Finally,
 
