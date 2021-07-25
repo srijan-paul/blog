@@ -46,7 +46,7 @@ print(adder(10)) -- 110
 
 Notice how on the last line, when `adder` is called, it's able to correctly fetch the value associated with variable `num`, even though that variable was supposed to "disappear" as soon as the runtime exits `make_adder`'s local scope? That's because the function returned by `make_adder` is a "closure" ([1](#backmatter)). 
 
-Lua originally introduced the idea of [upvalues](https://www.lua.org/pil/27.3.3.html) to implement closures. Upvalues are variables referenced by a function that live outside the scope of the said function.  Under the hood, the Lua interpreter moves local variables (which live on the lua stack) that are referenced by upvalues, to some place in the heap when their scope is about to end. This way, the function can still carry a reference to the variable's heap location and use that to read/write to upvalues.
+Lua originally introduced the indirection of [upvalues](https://www.lua.org/pil/27.3.3.html) to implement closures that are amenable to a single pass compiler for an interpreted language. Upvalues are variables referenced by a function that live outside the scope of the said function.  Under the hood, the Lua interpreter moves local variables (which live on the lua stack) that are referenced by upvalues, to some place in the heap when their scope is about to end. This way, the function can still carry a reference to the variable's heap location and use that to read/write to upvalues.
 
 ## Lua's sister languages<a name="luas_sister_languages"></a>
 
@@ -54,7 +54,7 @@ Lua originally introduced the idea of [upvalues](https://www.lua.org/pil/27.3.3.
 
 There are several sister languages to Lua that either transpile to, or take inspiration from the language. I'll list them briefly in this section in case they're of interest to you.
 
-1. [Pallene](https://github.com/pallene-lang/pallene): Statically typed, compiles to C but uses the Lua C-API. Users can author Pallene scripts, make shared object libraries and import them in regular Lua programs.
+1. [Pallene](https://github.com/pallene-lang/pallene): Statically typed, compiles to C and can use Lua's C-API to communicate with the Lua runtime. Users can author Pallene scripts, make shared object libraries and import them in regular Lua programs.
 2. [Teal](https://github.com/teal-language/tl): Statically typed, transpiles to Lua. I like to think of it as Lua's Typescript.
 3. [Moonscript](https://moonscript.org/): Duck typed, transpiles to Lua. Whitespace sensitive with classes and lots of syntactic sugar. This is popular among the LÖVE2D community. Takes heavy inspiration from coffeescript.
 4. [Jammy](https://github.com/markpwns1/jammy): Duck typed, transpiles to Lua. It's very much like Moonscript but I like it's syntax more personally.
@@ -70,7 +70,7 @@ These are some of the most "developed" Lua dialects that I've seen in my time fi
 
 ## Pallene<a name="pallene"></a>
 
-Pallene is a statically typed dialect of Lua that compiles down to C code. The C code that it generates however, makes calls to the Lua VM's C-API. Due to this, it becomes possible to write Pallene code, compile it to C libraries and then import them in Lua with `require`. 
+Pallene is a statically typed dialect of Lua that compiles down to C code. For the most part, Pallene uses it's own internal APIs and libraries to do all the computation. Sometimes however, it makes calls to the Lua VM's C-API to communicate with the runtime. Due to this, it becomes possible to write Pallene code, compile it to C libraries and then import them in Lua with `require`. 
 
 It is worth noting that Lua allows writing extension modules in C and then importing them from Lua.
 In fact, all of the language's standard library itself is actually written in C! This feature is facilitated via [dynamic loading](https://en.wikipedia.org/wiki/Dynamic_loading) of shared C libraries using [dlopen](https://man7.org/linux/man-pages/man3/dlopen.3.html) and it's windows/mac counterparts.
@@ -98,7 +98,7 @@ static lua_Integer add_c(lua_Integer a, lua_Integer b) {
     return a + b;
 }
 
-// This is the function exposed to as a part of the Pallene module.
+// This is the function exposed as a part of the Pallene module 'm'.
 // function m.add(a, b)
 int add_lua(lua_State *L) {
     StackValue *base = L->ci->func; // [1]
@@ -108,8 +108,7 @@ int add_lua(lua_State *L) {
     lua_Integer b = ivalue(s2v(base + 2));
 
     lua_Integer ret = function_02(a, b); // [3]
-    setivalue(s2v(L->top), ret);         // [4]
-    L->top++;
+    lua_pushinteger(L, ret);             // [4]
     return 1;
 }
 ```
@@ -181,19 +180,21 @@ int lua_entry_point(lua_State* L) {
 	current_func = (CClosure*)(base); // cast the base to a CClosure
     upvalues     = current_func->upvalues;
  	
-    c_entry_point(arg1, arg2, upvalues);
+    c_entry_point(L, upvalues, arg1, arg2);
 }
 ```
 
 The upvalues will be passed as an extra argument to the C entry point. The same C-entry point can work with different sets of upvalues  belonging to different `CClosure` objects. The "logic" can remain independent and work with different sets of "data".
 
-The process of converting higher order functions written in Pallene to C is still fairly blurry. We also haven't answered questions such as:
+The process of converting higher order functions written in Pallene to C is still left unexplained in this post. I also haven't answered questions such as:
 
- 	1. When/How are the closures created? Who creates them (Lua/C)?
- 	2. What about Garbage Collection? How does it affect the upvalues?
- 	3. How to facilitate mutation of upvalues?
+ 1. When/How are the closures created? Who creates them (Lua/C)?
+ 2. What about Garbage Collection? How does it affect the upvalues?
+ 3. How to facilitate mutation of upvalues?
 
-If you've loosely understood most of what we went through so far, then you're ready to understand the rest of the idea mentioned in [this document](https://docs.google.com/document/d/11eodot4ca2epSjRl4Xl0YLiWfcMCkNZ2FL00D9S7VN4/edit?usp=sharing). This was a part of my GSoC proposal which I wrote with help from my mentor [Hugo Musso Gualandi](https://github.com/hugomg).
+I intend to answer these questions in part 2!
+
+If you've loosely understood most of what we went through so far, then you're ready to understand the rest of the idea mentioned in [this document](https://docs.google.com/document/d/11eodot4ca2epSjRl4Xl0YLiWfcMCkNZ2FL00D9S7VN4/edit?usp=sharing). This was a part of my GSoC proposal which I wrote with help from my mentor, [Hugo Musso Gualandi](https://github.com/hugomg).
 
 ## Up Next.<a name="up_next"></a>
 
