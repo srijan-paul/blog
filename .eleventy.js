@@ -1,5 +1,6 @@
 const strftime = require('strftime');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('css');
@@ -15,6 +16,8 @@ module.exports = function (eleventyConfig) {
     const truncateLen = 30;
     return str.length > truncateLen ? `${str.substr(0, truncateLen)}...` : str;
   });
+
+  eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
   return {
     dir: {

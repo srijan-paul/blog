@@ -23,8 +23,9 @@
         {{ macros.header(title, tags, page.date) }}
         <hr>
 
+        {{ collections.all | eleventyNavigation | eleventyNavigationToHtml | safe }}
         {# blog contents #}
-        <article class="post">{{ content | safe }}</article>
+        <main class="post" id="main-content">{{ content | safe }}</main>
         <hr>
         {# navigating to previous and next post #}
         <div class="nav">

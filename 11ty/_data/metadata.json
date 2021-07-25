@@ -3,6 +3,6 @@
   "outDir": "docs",
   "root": "blog",
   "productionMode": true,
-  "tags": ["post", "gamedev", "ave", "programming-languages", "sicp"],
+  "tags": ["post", "gamedev", "ave", "programming-languages", "sicp", "lua", "gsoc"],
   "author": "Srijan Paul"
 }

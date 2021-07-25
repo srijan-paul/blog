@@ -60,7 +60,8 @@
         <hr>
 
         
-        <article class="post"><p><em>&quot;JavaScript is the devilspawn!&quot;</em> cried Dante, the average modern day web developer. <em>&quot;The semantics make little sense, the spec is absolute heresy! Brendan Eich be crucified!&quot;</em></p>
+        
+        <main class="post" id="main-content"><p><em>&quot;JavaScript is the devilspawn!&quot;</em> cried Dante, the average modern day web developer. <em>&quot;The semantics make little sense, the spec is absolute heresy! Brendan Eich be crucified!&quot;</em></p>
 <p>His voice echoed throughout the halls of the Purgatory's fifth circle.
 With his ally Virgilio by his side, the duo sat on the bank of Styx, gazing upon their image in the bloody river.</p>
 <p>&quot;<em><code>0.1 + 0.2 != 0.3</code> evaluates to <code>false</code>!? <code>NaN != NaN</code> is <code>true</code>? With a curse like that, we shall forever be stuck in purgatorio.&quot;</em></p>
@@ -175,7 +176,7 @@ However, some of the most vital JavaScript engines today, V8, JSC and SpiderMonk
 <p><em>A language where every code snippet always is well-defined by the standard.</em></p>
 <p>And this is indeed true of JavaScript. If you don't like that thought, pause for a second and try to come up with a JavaScript code snippet that is <strong>undefined</strong> under the ECMAScript spec. I bet you there isn't any. It may error out, or produce wonky output, but the behavior is <strong>defined</strong>, and will be the same for every standard-compliant JavaScript implementation.</p>
 <p>In fact, C++ is <strong>less safe</strong> than JavaScript, despite being statically typed (which makes sense, because the two properties aren't always locked in pair). For example, the following C++ code does not have any defined behavior:</p>
-<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span><br><br><span class="token keyword">union</span> IntOrPtr <span class="token punctuation">{</span><br>    <span class="token keyword">int</span> integer<span class="token punctuation">;</span><br>    <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  IntOrPtr u <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span>ptr <span class="token operator">=</span> <span class="token string">"C++ gang"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>  <br>  std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>integer <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment">// &lt;--- Whoops!</span><br>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span><br><br><span class="token keyword">union</span> IntOrPtr <span class="token punctuation">{</span><br>    <span class="token keyword">int</span> integer<span class="token punctuation">;</span><br>    <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  IntOrPtr u <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span>ptr <span class="token operator">=</span> <span class="token string">"C++ gang"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>  <br>  std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>integer <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span> <span class="token comment">// &lt;--- Whoops!</span><br>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
 <p>Accessing the uninitialized field of a union is undefined behavior, and may have different behavior on different compilers, hardware, OS or even different runs of the same executable!</p>
 <p>Relying on such behavior can be lethal for your program (and I bet you I've seen industry codebases that relies on such behavior!).</p>
 <p>My personal opinion:</p>
@@ -266,7 +267,7 @@ JavaScript looks like it's not white-space sensitive at first     glance. Catch 
 <li><strong>JavaScript done right?</strong> I have searched for ages, but couldn't find anything better than PureScript or Dart (when transpiled). it is extremely difficult for scripting languages to enter browsers, unless the transpile to the unholy devilspawn.</li>
 <li><strong>Why are there references to Dante's inferno?</strong> That is the closest entertaining piece of literature in my recent memory and I don't want a completely bland wall of text.</li>
 </ul>
-</article>
+</main>
         <hr>
         
         <div class="nav">
@@ -275,6 +276,9 @@ JavaScript looks like it's not white-space sensitive at first     glance. Catch 
               href="../digital-garden/">&lt; On digital gardens, books and ...</a>
           
 
+          
+            <a class="next"
+              href = "../gsoc/">GSoC&#39;21: Lifting lambdas, Pall... &gt;</a>
           
         </div>
 

@@ -1,0 +1,211 @@
+
+
+<!doctype html>
+<html data-theme="light">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>GSoC&#39;21: Lifting lambdas, Pallene and Lua&#39;s sisters (1/2) </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/prism-theme.css">
+  </head>
+  <body>
+    
+    
+    <class class="main">
+      <div class="content-wrapper">
+        
+
+  <div class="navbar">
+    <div class="nav-item">
+      <a href="../home" id="logo">ByteFiction</a>
+    </div>
+
+    
+    <div class="nav-item">
+      <label class="switch">
+        <input type="checkbox" id="theme-switcher-button">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+
+        
+  
+  <h1 class="post-title">GSoC&#39;21: Lifting lambdas, Pallene and Lua&#39;s sisters (1/2) </h1>
+  <div class="info">July 25, 2021</div>
+  
+  <div class="tags">
+    
+      <a class="tag" href="../tags/lua">
+        lua
+      </a>
+    
+      <a class="tag" href="../tags/programming-languages">
+        programming-languages
+      </a>
+    
+      <a class="tag" href="../tags/gsoc">
+        gsoc
+      </a>
+    
+      <a class="tag" href="../tags/post">
+        post
+      </a>
+    
+  </div>
+
+        <hr>
+
+        
+        <article class="post"><p>This post is part 1 of a brief 2-part series summarizing the things I learned as a part of the <a href="https://summerofcode.withgoogle.com/">Google Summer of Code</a> event.</p>
+<p>I was able to work on the <a href="https://github.com/pallene-lang/pallene">Pallene</a> programming language's compiler, under the organization <a href="www.lua.inf.puc-rio.br">LabLua</a>. The event isn't exactly over at the time of me writing this, but I'll try and summarize the meat of the matter.</p>
+<p>I want to keep a low entry-barrier to the problem we tackled this summer, so I'll defer the actual GSoC coding period to the next post, by going over some of the preliminaries and covering the current state of the Pallene compiler.</p>
+<h2>Lambdas and Closures</h2>
+<p>(If you're already familiar with what closures and lambda functions are, consider skipping over this part)</p>
+<p>The term &quot;lambda&quot; generally refers to anonymous functions in programming languages. You're probably already used to them. For example, in the snippet below we are creating a name-less function that returns <code>10</code> and calling it immediately.</p>
+<pre class="language-lua"><code class="language-lua"><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">10</span> <span class="token keyword">end</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token comment">-- 20</span></code></pre>
+<p>The term &quot;closure&quot; refers to a function that can capture variables from outside it's scope and retain references to them even after the surrounding scope has been exited.</p>
+<pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">make_adder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token keyword">local</span> num <span class="token operator">=</span> <span class="token number">100</span><br>	<span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>y<span class="token punctuation">)</span><br>        <span class="token keyword">return</span> x <span class="token operator">+</span> num<br>    <span class="token keyword">end</span><br><span class="token keyword">end</span><br><br><span class="token keyword">local</span> adder <span class="token operator">=</span> <span class="token function">make_adder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">adder</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- 110</span></code></pre>
+<p>Notice how on the last line, when <code>adder</code> is called, it's able to correctly fetch the value associated with variable <code>num</code>, even though that variable was supposed to &quot;disappear&quot; as soon as the runtime exits <code>make_adder</code>'s local scope? That's because the function returned by <code>make_adder</code> is a &quot;closure&quot; (<a href="#backmatter">1</a>).</p>
+<p>Lua originally introduced the idea of <a href="https://www.lua.org/pil/27.3.3.html">upvalues</a> to implement closures. Upvalues are variables referenced by a function that live outside the scope of the said function.  Under the hood, the Lua interpreter moves local variables (which live on the lua stack) that are referenced by upvalues, to some place in the heap when their scope is about to end. This way, the function can still carry a reference to the variable's heap location and use that to read/write to upvalues.</p>
+<h2>Lua's sister languages</h2>
+<p>(If you're not interested in Lua trivia, skip this part)</p>
+<p>There are several sister languages to Lua that either transpile to, or take inspiration from the language. I'll list them briefly in this section in case they're of interest to you.</p>
+<ol>
+<li><a href="https://github.com/pallene-lang/pallene">Pallene</a>: Statically typed, compiles to C but uses the Lua C-API. Users can author Pallene scripts, make shared object libraries and import them in regular Lua programs.</li>
+<li><a href="https://github.com/teal-language/tl">Teal</a>: Statically typed, transpiles to Lua. I like to think of it as Lua's Typescript.</li>
+<li><a href="https://moonscript.org/">Moonscript</a>: Duck typed, transpiles to Lua. Whitespace sensitive with classes and lots of syntactic sugar. This is popular among the LÖVE2D community. Takes heavy inspiration from coffeescript.</li>
+<li><a href="https://github.com/markpwns1/jammy">Jammy</a>: Duck typed, transpiles to Lua. It's very much like Moonscript but I like it's syntax more personally.</li>
+<li><a href="https://ravilang.github.io/">Ravi</a>: Lua with optional static typing and support for JIT. This uses a more enhanced version of the LuaVM.</li>
+<li><a href="https://nelua.io/">Nelua</a>: Statically typed, compiles to C. A systems programming language with Lua-like syntax and static types.</li>
+<li><a href="https://terralang.org/">Terra</a>: Statically typed and compiles to native code. Has support for metaprogramming through Lua.</li>
+<li><a href="https://fennel-lang.org/">Fennel</a>: Duck-typed LISP that transpiles to Lua. Also popular in the game programming community.</li>
+<li><a href="https://amulet.works/">Amulet</a> Functional language with a strong type system that transpiles to Lua. Belongs to the ML family.</li>
+<li><a href="https://devcat-studio.github.io/kailua/en-US/">Kailua</a>: Similar to facebook's Flow in that it's just tooling for regular lua where type annotations are allowed via comments!</li>
+<li><a href="https://wu-lang.gitbook.io/guide/">Wu</a>: Statically typed language that transpiles to Lua, written in Rust!</li>
+</ol>
+<p>These are some of the most &quot;developed&quot; Lua dialects that I've seen in my time fiddling with the language, and I find all of them very amusing. There also exists my <a href="https://github.com/srijan-paul/AveTS">own experiment</a> that I plan to finish the lua transpiler for some day.</p>
+<h2>Pallene</h2>
+<p>Pallene is a statically typed dialect of Lua that compiles down to C code. The C code that it generates however, makes calls to the Lua VM's C-API. Due to this, it becomes possible to write Pallene code, compile it to C libraries and then import them in Lua with <code>require</code>.</p>
+<p>It is worth noting that Lua allows writing extension modules in C and then importing them from Lua.
+In fact, all of the language's standard library itself is actually written in C! This feature is facilitated via <a href="https://en.wikipedia.org/wiki/Dynamic_loading">dynamic loading</a> of shared C libraries <a href="https://man7.org/linux/man-pages/man3/dlopen.3.html">dlopen</a> and it's windows/mac counterparts.</p>
+<p>The Lua reference manual describes how to author C libraries in detail <a href="https://www.lua.org/pil/26.2.html">here</a></p>
+<p>Here is a sample Pallene code:</p>
+<pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> m<span class="token punctuation">:</span> module <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><br><span class="token keyword">function</span> m<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>a<span class="token punctuation">:</span> integer<span class="token punctuation">,</span> b<span class="token punctuation">:</span> integer<span class="token punctuation">)</span><span class="token punctuation">:</span> integer<br>	<span class="token keyword">return</span> a <span class="token operator">+</span> b    <br><span class="token keyword">end</span><br><span class="token keyword">return</span> m</code></pre>
+<p>Pallene code is very similar to standard lua code + the type annotations and some minor semantic differences.
+I highly recommend reading the short <a href="https://github.com/pallene-lang/pallene/blob/master/doc/manual.md">manual</a> to get a taste for the language.</p>
+<p>Pallene works by compiling to C, and then using <code>gcc</code> to compile the C to shared libraries which can then be imported into lua scripts and called from Lua. For instance, the <code>add</code> function above compiles to the following C code (cleaned up and some unnecessary details omitted):</p>
+<pre class="language-c"><code class="language-c"><span class="token comment">// This function is internally used by pallene and not visible to the user</span><br><span class="token keyword">static</span> lua_Integer <span class="token function">add_c</span><span class="token punctuation">(</span>lua_Integer a<span class="token punctuation">,</span> lua_Integer b<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token comment">// This is the function exposed to as a part of the Pallene module.</span><br><span class="token comment">// function m.add(a, b)</span><br><span class="token keyword">int</span> <span class="token function">add_lua</span><span class="token punctuation">(</span>lua_State <span class="token operator">*</span>L<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    StackValue <span class="token operator">*</span>base <span class="token operator">=</span> L<span class="token operator">-></span>ci<span class="token operator">-></span>func<span class="token punctuation">;</span> <span class="token comment">// [1]</span><br><br>    <span class="token keyword">int</span> nargs     <span class="token operator">=</span> <span class="token function">lua_gettop</span><span class="token punctuation">(</span>L<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// [2]</span><br>    lua_Integer a <span class="token operator">=</span> <span class="token function">ivalue</span><span class="token punctuation">(</span><span class="token function">s2v</span><span class="token punctuation">(</span>base <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    lua_Integer b <span class="token operator">=</span> <span class="token function">ivalue</span><span class="token punctuation">(</span><span class="token function">s2v</span><span class="token punctuation">(</span>base <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>    lua_Integer ret <span class="token operator">=</span> <span class="token function">function_02</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [3]</span><br>    <span class="token function">setivalue</span><span class="token punctuation">(</span><span class="token function">s2v</span><span class="token punctuation">(</span>L<span class="token operator">-></span>top<span class="token punctuation">)</span><span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// [4]</span><br>    L<span class="token operator">-></span>top<span class="token operator">++</span><span class="token punctuation">;</span><br>    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<p>The first interesting point to note is that our Pallene function <code>add</code> got compiled to two C functions. Why is that?
+It's because Lua allows users to author functions in C (see <a href="https://www.lua.org/source/5.3/lua.h.html#lua_CFunction">lua_CFunction</a>), which can be called by the Lua interpreter. However, these functions must follow a certain convention. That being:</p>
+<ol>
+<li>A function callable by the lua interpreter must be of the type <code>int (*)(lua_State*)</code>.</li>
+<li>The arguments are placed on the lua stack right on top of the function, in order.</li>
+<li>The function must push the return value(s) onto the stack, and return the number of values it pushed to the stack.</li>
+</ol>
+<p>The <code>add_lua</code> 's <code>lua</code> suffix signifies the fact that it's a <code>lua_CFunction</code> , which is called by pushing the arguments to the stack and transferring control to it. Then the function performs following actions:</p>
+<ol>
+<li>Get a reference to the base of the current call frame, this is a pointer to the function object that is being called (a.k.a  <code>add_lua</code>'s address in the Lua stack). Offsets from this pointer can be used to refer to arguments.</li>
+<li>Extract the the number of arguments, and the numeric arguments <code>a</code> and <code>b</code> from the stack, put them into C local variables (<a href="#TODO">2</a>).</li>
+<li>Call the corresponding <strong>C entry  point</strong> with the right arguments, and store the return value from that in yet another C local variable.</li>
+<li>Push the value received onto the Lua stack, and signal that one value was returned by <code>return 1</code>-ing the control back to the Lua Runtime.</li>
+</ol>
+<p>You'll notice that the C-entry points of the functions (<code>add_c</code>) mirror the user-written Pallene code more closely and that the Lua-entry points (<code>add_lua</code>) just exist to act as a bridge between the Lua runtime and the Pallene runtime. They perform the task of type-checking arguments, and passing the arguments from Lua's dynamic world to C's statically typed world. An eagle's eyes view of this can be imagined to be something like so:</p>
+<img src="../assets/svg/pallene_convention.svg" width="100%" />
+<h2>Closures in Pallene</h2>
+<p>Before diving into this part, it helps to establish some terminology to make sure we're on the same page:</p>
+<ol>
+<li><strong>Lua user code</strong>: The user-written Lua scripts that may call our Pallene module exposed functions.</li>
+<li><strong>Lua entry point</strong>: The helper C function generated by the Pallene compiler which receives arguments from the Lua user code and transfers them to the C-entry point. It is a <a href="https://www.lua.org/source/5.3/lua.h.html#lua_CFunction">lua_CFunction</a>. e.g- <code>add_lua</code>.</li>
+<li><strong>C entry point</strong>: The C version of the Pallene user code, also generated by the Pallene compiler. This is a direct representation of the user's logic in C. e.g - <code>add_c</code>.</li>
+</ol>
+<p>This is where the proposal comes in. The above convention has no support for higher order functions and closures.
+Some things to keep in mind when approaching this problem:</p>
+<ol>
+<li>Standard C  does not allow nested functions or closures (<a href="#TODO">3</a>).</li>
+<li>Lua however does support Closure objects that can defer to C functions for executing the logic (see <a href="https://www.lua.org/source/5.3/lobject.h.html#CClosure">CClosure</a>).</li>
+<li>The &quot;Lua user code ↔ Lua entry point&quot; convention is rigidly specified by lua and must follow the aforementioned rules for every <a href="https://www.lua.org/source/5.3/lua.h.html#lua_CFunction">lua_CFunction</a>.</li>
+<li>The &quot;Lua entry point ↔  C entry point&quot; calling convention is flexible and up to discretion the Pallene authors. Can we take advantage of this by passing some extra arguments to the C entry point that represent the upvalues?</li>
+</ol>
+<p>The C-Closures in Lua are more or less defined as such:</p>
+<pre class="language-c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">CClosure</span> <span class="token punctuation">{</span><br>  lua_CFunction f<span class="token punctuation">;</span>    <span class="token comment">/* C function containing the logic */</span><br>  TValue<span class="token operator">*</span> upvalues<span class="token punctuation">;</span>   <span class="token comment">/* Dynamic array containing the upvalues */</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br></code></pre>
+<p>This way of thinking about closures is the key. A closure can be thought of as a bag containing two items: the <strong>code</strong> and the <strong>data</strong>. The &quot;code part&quot; uses the &quot;data&quot; to compute results.</p>
+<p>Another key observation to make can be seen via this image:</p>
+<img src="../assets/svg/pallene_convention_2.svg" width="100%" />
+<p>Every part of the convention above the dotted red line is rigidly defined by the Lua standard, and can't be altered.
+However, parts of the convention below the red-line are completely in Pallene's control.</p>
+<p>We just have to make sure that the C function is able to find the upvalues somewhere. They can be stored in a global map, array or better, the <code>upvalue</code> list of the <code>CClosure</code> object itself! With this in mind, the calling convention can be thought of as such (pseudocode):</p>
+<pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">lua_entry_point</span><span class="token punctuation">(</span>lua_State<span class="token operator">*</span> L<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>	base         <span class="token operator">=</span> <span class="token function">get_base</span><span class="token punctuation">(</span>L<span class="token punctuation">)</span>       <span class="token comment">// get the base of the current call-frame</span><br>	current_func <span class="token operator">=</span> <span class="token punctuation">(</span>CClosure<span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>base<span class="token punctuation">)</span> <span class="token comment">// cast the base to a CClosure</span><br>    upvalues     <span class="token operator">=</span> current_func<span class="token operator">-></span>upvalues<span class="token punctuation">;</span><br> 	<br>    <span class="token function">c_entry_point</span><span class="token punctuation">(</span>arg1<span class="token punctuation">,</span> arg2<span class="token punctuation">,</span> upvalues<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br>    </code></pre>
+<p>The upvalues will be passed as an extra argument to the C entry point. The same C-entry point can work with different sets of upvalues  belonging to different <code>CClosure</code> objects. The &quot;logic&quot; can remain independent and work with different sets of &quot;data&quot;.</p>
+<p>The process of converting higher order functions written in Pallene to C is still fairly blurry. We also haven't answered questions such as:</p>
+<pre><code>1. When/How are the closures created? Who creates them (Lua/C)?
+2. What about Garbage Collection? How does it affect the upvalues?
+3. How to facilitate mutation of upvalues?
+</code></pre>
+<p>If you've loosely understood most of what we went through so far, then you're ready to understand the rest of the idea mentioned in <a href="https://docs.google.com/document/d/11eodot4ca2epSjRl4Xl0YLiWfcMCkNZ2FL00D9S7VN4/edit?usp=sharing">this document</a>. This was a part of my GSoC proposal which I wrote with help from my mentor <a href="https://github.com/hugomg">Hugo Musso Gualandi</a>.</p>
+<h2>Up Next.</h2>
+<p>In the next blog post, I intend to summarize the work I did over this summer.
+A brief rundown of the problems I faced and things I learned.</p>
+<h2>Backmatter</h2>
+<ol>
+<li>Some experts argue that calling capturing functions &quot;closures&quot; is a misnomer since the word has a separate meaning in mathematics and set theory, but we're going to look past that for this write-up.</li>
+<li>It is possible for the user on the Lua side of the world to pass arguments with incorrect types, Pallene guards against this by emitting some runtime type checking code which I've omitted for brevity's sake.</li>
+<li>Some C compilers support lambdas and closures using non-standard extensions called <a href="https://en.wikipedia.org/wiki/Blocks_(C_language_extension)">Blocks</a>.</li>
+</ol>
+</article>
+        <hr>
+        
+        <div class="nav">
+          
+            <a class="prev" 
+              href="../gsoc/">&lt; GSoC&#39;21: Lifting lambdas, Pall...</a>
+          
+
+          
+        </div>
+
+        
+
+  <div class="socials-section">
+    <hr/>
+    <div class="social-icons">
+      
+      <a class="social-icon" href="https://www.twitter.com/" target="_blank">
+        <img class="social-img" src="../assets/svg/twitter.svg"/>
+      </a>
+
+      <a class="social-icon" href="https://www.github.com/srijan-paul" target="_blank">
+        <img class="social-img filterclass" src="../assets/svg/github.svg"/>
+      </a>
+
+      <a class="social-icon" href="https://srijan-paul.github.io" target="_blank">
+        <img class="social-img filterclass" src="../assets/svg/www.svg"/>
+      </a>
+
+      <a class="social-icon" href="mailto:srijannr1@gmail.com" target="_blank">
+        <img class="social-img" src="../assets/svg/gmail.svg"/>
+      </a>
+
+    </div>
+
+    <div class="copyright"> 
+      Copyright Ⓒ 2020-2021 Srijan Paul.
+      <div class="copyright-note"> Why do blog sites need copyrights anyway? </div>
+    </div>
+  
+  </div>
+
+
+      </div>
+    </class>
+    
+    <script type="text/javascript" src="../js/theme_switch.js"></script>
+  </body>
+</html>
