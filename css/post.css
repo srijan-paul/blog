@@ -42,10 +42,6 @@ body {
 
 /* navbar */
 
-code {
-  font-family: 'JetBrains Mono', monospace, sans-serif;
-}
-
 .navbar {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -249,11 +245,13 @@ pre {
   border-radius: 4px;
   padding: 2.5% !important;
   margin-bottom: 4% !important;
+  overflow: auto;
 }
 
 code {
-  font-size: 17px !important;
-  overflow: scroll;
+  font-size: 16px !important;
+  font-family: 'JetBrains Mono', monospace, sans-serif;
+  overflow: auto;
 }
 
 p {
