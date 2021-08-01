@@ -320,7 +320,7 @@ I hope I could give a very hand-wavy idea of the workflow. I should have said it
   	value: integer
   end
   
-  local y: Box = { value = integer } -- "boxed value"
+  local y: Box = { value = 10 } -- "boxed value"
   ```
 
   Here, `y` is a "boxed" integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. [return**↑**](#3)
