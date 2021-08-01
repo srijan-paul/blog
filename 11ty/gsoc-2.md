@@ -301,7 +301,7 @@ I hope I could give a very hand-wavy idea of the workflow. I should have said it
 
 1. While talking with my mentor, I later learned there was a reason for this.
   The author wanted to bootstrap the compiler soon after it was created, 
-  and so to avoid fiddling with imports he decided do write every single line of code into a single file instead. [return**↑**](#1)
+  and so to avoid fiddling with imports he decided have a single file compiler. [return**↑**](#1)
 
 2. I wish I could say it got better with time,
   but as you'll notice- some of my PRs have as many as [71](https://github.com/pallene-lang/pallene/pull/334) comments on them.
