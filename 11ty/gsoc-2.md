@@ -5,7 +5,7 @@ tags: ['lua', 'programming-languages', 'gsoc', 'post']
 title: "GSoC'21: Lifting lambdas, Pallene and Lua's sisters (2/2)"
 ---
 
-In the [last post](https://srijan-paul.github.io/blog/gsoc/), 
+In the [last post](../gsoc/), 
 I went over the Pallene project and explained some parts of it that concerned my GSoC project.
 In this one, I'll briefly go over our approach to the problem, and some relevant details.
 

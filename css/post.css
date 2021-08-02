@@ -24,6 +24,14 @@
   --link-color: #01a3a4;
 }
 
+html,
+body {
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+
 body {
   margin: 0px;
   height: 100%;
@@ -282,7 +290,7 @@ p {
   /* float: right */
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 840px) {
   .content-wrapper {
     width: 90%;
     /* margin-top: 0%; */
