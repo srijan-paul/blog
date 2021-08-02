@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla&family=Epilogue:wght@500&family=JetBrains+Mono&display=swap');
 
-body {
-  margin: 0px;
-  height: 100%;
-  background-color: var(--bg-color);
-  padding: 0px;
-}
-
 [data-theme='dark'] {
   --fg-color: #e4e4e4;
   --heading-color: #ffffff;
@@ -29,6 +22,14 @@ body {
   --accent-color: #ffffff;
   --logo-color: #227093;
   --link-color: #01a3a4;
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  padding: 0px;
 }
 
 #logo,
@@ -55,15 +56,14 @@ body {
 }
 
 .content-wrapper {
-  margin-top: 3% !important;
   background-color: var(--accent-color);
   color: var(--fg-color);
   font-family: 'Karla', sans-serif;
   padding: 3%;
+  padding-top: 5% !important;
   word-spacing: 0.3rem;
   width: 55%;
   margin: auto;
-  margin-bottom: 5%;
   padding-top: 2%;
   font-size: 19px;
   text-align: left;
