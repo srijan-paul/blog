@@ -139,9 +139,9 @@ According to our plan, it should turn into something like this (oversimplified f
 
 
 // An upvalue box that surrounds an integer.
-struct Box { int x; };
+typedef struct { int x; } Box;
 // takes an integer and makes a box surrounding it.
-int make_Box(int* x);
+Box* make_Box(int* x);
 
 // C entry point for the closure returned by `make_counter`.
 static int closure_0_c(Box* upvalue_x, int upvalue_dx) {
@@ -208,6 +208,9 @@ Ooookay, so what does GSoC look like for a student?
 2. **Cross fingers and wait:** Now we wait for the organization and Google to review the proposal. If everything goes well - I should get a green signal via mail. And everything did go well, so I did :)
 3. **Community bonding:** The actual "summer of code" is padded with a period where we get our feet wet with the organizations, our mentors and the codebase.
 4. **Start coding:** And this is where the interesting work finally starts.
+
+In addition to the have, it helps to have a clear plan and some know-hows about the project you want to
+work on. Getting in touch with the organization prior to GSoC and getting familiar can be a good step 0 :).
 
 ## Coding Period. <a name="coding"></a>
 
@@ -299,9 +302,10 @@ I hope I could give a very hand-wavy idea of the workflow. I should have said it
 
 ## Backmatter. <a name="backmatter"></a>
 
-1. While talking with my mentor, I later learned there was a reason for this.
+1. While talking with my mentor, I later learned there were good reasons for this.
   The author wanted to bootstrap the compiler soon after it was created, 
-  and so to avoid fiddling with imports he decided have a single file compiler. [return**↑**](#1)
+  and so to avoid fiddling with imports he decided have a single file compiler. As an added bonus,
+  installing teal is incredibly simple compared to other transpilers/tools. [return**↑**](#1)
 
 2. I wish I could say it got better with time,
   but as you'll notice- some of my PRs have as many as [71](https://github.com/pallene-lang/pallene/pull/334) comments on them.
