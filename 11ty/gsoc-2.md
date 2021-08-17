@@ -264,24 +264,25 @@ At the time of writing this blog post, some of these questions are still unanswe
 Some of the benchmark data that we gathered can be seen on the gist [here](https://gist.github.com/srijan-paul/06d640db0b08086757687dbebffb7f1f) and this issue [here](https://github.com/pallene-lang/pallene/issues/426).
 From what we know right now, there exist places where it's possible to gain a speed up of 110-120% 
 
-Coming to **2**, we haven't found any critical bugs yet, but a couple small ones. For example:
+Coming to **2**, we found 2-3 bugs of varying severities. For example, Lua uses byte sized unsigned integers to index upvalues (and local variables). This means we must restrict the number of upvalues a function can have in pallene. We set this limit to 200.
 
- - The Lua interpreter has a limit of 255 local variables and upvalues.
-   Moreover, the C standard carves out support for upto 127 function parameters, since we use function parameters
-   to pass upvalues in the generated C code- these limits affect both the Lua and C backends.
- - The Lua interpreter also has the same limit for the number of arguments/parameters for a  function call. 
-   For the same reasons as above, these should also be taken care of.
+As for the last bit, Pallene used to have a slightly odd representation for global variables.
+There used to be big table named `G` which would hold all the global variables and constant values. 
+The `G` would then be passed around from function to function so that the functions could access the globals they need.
+Now that we have upvalues, functions could simply capture the upvalues they need upon initialization.
+So we decided to remove the `G` table and instead use a new table called `K` which would only contain constant values like strings.
 
-Fixing these two issues is relatively simple, since all it takes is to display a clean error message to the programmer.
+In summary, we made some the following changes to Pallene's calling convention:
+- Local functions are treated uniformly regardless of the style of declaration.
+  (`local f = function() end` vs `local function f() end`).
+  The only difference being function statements cannot be re-assigned.
+- Global varibales are treated as regular upvalues that can be captured by toplevel functions that need them (similar to Lua).
+- Reduce the number of instructions in the IR.
+- Remove the global-var table `G`, and replace it with a constant-pool table `K`, containing constants like strings.
 
-And finally, we want to implement a more sensible calling convention.
-Currently, all the global variables in Pallene are stored in a table that is common to *all* pallene functions. This is a weird exception- especially considering we can simply represent them as upvalues. (This is what Lua does).
+You can view the PRs made during GSoC by clicking [here](https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+merged%3A%3C2021-08-23).
 
-As the final evaluation inches closer, I will keep updating this part of the blog post.
-
-You can view the PRs made during GSoC by clicking [here](https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+)
-
-## In Tomorrow's news... <a name="tomorrow"></a>
+## In Tomorrow's news <a name="tomorrow"></a>
 Higher order functions are a much welcomed addition to Pallene. But there are some long term goals that I'd personally like the language to achieve. I've been trying to get it to a point where I can use it to write libraries for a WIP game framework of mine called [Wex](https://github.com/cpp-gamedev/wex/tree/dev) ([4](#backmatter)).<a name="4"></a>
 
 1. **Better Embeddability**.  While it's possible to embed Pallene into C applications, the experience isn't exactly the easiest.  I want to see what we can do about the making the language more easily accessible into real applications. Note that all C applications that embed Pallene are essentially embedding a Lua interpreter. The Pallene compiler itself is called independently - which generates shared object files to be linked dynamically.
