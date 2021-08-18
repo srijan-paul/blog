@@ -9,15 +9,18 @@ In the [last post](../gsoc/),
 I went over the Pallene project and explained some parts of it that concerned my GSoC project.
 In this one, I'll briefly go over our approach to the problem, and some relevant details.
 
-## Contents
+<div class="toc">
 
-- [First contact](#first-contact)
-- [Before GSoC](#before-gsoc)
-- [The Idea](#idea)
-- [Coding Period](#coding)
-- [In Tomorrow's news...](#tomorrow)
-- [On that note](#end-note)
-- [Backmatter](#backmatter)
+| Table of Contents               |
+|---------------------------------|
+| [First Contact](#first-contact) |
+| [Before GSoC](#before-gsoc)     |
+| [The Idea](#idea)               |
+| [Coding Period](#coding)        |
+| [In Tomorrow's news](#tomorrow) |
+| [Backmatter](#backmatter)       |
+
+</div>
 
 ## First contact. <a name="first-contact"></a>
 
@@ -147,12 +150,12 @@ Box* make_Box(int* x);
 
 // C entry point for the closure returned by `make_counter`.
 static int closure_0_c(Box* upvalue_x, int upvalue_dx) {
-	upvalue_x->x = upvalue->x + 1;
+	upvalue_x->x = upvalue->x + upvalue_dx;
 	return upvalue->x;
 }
 
 // Lua entry point for the closure returned by `make_counter`.
-static int closure_0_lua(lua_State* L, int upvalue idx) {
+static int closure_0_lua(lua_State* L) {
 	CClosure* current_func = get_func(L);
 	// 1. Grab the upvalues
 	Box* x  = as_box(current_func->upvalue[0]);
@@ -316,20 +319,18 @@ I hope I could give a very hand-wavy idea of the workflow. I should have said it
   Should you ever try to tackle a *chonky* codebase, my mess-ups are evidence that the reviewers will be nice and offer help when needed.
   So don't be afraid to take a leap of faith! [return**↑**](#2)
 
-3. A "Boxed value" is simply a value inside a record. For instance:
+3. A "boxed value" is simply a value inside a record. For instance:
+```lua
+local x: integer = 1 -- regular value
 
-  ```lua
-  local x: integer = 1 -- regular value
-  
-  -- a "box" type can be thought of as a struct
-  -- surrounding a single, regular data type.
-  record Box
-  	value: integer
-  end
-  
-  local y: Box = { value = 10 } -- "boxed value"
-  ```
+-- a "box" type can be thought of as a struct
+-- surrounding a single, regular data type.
+record Box
+value: integer
+end
 
-  Here, `y` is a "boxed" integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. [return**↑**](#3)
+local y: Box = { value = 10 } -- "boxed value"
+```
+Here, `y` is a "boxed" integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. [return**↑**](#3)
 
 4.  Another one of my goals is to be able to script it with [Vyse](). More on this language in a future post! [return**↑**](#4)
