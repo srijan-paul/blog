@@ -65,17 +65,35 @@
 
         
         
-        <main class="post" id="main-content"><h2>Table of contents</h2>
-<ol>
-<li><a href="#lambdas_and_closures">Lambdas and Closures</a></li>
-<li><a href="#luas_sister_languages">Lua's Sister Languages</a></li>
-<li><a href="#pallene">Pallene</a></li>
-<li><a href="#closures_in_pallene">Closures in Pallene</a></li>
-<li><a href="#up_next">Up next</a></li>
-</ol>
-<p>This post is part 1 of a brief 2-part series summarizing the things I learned as a part of the <a href="https://summerofcode.withgoogle.com/">Google Summer of Code</a> event.</p>
+        <main class="post" id="main-content"><p>This post is part 1 of a brief 2-part series summarizing the things I learned as a part of the <a href="https://summerofcode.withgoogle.com/">Google Summer of Code</a> event.</p>
 <p>I was able to work on the <a href="https://github.com/pallene-lang/pallene">Pallene</a> programming language's compiler, under the organization <a href="www.lua.inf.puc-rio.br">LabLua</a>. The event isn't exactly over at the time of me writing this, but I'll try and summarize the meat of the matter.</p>
 <p>I want to keep a low entry-barrier to the problem we tackled this summer, so I'll defer the actual GSoC coding period to the next post, by going over some of the preliminaries and covering the current state of the Pallene compiler.</p>
+<div class="toc">
+<table>
+<thead>
+<tr>
+<th>Table of Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#lambdas_and_closures">Lambdas and Closures</a></td>
+</tr>
+<tr>
+<td><a href="#luas_sister_languages">Lua's Sister Languages</a></td>
+</tr>
+<tr>
+<td><a href="#pallene">Pallene</a></td>
+</tr>
+<tr>
+<td><a href="#closures_in_pallene">Closures in Pallene</a></td>
+</tr>
+<tr>
+<td><a href="#up_next">Up next</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 <h2>Lambdas and Closures<a name="lambdas_and_closures"></a></h2>
 <p>(If you're already familiar with what closures and lambda functions are, consider skipping over this part)</p>
 <p>The term &quot;lambda&quot; generally refers to anonymous functions in programming languages. You're probably already used to them. For example, in the snippet below we are creating a name-less function that returns <code>10</code> and calling it immediately.</p>

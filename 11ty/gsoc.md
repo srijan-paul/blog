@@ -5,20 +5,23 @@ tags: ['lua', 'programming-languages', 'gsoc', 'post']
 title: "GSoC'21: Lifting lambdas, Pallene and Lua's sisters (1/2)"
 ---
 
-## Table of contents
-1. [Lambdas and Closures](#lambdas_and_closures)
-2. [Lua's Sister Languages](#luas_sister_languages)
-3. [Pallene](#pallene)
-4. [Closures in Pallene](#closures_in_pallene)
-5. [Up next](#up_next)
-
 This post is part 1 of a brief 2-part series summarizing the things I learned as a part of the [Google Summer of Code](https://summerofcode.withgoogle.com/) event.
 
 I was able to work on the [Pallene](https://github.com/pallene-lang/pallene) programming language's compiler, under the organization [LabLua](www.lua.inf.puc-rio.br). The event isn't exactly over at the time of me writing this, but I'll try and summarize the meat of the matter.
 
 I want to keep a low entry-barrier to the problem we tackled this summer, so I'll defer the actual GSoC coding period to the next post, by going over some of the preliminaries and covering the current state of the Pallene compiler.
 
+<div class="toc">
 
+| Table of Contents                                |
+| ------------------------------------------------ |
+| [Lambdas and Closures](#lambdas_and_closures)    |
+| [Lua's Sister Languages](#luas_sister_languages) |
+| [Pallene](#pallene)                              |
+| [Closures in Pallene](#closures_in_pallene)      |
+| [Up next](#up_next)                              |
+
+</div>
 
 ## Lambdas and Closures<a name="lambdas_and_closures"></a>
 
