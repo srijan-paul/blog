@@ -91,8 +91,10 @@ And so I started off with [issue 225](https://github.com/pallene-lang/pallene/is
 
 A perfect issue for several reasons-
 minor enough to approach for a first-time contributor and touches several parts of the codebase,
-so I can get familiar with it in the process.
-And so - with the help of the maintainer -  it led me to spawn [PR 329](https://github.com/pallene-lang/pallene/pull/329). Of course, my code wasn't very courteous to the rest of the codebase, so it took some rounds of review before it could get merged ([2](#backmatter)) <a name="2"></a>.
+so I can get familiar with it in the process. And so - with the help of the maintainer -  it led me to spawn 
+[PR 329](https://github.com/pallene-lang/pallene/pull/329).
+Of course, my code wasn't very courteous to the rest of the codebase,
+so it took some rounds of review before it could get merged ([2](#backmatter)) <a name="2"></a>.
 
 There were a total of 4 PRs merged before GSoC. All of them can be viewed [here](https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3C2021-04-27+).
 Moving on to GSoC...

@@ -3,9 +3,9 @@
 [data-theme='dark'] {
   --fg-color: #e4e4e4;
   --heading-color: #ffffff;
-  --bg-color: rgb(32, 35, 37);
+  --bg-color: #18191a;
   --info-color: gray;
-  --accent-color: rgb(32, 35, 37);
+  --accent-color: #18191a;
   --logo-color: #fed130d3;
   --link-color: #61afef;
   --bq-border: gray;
@@ -72,7 +72,7 @@ body {
   width: 55%;
   margin: auto;
   padding-top: 2%;
-  font-size: 19px;
+  font-size: 17.5px;
   text-align: left;
   /* border-radius: 1rem; */
   transition: background-color 300ms ease-in;
@@ -257,7 +257,7 @@ pre {
 }
 
 code {
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-family: 'JetBrains Mono', monospace, sans-serif;
   overflow: auto;
 }
