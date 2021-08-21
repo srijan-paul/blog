@@ -9,8 +9,8 @@
     <title>{{ metadata.blogName }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/common.css">
   </head>
@@ -28,7 +28,21 @@
         {# home page description #}
         <article class="post">
           {{ content | safe }}
+          <h2>Blog posts</h2>
           {{macros.postList(collections.post)}}
+
+          <h2>About me</h2>
+          <p>
+          I am an undergrad student studying Computer Science. <br>
+          Currently I am maintaing one of my hobby projects - 
+          the <a href="https://github.com/srijan-paul/snap" target="_blank">Vyse</a> programming language.
+          </p>
+
+          <p>
+          I study PL theory, do backend development, game-dev or write misc. software.<br/>
+          There's more about me on my <a href="https://srijan-paul.github.io/" target="_blank">main website</a>.
+          </p>
+
         </article>
       </div>
 

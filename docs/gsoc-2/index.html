@@ -77,6 +77,9 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 </thead>
 <tbody>
 <tr>
+<td><a href="#get-code">Get The Code</a></td>
+</tr>
+<tr>
 <td><a href="#first-contact">First Contact</a></td>
 </tr>
 <tr>
@@ -93,6 +96,89 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 </tr>
 <tr>
 <td><a href="#backmatter">Backmatter</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2>Get The Code.</h2>
+<p>If you're only interested in the code, you can find all the PRs on <a href="https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+merged%3A%3C2021-08-23">this</a> link.</p>
+<p>Nevertheless, here is a summary:</p>
+<div style="font-size:90%;">
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/373">373</a></td>
+<td>Adding support for closures to the pallene parser.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/386">386</a></td>
+<td>HOFs that cannot reference variables declared outside them.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/389">389</a></td>
+<td>Closures can read but not write to captured variables.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/399">399</a></td>
+<td>Closures can read <strong>and</strong> write to captured variables.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/399">399</a></td>
+<td>Closures can capture and mutate parameters from outer functions.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/402">402</a></td>
+<td>Closures can capture and mutate parameters from outer functions.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/404">404</a></td>
+<td>Implement upvalues that aren't initialized upon declaration.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/405">405</a></td>
+<td>Remove metatables for records that are used to capture upvalues.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/423">423</a></td>
+<td>Limit the maximum number of function parameters / arguments.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/438">438</a></td>
+<td>Avoid creating closures for lambdas in luaopen.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/440">440</a></td>
+<td>First change to calling convention. Pass a single parameter in generated code representing the upvalue list</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/445">445</a></td>
+<td>(Bugfix) Limit upvalue count to 200</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/450">450</a></td>
+<td>(Bugfix) Fixed some generated C code that would crash because of missing parameters.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/452">452</a></td>
+<td>Introduce a new <code>SetUpvalue</code> instruction in the IR.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/457">457</a></td>
+<td>Second change to call convention. Capturing non-toplevel FuncStats as upvalues.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/462">462</a></td>
+<td>Split <code>G</code> into <code>K</code> and <code>U</code>. Global variables now treated as upvalues</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pallene-lang/pallene/pull/467">467</a></td>
+<td>Changes to <code>SetUpvalue</code> IR instruction. Upvalues now set in batches</td>
 </tr>
 </tbody>
 </table>
@@ -278,23 +364,24 @@ The only difference being function statements cannot be re-assigned.</li>
 <p>While talking with my mentor, I later learned there were good reasons for this.
 The author wanted to bootstrap the compiler soon after it was created,
 and so to avoid fiddling with imports he decided have a single file compiler. As an added bonus,
-installing teal is incredibly simple compared to other transpilers/tools. <a href="#1">return<strong>↑</strong></a></p>
+installing teal is incredibly simple compared to other transpilers/tools. <a href="#1"><strong>(return ⮭)</strong></a></p>
 </li>
 <li>
 <p>I wish I could say it got better with time,
 but as you'll notice- some of my PRs have as many as <a href="https://github.com/pallene-lang/pallene/pull/334">71</a> comments on them.
 This is true even for the PR I made yesterday. But that's good!
 Should you ever try to tackle a <em>chonky</em> codebase, my mess-ups are evidence that the reviewers will be nice and offer help when needed.
-So don't be afraid to take a leap of faith! <a href="#2">return<strong>↑</strong></a></p>
+So don't be afraid to take a leap of faith! <a href="#2"><strong>(return ⮭)</strong></a></p>
 </li>
 <li>
 <p>A &quot;boxed value&quot; is simply a value inside a record. For instance:</p>
 </li>
 </ol>
 <pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> x<span class="token punctuation">:</span> integer <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">-- regular value</span><br><br><span class="token comment">-- a "box" type can be thought of as a struct</span><br><span class="token comment">-- surrounding a single, regular data type.</span><br>record Box<br>value<span class="token punctuation">:</span> integer<br><span class="token keyword">end</span><br><br><span class="token keyword">local</span> y<span class="token punctuation">:</span> Box <span class="token operator">=</span> <span class="token punctuation">{</span> value <span class="token operator">=</span> <span class="token number">10</span> <span class="token punctuation">}</span> <span class="token comment">-- "boxed value"</span></code></pre>
-<p>Here, <code>y</code> is a &quot;boxed&quot; integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. <a href="#3">return<strong>↑</strong></a></p>
+<p>Here, <code>y</code> is a &quot;boxed&quot; integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. <a href="#3"><strong>(return ⮭)</strong></a></p>
 <ol start="4">
-<li>Another one of my goals is to be able to script it with <a href="">Vyse</a>. More on this language in a future post! <a href="#4">return<strong>↑</strong></a></li>
+<li>Another one of my goals is to be able to script it with <a href="">Vyse</a>.
+More on this language in a future post! <a href="#4"><strong>(return ⮭)</strong></a></li>
 </ol>
 </main>
         <hr>

@@ -13,4 +13,3 @@ This blog is also meant to serve as a way to document my projects in a way that 
 If you find some of these interesting, stick around. :)
 
 Oh, and while I have your attention, here are some of my write ups:
-

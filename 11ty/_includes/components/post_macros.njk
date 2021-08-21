@@ -23,10 +23,10 @@
 {% macro postList(collection, relativePath = '..') %}
   <div class = "post-list">
     <ul>
-      {% for post in collection %}
+      {% for post in collection | reverse %}
 
         <li>
-          <a href="{{relativePath}}{{env.root}}{{ post.url }}index.html">{{ post.data.title }}
+          <a href="{{relativePath}}{{env.root}}{{ post.url }}index.html" class="no-decor">{{ post.data.title }}
           </a>
           <span class="post-date"> ({{ post.date | formatDate }}) </span>
         </li>

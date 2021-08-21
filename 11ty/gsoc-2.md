@@ -12,7 +12,8 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 <div class="toc">
 
 | Table of Contents               |
-|---------------------------------|
+| ------------------------------- |
+| [Get The Code](#get-code)       |
 | [First Contact](#first-contact) |
 | [Before GSoC](#before-gsoc)     |
 | [The Idea](#idea)               |
@@ -21,6 +22,37 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 | [Backmatter](#backmatter)       |
 
 </div>
+
+
+## Get The Code.
+
+If you're only interested in the code, you can find all the PRs on [this](https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+merged%3A%3C2021-08-23) link.
+
+Nevertheless, here is a summary:
+
+<div style="font-size:90%;">
+
+| PR                                                      | Purpose                                                                                                     |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [373](https://github.com/pallene-lang/pallene/pull/373) | Adding support for closures to the pallene parser.                                                          |
+| [386](https://github.com/pallene-lang/pallene/pull/386) | HOFs that cannot reference variables declared outside them.                                                 |
+| [389](https://github.com/pallene-lang/pallene/pull/389) | Closures can read but not write to captured variables.                                                      |
+| [399](https://github.com/pallene-lang/pallene/pull/399) | Closures can read **and** write to captured variables.                                                      |
+| [399](https://github.com/pallene-lang/pallene/pull/399) | Closures can capture and mutate parameters from outer functions.                                            |
+| [402](https://github.com/pallene-lang/pallene/pull/402) | Closures can capture and mutate parameters from outer functions.                                            |
+| [404](https://github.com/pallene-lang/pallene/pull/404) | Implement upvalues that aren't initialized upon declaration.                                                |
+| [405](https://github.com/pallene-lang/pallene/pull/405) | Remove metatables for records that are used to capture upvalues.                                            |
+| [423](https://github.com/pallene-lang/pallene/pull/423) | Limit the maximum number of function parameters / arguments.                                                |
+| [438](https://github.com/pallene-lang/pallene/pull/438) | Avoid creating closures for lambdas in luaopen.                                                             |
+| [440](https://github.com/pallene-lang/pallene/pull/440) | First change to calling convention. Pass a single parameter in generated code representing the upvalue list |
+| [445](https://github.com/pallene-lang/pallene/pull/445) | (Bugfix) Limit upvalue count to 200                                                                         |
+| [450](https://github.com/pallene-lang/pallene/pull/450) | (Bugfix) Fixed some generated C code that would crash because of missing parameters.                        |
+| [452](https://github.com/pallene-lang/pallene/pull/452) | Introduce a new `SetUpvalue` instruction in the IR.                                                         |
+| [457](https://github.com/pallene-lang/pallene/pull/457) | Second change to call convention. Capturing non-toplevel FuncStats as upvalues.                             |
+| [462](https://github.com/pallene-lang/pallene/pull/462) | Split `G` into `K` and `U`. Global variables now treated as upvalues                                        |
+| [467](https://github.com/pallene-lang/pallene/pull/467) | Changes to `SetUpvalue` IR instruction. Upvalues now set in batches                                         |
+</div>
+
 
 ## First contact. <a name="first-contact"></a>
 
@@ -311,13 +343,13 @@ I hope I could give a very hand-wavy idea of the workflow. I should have said it
 1. While talking with my mentor, I later learned there were good reasons for this.
   The author wanted to bootstrap the compiler soon after it was created, 
   and so to avoid fiddling with imports he decided have a single file compiler. As an added bonus,
-  installing teal is incredibly simple compared to other transpilers/tools. [return**↑**](#1)
+  installing teal is incredibly simple compared to other transpilers/tools. [**(return ⮭)**](#1)
 
 2. I wish I could say it got better with time,
   but as you'll notice- some of my PRs have as many as [71](https://github.com/pallene-lang/pallene/pull/334) comments on them.
   This is true even for the PR I made yesterday. But that's good!
   Should you ever try to tackle a *chonky* codebase, my mess-ups are evidence that the reviewers will be nice and offer help when needed.
-  So don't be afraid to take a leap of faith! [return**↑**](#2)
+  So don't be afraid to take a leap of faith! [**(return ⮭)**](#2)
 
 3. A "boxed value" is simply a value inside a record. For instance:
 ```lua
@@ -331,6 +363,7 @@ end
 
 local y: Box = { value = 10 } -- "boxed value"
 ```
-Here, `y` is a "boxed" integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. [return**↑**](#3)
+Here, `y` is a "boxed" integer, whereas x is a regular integer variable. Of course, this is just the terminology I choose to use. I don't know if there is an official name. [**(return ⮭)**](#3)
 
-4.  Another one of my goals is to be able to script it with [Vyse](). More on this language in a future post! [return**↑**](#4)
+4.  Another one of my goals is to be able to script it with [Vyse]().
+More on this language in a future post! [**(return ⮭)**](#4)
