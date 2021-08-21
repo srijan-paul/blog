@@ -101,7 +101,9 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 </table>
 </div>
 <h2>Get The Code.</h2>
-<p>If you're only interested in the code, you can find all the PRs on <a href="https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+merged%3A%3C2021-08-23">this</a> link.</p>
+<p>Let's get the obvious parts out of the way first.<br>
+A list of all the PRs I made over the summer can be found on
+<a href="https://github.com/pallene-lang/pallene/pulls?q=is%3Apr+is%3Aclosed+author%3Asrijan-paul+created%3A%3E2021-04-27+merged%3A%3C2021-08-23">this</a> link.</p>
 <p>Nevertheless, here is a summary:</p>
 <div style="font-size:90%;">
 <table>
@@ -184,13 +186,17 @@ In this one, I'll briefly go over our approach to the problem, and some relevant
 </table>
 </div>
 <h2>First contact. <a name="first-contact"></a></h2>
-<p>(Flashback to how I came across Pallene, skip if not interested in lore)</p>
+<p>(Flashback to how I came across Pallene, skip if not interested in misc. background stories).</p>
 <p>I used Pallene for the first time around September (I think?) of 2020.
-Around this time, I was making games with the <a href="https://love2d.org/">LÖVE </a> game framework, which uses Lua for scripting.
-I've made a <a href="https://github.com/srijan-paul/horror-game">couple</a> <a href="https://github.com/srijan-paul/Bonkyon">of</a> <a href="https://github.com/srijan-paul/bullet_hell">games</a> with it, but I realized one thing. Every time the codebase started beefing up (4-6k LoC), keeping track of different moving parts of a game started getting difficult.</p>
-<p>One small choice made in the entity management system caused wonky behavior of physics code written a couple thousand lines down,
-scene transitions would bork up lighting effects,
-<code>nil</code> accesses would show up every 5 minutes when prototyping new features and the list goes on.</p>
+Around this time, I was making games with the <a href="https://love2d.org/">LÖVE</a> game framework, which uses Lua for scripting.
+I've made a <a href="https://github.com/srijan-paul/horror-game">couple</a> - <a href="https://github.com/srijan-paul/Bonkyon">of</a> - <a href="https://github.com/srijan-paul/bullet_hell">games</a>
+with it, but I realized one thing.
+Every time the codebase started beefing up (4-6k LoC),
+keeping track of different moving parts of a game started getting difficult.</p>
+<p>One small choice made in the entity management system caused wonky behavior
+of physics code written a couple thousand lines down,
+scene transitions would mess up lighting effects,
+field accesses on <code>nil</code> would show up every 5 minutes when prototyping new features, and the list goes on.</p>
 <p>I realized that getting a static analyzer, or a statically typed language can probably help me manage my projects better.
 So I started looking and found a <a href="https://srijan-paul.github.io/blog/gsoc/#luas_sister_languages">whole bunch of tools</a>
 that could serve the purpose.
@@ -208,26 +214,35 @@ At this point, I saw two drastically different choices in front of me:</p>
 <p>Knowing myself, I would have taken the first route.
 Fortunately however, this was around the time someone on discord had shown me this xkcd:</p>
 <p><img src="https://imgs.xkcd.com/comics/standards_2x.png" alt="XKCD"></p>
-<p>So I decided against taking the blame for a 15th standard and started looking for tools that I could contribute to. My first instinctive choice was to go with Teal or <a href="https://typescripttolua.github.io/">TS2Lua</a>. However, both tools had their own problems:</p>
+<p>So I decided against taking the blame for a 15th standard and started looking for tools that I could contribute to.
+My first instinctive choice was to go with Teal or <a href="https://typescripttolua.github.io/">TS2Lua</a>.
+However, both tools had their own problems:</p>
 <ol>
-<li>Teal: I was excited to dig in - and I cloned the <a href="">repo</a> - only to see the whole codebase is a single file 6k+LoC (<a href="#backmatter">1</a>)<a name="1"></a>. At the time, this was a deal breaker for me sadly. I couldn't possibly edit a file that huge without losing my mind. It takes my editor and LSP an entire minute or two just to parse the file! Unfortunate.</li>
-<li>TS2Lua: It was all roses in the beginning,
-but I soon realized retrofitting a JS dialect to Lua isn't as pretty as it sounds. There exist weird issues like:
+<li>
+<p>Teal: I was excited to dig in - and I cloned the <a href="">repo</a> -
+only to see the whole codebase is a single file 6k+LoC (<a href="#backmatter">1</a>)<a name="1"></a>.
+At the time, this was a deal breaker for me sadly. I couldn't possibly edit a file that huge without losing my mind.
+It takes my editor and LSP an entire minute or two just to parse the file! Unfortunate.</p>
+</li>
+<li>
+<p>TS2Lua: It was all roses in the beginning,
+but I soon realized retrofitting a JS dialect to Lua isn't as pretty as it sounds. There exist weird issues like:</p>
 <ol>
-<li>Inconsistency of 0-indexed JS arrays vs 1-indexed Lua tables. I asked the developer and they wanted to keep things that way (Understandably so, there is no good solution for this that I can think of either).</li>
-<li>Operator overloading, which I deem a must-have for working with vectors  is achieved via weird hacks, and doesn't type-check as neatly.</li>
+<li>Inconsistency of 0-indexed JS arrays vs 1-indexed Lua tables. I asked the developers and they wanted to keep things that way (Understandably so, there is no good solution for this that I can think of either).</li>
+<li>Operator overloading, which I deem a must-have for working with vectors is achieved via weird hacks, and doesn't type-check as neatly.</li>
 <li>Debugging the generated Lua source can sometimes be painful.</li>
 </ol>
 </li>
 </ol>
 <p>This was unfortunate.
-Other than these caveats, TS2L's quality absolutely amazes me, and Teal is the closest thing Lua has to it's own Typescript.</p>
+Other than these caveats, TS2L's quality absolutely amazes me,
+and Teal is the closest thing Lua has to it's own Typescript.</p>
 <p>This made me look towards Pallene, a compiled language that makes some use of Lua's C-API.
 It can optionally transpile to Lua and be used to author libraries for Lua!
 The repo also got a good amount of activity, had a good installation guide and several open issues.</p>
 <p>Unfortunately though, the language wasn't  completely ready for production use yet.
 Meaning if I was going into it, I was comitting to it for a very long  term.
-Since I was starting to dip my feet into type theory at the time anyway, this could have made for an interesting run...</p>
+Since I was starting to dip my feet into type theory at the time anyway, this could have made for an interesting run.</p>
 <h2>Before GSoC. <a name="before-gsoc"></a></h2>
 <p>From fiddling around with Pallene in the past,
 I knew there are some big enhancements that the project could benefit from (my wishlist, of sorts).
@@ -240,7 +255,8 @@ I had heard of Google Summer of Code before, but I had no idea how the event  wo
 That's obviously good news!</p>
 <p>And so I started off with <a href="https://github.com/pallene-lang/pallene/issues/225">issue 225</a>, which basically said:</p>
 <blockquote>
-<p><em>&quot;When there is an internal error in the compiler, we get a not-so-tasteful 'impossible' crash message. It'd be nice to know more about the object that caused the crash.</em>&quot;</p>
+<p><em>&quot;When there is an internal error in the compiler, we get a not-so-tasteful 'impossible' crash message.</em>
+<em>It'd be nice to know more about the object that caused the crash.</em>&quot;</p>
 </blockquote>
 <p>A perfect issue for several reasons-
 minor enough to approach for a first-time contributor and touches several parts of the codebase,
@@ -254,7 +270,7 @@ Moving on to GSoC...</p>
 <p>The proposal was to have higher order functions in Pallene.
 Lua has support for lexical capturing and closures,
 so it would make sense for Pallene to base it's semantics off of those set by Lua.
-It all started with <a href="https://github.com/pallene-lang/pallene/issues/174">issue 174</a>- that discusses this very feature.</p>
+It all started with <a href="https://github.com/pallene-lang/pallene/issues/174">issue 174</a>, which discusses this very feature.</p>
 <p>I briefly went over higher order functions and Pallene's calling convention in part 1 of the series -
 so I'll be providing an eagle's eye view of the experience.
 Of course, you don't necessarily have to read the first one to understand everything here.</p>
@@ -282,33 +298,48 @@ but being the ever so rightful and courteous gentleman I am, here is a summary:<
 <li><strong>Community bonding:</strong> The actual &quot;summer of code&quot; is padded with a period where we get our feet wet with the organizations, our mentors and the codebase.</li>
 <li><strong>Start coding:</strong> And this is where the interesting work finally starts.</li>
 </ol>
-<p>In addition to the have, it helps to have a clear plan and some know-hows about the project you want to
+<p>In addition to the above, it helps to have a clear plan and some know-hows about the project you want to
 work on. Getting in touch with the organization prior to GSoC and getting familiar can be a good step 0 :).</p>
 <h2>Coding Period. <a name="coding"></a></h2>
 <p>(Note: I use the terms &quot;upvalue&quot; and &quot;captured variable&quot; interchangeably).</p>
 <p><strong>Support closures on the front-end.</strong>
 This meant parsing closures from source text to an AST- and then type checking the AST.</p>
 <p>This was less work than we initially anticipated, and ended up saving us a lot of time!
-Pallene was already capable of parsing top-level function statements. So a slight tweaking of the grammar and the parser's code was all it took. The type checker didn't require any changes!</p>
-<p><strong>Implement closures that don't  capture any variables</strong> (yes, just lambda functions). This was my first time tinkering with the Pallene IR. I had touched on it briefly in an attempt to introduce <code>ipairs</code> loops, but not in detail. We ended up having to add a new IR instruction called <code>NewClosure</code>, that -- when compiled -- would create a new closure object by calling a function from the Lua C-API, appropriately named <a href="https://www.lua.org/source/5.1/lfunc.c.html#luaF_newCClosure">luaF_newCclosure</a>.</p>
-<p><strong>Implement read-only captured upvalues.</strong>  This took some more changes to the IR. Here, we introduced yet another instruction called <code>Upvalue &lt;id&gt;</code> - where <code>&lt;id&gt;</code> is a number assigned by the compiler to an upvalue to identify it uniquely.  Using this IR- nested closures could now refer to non-local variables (which - as described above - are just function parameters once compiled down to C).</p>
-<p><strong>Implement mutable upvalues.</strong> For this, we had to introduce an entirely new compiler pass that fit between the type-checking pass and the IR generation pass. This pass would inspect the AST and perform four main tasks:</p>
+Pallene was already capable of parsing top-level function statements.
+So a slight tweaking of the grammar and the parser's code was all it took.
+The type checker didn't require any changes!</p>
+<p><strong>Implement closures that don't  capture any variables</strong> (yes, just lambda functions).
+This was my first time tinkering with the Pallene IR. I had touched on it briefly in an attempt to introduce <code>ipairs</code> loops, but not in detail. We ended up having to add a new IR instruction called <code>NewClosure</code>, that -- when compiled -- would create a new closure object by calling a function from the Lua C-API, appropriately named <a href="https://www.lua.org/source/5.1/lfunc.c.html#luaF_newCClosure">luaF_newCclosure</a>.</p>
+<p><strong>Implement read-only captured upvalues.</strong>
+This took some more changes to the IR. Here, we introduced yet another instruction called <code>Upvalue &lt;id&gt;</code> -
+where <code>&lt;id&gt;</code> is a number assigned by the compiler to an upvalue to identify it uniquely.
+Using this IR- nested closures could now refer to non-local variables
+(which - as described above - are just function parameters once compiled down to C).</p>
+<p><strong>Implement mutable upvalues.</strong>
+For this, we had to introduce an entirely new compiler pass that fit between the type-checking pass and the IR generation pass.
+This pass would inspect the AST and perform four main tasks:</p>
 <ol>
 <li>Separate captured variables from regular  variables.</li>
 <li>Separate mutable captured variables from read-only captured variables.</li>
 <li>Encode record types needed for the upvalue boxes in the AST.</li>
 <li>Modify the AST to represent captured variables as boxed values instead of  regular values. (<a href="#backmatter">3</a>) <a name="3"></a></li>
 </ol>
-<p>After this compiler pass, the IR generator could easily transform an AST into IR - and the code generator required fairly minimal changes too.</p>
+<p>After this compiler pass, the IR generator could easily transform an AST into IR -
+and the code generator required fairly minimal changes too.</p>
 <p><strong>First evaluation.</strong> We were ahead of schedule! The first evaluation went well.</p>
 <p><strong>Uh-oh!</strong> Now my college decided to conduct exams at a weird time of the year, so development had to take a break for a while. Thanks to the progress made earlier, I shift focus and take some time off from coding.</p>
-<p><strong>Deciding the milestones for second evaluation.</strong> The most beefy changes had been made at this point, so we could use the remaining weeks to polish the changes introduced to the codebase. There are 3 main facets to cover:</p>
+<p><strong>Deciding the milestones for second evaluation.</strong>
+The most beefy changes had been made at this point,
+so we could use the remaining weeks to polish the changes introduced to the codebase.
+There are 3 main facets to cover:</p>
 <ol>
 <li>Optimizing closures by merging multiple upvalue boxes into one.</li>
 <li>Fixing bugs (if any).</li>
 <li>Getting rid of global variables altogether and representing them as captured variables.</li>
 </ol>
-<p>For <strong>1</strong>, we had multiple meetings to discuss strategies and tradeoffs. We realized that this might require several changes to the compiler and some not very trivial lifetime analysis of symbols. There were several questions to answer such as:</p>
+<p>For <strong>1</strong>, we had multiple meetings to discuss strategies and tradeoffs.
+We realized that this might require several changes to the compiler and some not very trivial lifetime analysis of symbols.
+There were several questions to answer such as:</p>
 <ul>
 <li>What criteria would we use to determine mergeability?</li>
 <li>What kind of performance gains are we looking at?</li>
@@ -322,14 +353,19 @@ Pallene was already capable of parsing top-level function statements. So a sligh
 </ul>
 </li>
 </ul>
-<p>At the time of writing this blog post, some of these questions are still unanswered. However, we have some numbers to chew on in the mean time. We used two ways to collect some benchmark data:</p>
+<p>At the time of writing this blog post, some of these questions are still unanswered.
+However, we have some numbers to chew on in the mean time. We used two ways to collect some benchmark data:</p>
 <ul>
 <li>Find popular Lua repositories on Github and run their source code through a hacky script to find out the number of upvalues referenced by closures in these codebases. Once we have that data- we eyeball the codebase to check how often we'd be able to make box-merge optimizations.</li>
-<li>Use the Pallene compiler to generate C files from Pallene source code that uses higher order functions. Then &quot;optimize&quot; the generated C code by hand. Once done, run both the compiler generated and hand-edited code through a benchmark tool like Hyperfine, and compare the results.</li>
+<li>Use the Pallene compiler to generate C files from Pallene source code that uses higher order functions.
+Then &quot;optimize&quot; the generated C code by hand. Once done, run both the compiler generated and hand-edited code through a benchmark tool like Hyperfine, and compare the results.</li>
 </ul>
 <p>Some of the benchmark data that we gathered can be seen on the gist <a href="https://gist.github.com/srijan-paul/06d640db0b08086757687dbebffb7f1f">here</a> and this issue <a href="https://github.com/pallene-lang/pallene/issues/426">here</a>.
 From what we know right now, there exist places where it's possible to gain a speed up of 110-120%</p>
-<p>Coming to <strong>2</strong>, we found 2-3 bugs of varying severities. For example, Lua uses byte sized unsigned integers to index upvalues (and local variables). This means we must restrict the number of upvalues a function can have in pallene. We set this limit to 200.</p>
+<p>Coming to <strong>2</strong>, we found 2-3 bugs of varying severities.
+For example, Lua uses byte sized unsigned integers to index upvalues (and local variables).
+This means we must restrict the number of upvalues a function can have in pallene.
+We set this limit to 200.</p>
 <p>As for the last bit, Pallene used to have a slightly odd representation for global variables.
 There used to be big table named <code>G</code> which would hold all the global variables and constant values.
 The <code>G</code> would then be passed around from function to function so that the functions could access the globals they need.
