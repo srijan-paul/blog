@@ -40,7 +40,6 @@ Nevertheless, here is a summary:
 | [386](https://github.com/pallene-lang/pallene/pull/386) | HOFs that cannot reference variables declared outside them.                                                 |
 | [389](https://github.com/pallene-lang/pallene/pull/389) | Closures can read but not write to captured variables.                                                      |
 | [399](https://github.com/pallene-lang/pallene/pull/399) | Closures can read **and** write to captured variables.                                                      |
-| [399](https://github.com/pallene-lang/pallene/pull/399) | Closures can capture and mutate parameters from outer functions.                                            |
 | [402](https://github.com/pallene-lang/pallene/pull/402) | Closures can capture and mutate parameters from outer functions.                                            |
 | [404](https://github.com/pallene-lang/pallene/pull/404) | Implement upvalues that aren't initialized upon declaration.                                                |
 | [405](https://github.com/pallene-lang/pallene/pull/405) | Remove metatables for records that are used to capture upvalues.                                            |
