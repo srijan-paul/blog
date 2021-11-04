@@ -1,7 +1,7 @@
 ---
 layout: post.njk
 tags: ['personal', 'post', 'misc']
-title: "Episodic night terrors"
+title: "My undiagnosed night terrors"
 ---
 
 Back when I was 5 or so years old, my family used to live in a remote suburban area.
