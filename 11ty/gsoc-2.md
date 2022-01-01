@@ -1,5 +1,4 @@
 ---
-
 layout: post.njk
 tags: ['lua', 'programming-languages', 'gsoc', 'post']
 title: "GSoC'21: Lifting lambdas, Pallene and Lua's sisters (2/2)"
